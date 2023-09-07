@@ -43,6 +43,20 @@
 	<!-- <script src="<?= base_url('assets/')?>assets/js/setting-demo.js"></script>
 	<script src="<?= base_url('assets/')?>assets/js/demo.js"></script> -->
 	<script>
+		// for side bar
+			var currentUrl = window.location.href;
+
+		// Mendapatkan semua elemen <a> di dalam sidebar
+		var sidebarLinks = document.querySelectorAll(".nav-item a");
+
+		// Meloop melalui setiap tautan dan cek apakah URL sesuai dengan tautan tersebut
+		sidebarLinks.forEach(function(link) {
+			if (link.href === currentUrl) {
+				// Jika URL sesuai, tambahkan kelas "active" pada elemen li yang berisi tautan
+				link.parentElement.classList.add("active");
+			}
+		});
+
 		Circles.create({
 			id:'circles-1',
 			radius:45,

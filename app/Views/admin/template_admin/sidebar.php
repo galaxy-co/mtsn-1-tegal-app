@@ -37,10 +37,17 @@
 						</div>
 					</div>
 					<ul class="nav nav-success">
-						<li class="nav-item active">
-							<a href="<?= base_url('/admin/home')?>" aria-expanded="false">
+						<li class="nav-item">
+							<a href="<?= base_url('/admin')?>" aria-expanded="false">
 								<i class="fas fa-home"></i>
 								<p>Dashboard</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="<?= base_url('/admin/kelas')?>">
+								<i class="icon-home"></i>
+								<p>Kelas</p>
+								<!-- <span class="caret"></span> -->
 							</a>
 						</li>
 						<li class="nav-item">
