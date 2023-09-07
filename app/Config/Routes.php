@@ -5,17 +5,15 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/admin', 'AdminController::index');
+$routes->get('/admin', 'Admin\AdminController::index');
 
-// $routes->get('/admin/siswa', 'SiswaController::index');
 
-//Kelas
-// $routes->get('/admin/kelas', 'KelasController::index');
-// $routes->get('/admin/addKelas', 'Admin::addKelas');
-// $routes->get('/', 'Admin::index');
+$routes->get('/admin/siswa', 'Admin\SiswaController::index');
 
-$routes->get('/admin/siswa', 'Admin::siswa');
+//kelas
 
-$routes->get('/admin/kelas', 'KelasController::index');
+$routes->get('/admin/kelas', 'Admin\KelasController::index');
 
-$routes->post('/admin/addKelas', 'KelasController::addKelas');
+$routes->post('/admin/addKelas', 'Admin\KelasController::addKelas');
+
+$routes->get('/admin/deleteKelas/(:num)', 'Admin\KelasController::deleteKelas/$1');

@@ -200,29 +200,49 @@
 	</script>
 	<!-- sweetAlert -->
 	<script>
-		jQuery(document).ready(function() {
-		<?php if(session()->getFlashdata('success')) : ?>
-        // Trigger SweetAlert when the page loads
-        $('#triggerSweetAlert').click();
-        <?php endif; ?>
-	});
-		$('#alert_demo_4').click(function(e) {
-				swal({
-					title: "Good job!",
-					text: "You clicked the button!",
-					icon: "success",
-					buttons: {
+		$('#alertSuccess').click(function(e) {
+				swal("Success", "Success", {
+					icon : "success",
+					buttons: {        			
 						confirm: {
-							text: "Confirm Me",
-							value: true,
-							visible: true,
-							className: "btn btn-success",
-							closeModal: true
+							className : 'btn btn-success'
 						}
-					}
+					},
 				});
 			});
-		
+		//== Class Initialization
+	jQuery(document).ready(function() {
+		SweetAlert2Demo.init();
+	});
+
+	$('#alertHapus').click(function(e) {
+				swal({
+					title: 'Yakin Mau Hapus?',
+					text: "Apa Anda Yakin Mau Menghaspu Data Ini?!",
+					type: 'warning',
+					buttons:{
+						cancel: {
+							visible: true,
+							text : 'Tidak, Batalkan!',
+							className: 'btn btn-danger'
+						},        			
+						confirm: {
+							text : 'Ya, Hapus',
+							className : 'btn btn-success'
+						}
+					}
+				}).then((willDelete) => {
+					if (!willDelete) {
+						swal("Data Masih Tetap Tersimpan", {
+							buttons : {
+								confirm : {
+									className: 'btn btn-success'
+								}
+							}
+						});
+					}
+				});
+			})
 		
 	</script>
 </body>

@@ -1,5 +1,4 @@
 
->
         
 <div class="main-panel">
     <!-- Form -->
@@ -36,13 +35,16 @@
                             <div class="card-title">Input Kelas</div>
                         </div>
                         <?php if(session()->getFlashdata('success')) : ?>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>Sukses</strong> Berhasil Tambah Kelas.
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        </div>
-                    <?php endif ?>
+                            <button type="button" class="btn btn-success" id="alertSuccess" style="display: none;"> Success</button>
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    var button = document.getElementById('alertSuccess');
+                                    if (button) {
+                                        button.click();
+                                    }
+                                });
+                            </script>
+                        <?php endif ?>
                         <form action="<?= base_url('admin/addKelas') ?>" method="POST">
                             <div class="card-body">
 
@@ -73,7 +75,7 @@
                                         </div>
                                     </div>
                             <div class="card-action">
-                                <button class="btn btn-success" type="submit">TAMBAH</button>
+                                <button class="btn btn-success" type="submit">TAMBAH</button>		
                             </div>
                             
                         </div>
@@ -127,7 +129,7 @@
                                             ?>
                                             <td><?=$kurikulum?></td>
                                             
-                                            <td>61</td>
+                                            <td><button class="btn btn-primary btn-sm"><i class="icon-note"></i> Edit</button>  <a href="<?= base_url('admin/deleteKelas/') . $k['id_kelas']?>" class="btn btn-danger btn-sm" id="alertHapus" style="text-decoration:none"><i class="icon-trash"></i> Hapus</a></td>
                                         </tr>
                                         <?php endforeach?>
                                     </tbody>

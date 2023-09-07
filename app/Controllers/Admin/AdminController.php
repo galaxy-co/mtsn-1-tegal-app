@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
+
+use App\Controllers\BaseController;
 
 class AdminController extends BaseController
 {
@@ -11,5 +13,4 @@ class AdminController extends BaseController
         echo view('admin/index');
         echo view('admin/template_admin/footer');
     }
-
 }
