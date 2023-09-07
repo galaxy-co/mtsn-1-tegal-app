@@ -11,4 +11,13 @@ class Admin extends BaseController
         echo view('admin/index');
         echo view('admin/template_admin/footer');
     }
+
+    public function siswa()
+    {
+
+        echo view('admin/template_admin/header');
+        echo view('admin/template_admin/sidebar');
+        echo view('admin/siswa_in_admin');
+        echo view('admin/template_admin/footer');
+    }
 }

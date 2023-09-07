@@ -38,12 +38,18 @@
 					</div>
 					<ul class="nav nav-success">
 						<li class="nav-item active">
-							<a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+							<a href="<?= base_url('/admin/home')?>" aria-expanded="false">
 								<i class="fas fa-home"></i>
 								<p>Dashboard</p>
 							</a>
 						</li>
-						
+						<li class="nav-item">
+							<a href="<?= base_url('/admin/siswa')?>">
+								<i class="icon-people"></i>
+								<p>Siswa</p>
+								<!-- <span class="caret"></span> -->
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>
