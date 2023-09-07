@@ -9,4 +9,6 @@ $routes->get('/admin', 'Admin::index');
 
 $routes->get('/admin/siswa', 'Admin::siswa');
 
+//Kelas
 $routes->get('/admin/kelas', 'Admin::kelas');
+$routes->get('/admin/addKelas', 'Admin::addKelas');

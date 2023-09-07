@@ -33,38 +33,41 @@
                         <div class="card-header">
                             <div class="card-title">Input Kelas</div>
                         </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <label for="defaultSelect">Tingkat</label>
-                                        <select class="form-control form-control" id="defaultSelect">
-                                            <option>7</option>
-                                            <option>8</option>
-                                            <option>9</option>
-                                        </select>
+                        <form action="<?= base_url('admin/addKelas') ?>" method="POST">
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group">
+                                            <label for="defaultSelect">Tingkat</label>
+                                            <select class="form-control form-control" id="defaultSelect">
+                                                <option>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <label for="largeInput">Bagian / Nama</label>
-                                        <input type="text" class="form-control form-control" id="defaultInput" placeholder="Contoh.. A/B/C">
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group">
+                                            <label for="largeInput">Bagian / Nama</label>
+                                            <input type="text" class="form-control form-control" id="defaultInput" placeholder="Contoh.. A/B/C">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <label for="defaultSelect">Kurikulum</label>
-                                        <select class="form-control form-control" id="defaultSelect">
-                                            <option>Kurtilas</option>
-                                            <option>Kurmer</option>
-                                        </select>
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group">
+                                            <label for="defaultSelect">Kurikulum</label>
+                                            <select class="form-control form-control" id="defaultSelect">
+                                                <option>Kurtilas</option>
+                                                <option>Kurmer</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                        <div class="card-action">
-                            <button class="btn btn-success">Submit</button>
-                            <button class="btn btn-danger">Cancel</button>
+                            <div class="card-action">
+                                <button class="btn btn-success" type="submit">TAMBAH</button>
+                            </div>
+                            
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
