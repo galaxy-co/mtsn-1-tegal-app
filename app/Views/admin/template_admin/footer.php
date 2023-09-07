@@ -198,5 +198,32 @@
 			});
 		});
 	</script>
+	<!-- sweetAlert -->
+	<script>
+		jQuery(document).ready(function() {
+		<?php if(session()->getFlashdata('success')) : ?>
+        // Trigger SweetAlert when the page loads
+        $('#triggerSweetAlert').click();
+        <?php endif; ?>
+	});
+		$('#alert_demo_4').click(function(e) {
+				swal({
+					title: "Good job!",
+					text: "You clicked the button!",
+					icon: "success",
+					buttons: {
+						confirm: {
+							text: "Confirm Me",
+							value: true,
+							visible: true,
+							className: "btn btn-success",
+							closeModal: true
+						}
+					}
+				});
+			});
+		
+		
+	</script>
 </body>
 </html>

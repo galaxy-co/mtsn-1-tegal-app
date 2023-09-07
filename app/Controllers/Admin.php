@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+
 class Admin extends BaseController
 {
     public function index()
@@ -27,5 +28,11 @@ class Admin extends BaseController
         echo view('admin/template_admin/sidebar');
         echo view('admin/kelas_in_admin');
         echo view('admin/template_admin/footer');
+    }
+
+    public function addKelas(){
+        $data = $this->request->getPost();
+        var_dump($data);
+        die;
     }
 }
