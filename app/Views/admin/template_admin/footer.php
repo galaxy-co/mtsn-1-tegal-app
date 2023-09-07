@@ -39,9 +39,7 @@
 	<!-- Datatables -->
 	<script src="<?= base_url('assets/')?>assets/js/plugin/datatables/datatables.min.js"></script>
 
-	<!-- Atlantis DEMO methods, don't include it in your project! -->
-	<!-- <script src="<?= base_url('assets/')?>assets/js/setting-demo.js"></script>
-	<script src="<?= base_url('assets/')?>assets/js/demo.js"></script> -->
+	
 	<script>
 		// for side bar
 			var currentUrl = window.location.href;
@@ -150,6 +148,9 @@
 			fillColor: 'rgba(255, 165, 52, .14)'
 		});
 
+		
+	</script>
+	<script>
 		$(document).ready(function() {
 			$('#basic-datatables').DataTable({
 			});

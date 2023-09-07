@@ -51,9 +51,30 @@
 							</a>
 						</li>
 						<li class="nav-item">
+							<a href="<?= base_url('/admin/guru')?>">
+								<i class="icon-layers"></i>
+								<p>Guru</p>
+								<!-- <span class="caret"></span> -->
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="<?= base_url('/admin/mapel')?>">
+								<i class="icon-home"></i>
+								<p>Mapel</p>
+								<!-- <span class="caret"></span> -->
+							</a>
+						</li>
+						<li class="nav-item">
 							<a href="<?= base_url('/admin/siswa')?>">
 								<i class="icon-people"></i>
 								<p>Siswa</p>
+								<!-- <span class="caret"></span> -->
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="<?= base_url('/admin/inputNilai')?>">
+								<i class="icon-note"></i>
+								<p>Input Nilai</p>
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>
