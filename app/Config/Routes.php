@@ -16,3 +16,6 @@ $routes->post('/admin/addKelas', 'Admin\KelasController::addKelas');
 $routes->get('/admin/deleteKelas/(:num)', 'Admin\KelasController::deleteKelas/$1');
 $routes->get('/admin/editKelas/(:num)', 'Admin\KelasController::editKelas/$1');
 
+// guru
+$routes->get('/admin/guru', 'Admin\GuruController::index');
+$routes->post('/admin/uploadGuru', 'Admin\GuruController::uploadGuru');
