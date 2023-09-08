@@ -37,7 +37,8 @@ class GuruController extends BaseController
                     continue;
                 }else{
                     $data = [
-                        'nama_guru' => $value[1]
+                        'nama_guru' => $value[1],
+                        'nuptk' => $value[2]
                     ];
                 }
                 $this->guruModel->save($data);
@@ -49,5 +50,24 @@ class GuruController extends BaseController
             session()->setFlashdata('warning', 'Ekstensi File Tidak di Izinkan');
             return redirect()->to('/admin/guru');
         }
+    }
+    public function deleteGuru($id){
+        $id = intval($id);
+        $this->guruModel->delete($id);
+
+        session()->setFlashdata('success', 'Sukses Hapus Data');
+
+        return redirect()->to('/admin/guru');
+    }
+    public function addGuru(){
+        $data = $this->request->getPost();
+        $this->guruModel->save($data);
+
+        session()->setFlashdata('success', 'Sukses Tambah Guru');
+        return redirect()->to('/admin/guru');
+    }
+
+    public function edit($id){
+        die('Edit will be here...');
     }
 }

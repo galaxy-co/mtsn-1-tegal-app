@@ -14,7 +14,7 @@ class GuruModel extends Model
     protected $returnType           = 'array';
     protected $useSoftDelete        = false;
 
-    protected $allowedFields        = ['nama_guru'];
+    protected $allowedFields        = ['nama_guru', 'nuptk'];
     // protected $DBGroup          = 'default';
     // protected $table            = 'gurus';
     // protected $primaryKey       = 'id';

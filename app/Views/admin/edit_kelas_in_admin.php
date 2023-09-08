@@ -32,7 +32,7 @@
                         <div class="card-header">
                             <div class="card-title">Edit Kelas</div>
                         </div>
-                        <form action="<?= base_url('admin/addKelas') ?>" method="POST">
+                        <form action="<?= base_url('admin/kelas/add') ?>" method="POST">
                             <div class="card-body">
                                 <input type="hidden" name="id_kelas" value="<?= $kelas['id_kelas']?>">
                                 <div class="row">

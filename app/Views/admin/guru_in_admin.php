@@ -56,13 +56,17 @@
                                 });
                             </script>
                         <?php endif ?>
-                        <form action="<?= base_url('admin/addGuru') ?>" method="POST">
+                        <form action="<?= base_url('admin/guru/add') ?>" method="POST">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6 col-lg-4">
                                         <div class="form-group">
                                             <label for="largeInput">Nama Guru</label>
-                                            <input type="text" class="form-control form-control" id="nama_kelas" name="nama_kelas" placeholder="Nama Guru...">
+                                            <input type="text" class="form-control form-control" id="nama_guru" name="nama_guru" placeholder="Nama Guru..." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="largeInput">NUPTK</label>
+                                            <input type="text" class="form-control form-control" id="nuptk" name="nuptk" placeholder="NUPTK..." required>
                                         </div>
                                     </div>
                             <div class="card-action">
@@ -107,6 +111,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Guru</th>
+                                            <th>NUPTK</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -114,6 +119,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Guru</th>
+                                            <th>NUPTK</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
@@ -123,10 +129,11 @@
                                         <tr>
                                             <td><?= ++$i ?></td>
                                             <td><?= $k['nama_guru'] ?></td>
+                                            <td><?= $k['nuptk'] ?></td>
                                             
                                             <td>
-                                                <a href="<?= base_url('admin/editGuru/') . $k['id_guru']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Edit</a>  
-                                                <a href="<?= base_url('admin/deleteGuru/') . $k['id_guru']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a></td>
+                                                <a href="<?= base_url('admin/guru/edit/') . $k['id_guru']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Edit</a>  
+                                                <a href="<?= base_url('admin/guru/delete/') . $k['id_guru']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a></td>
                                         </tr>
                                         
                                         <?php endforeach?>
@@ -150,7 +157,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="<?= base_url('admin/uploadGuru')?>" method="POST" enctype="multipart/form-data">
+      <form action="<?= base_url('admin/guru/upload')?>" method="POST" enctype="multipart/form-data">
         <div class="modal-body">
             <div class="form-group">
                 <label for="exampleFormControlFile1">Pilih File Template Guru</label>

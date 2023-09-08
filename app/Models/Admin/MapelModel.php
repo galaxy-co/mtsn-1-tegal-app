@@ -4,19 +4,19 @@ namespace App\Models\Admin;
 
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class MapelModel extends Model
 {
-    protected $table        = 'subjects';
-    protected $primaryKey = 'subject_id';
+    protected $table        = 'mapel';
+    protected $primaryKey = 'id_mapel';
 
     protected $useAutoIncrement     = true;
 
     protected $returnType           = 'array';
     protected $useSoftDelete        = false;
 
-    protected $allowedFields        = ['subject_desc'];
+    protected $allowedFields        = ['nama_mapel', 'tingkal_kelas'];
     // protected $DBGroup          = 'default';
-    // protected $table            = 'gurus';
+    // protected $table            = 'mapels';
     // protected $primaryKey       = 'id';
     // protected $useAutoIncrement = true;
     // protected $returnType       = 'array';
