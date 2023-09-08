@@ -22,12 +22,22 @@ class KelasController extends BaseController
         echo view('admin/template_admin/footer');
     }
     public function addKelas(){
+        
         $data = $this->request->getPost();
+
+        $existingData = $this->kelasModel->where('tingkat', $data['tingkat'])
+                                                ->where('nama_kelas', $data['nama_kelas'])
+                                                ->first();
+        if($existingData){
+            session()->setFlashdata('warning', 'Data Kelas Sudah ada!');
+            return redirect()->to('/admin/kelas');
+        }
         $this->kelasModel->save($data);
 
         session()->setFlashdata('success', 'Sukses Input Kelas');
         return redirect()->to('/admin/kelas');
     }
+
     public function deleteKelas($id_kelas){
         // var_dump($id);
         // die;
@@ -37,5 +47,12 @@ class KelasController extends BaseController
         session()->setFlashdata('success', 'Sukses Hapus Data');
 
         return redirect()->to('/admin/kelas');
+    }
+    public function editKelas($id){
+        $data['kelas'] = $this->kelasModel->find($id);
+        echo view('admin/template_admin/header');
+        echo view('admin/template_admin/sidebar');
+        echo view('admin/edit_kelas_in_admin', $data);
+        echo view('admin/template_admin/footer');
     }
 }

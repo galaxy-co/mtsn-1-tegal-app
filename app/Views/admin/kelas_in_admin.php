@@ -45,9 +45,19 @@
                                 });
                             </script>
                         <?php endif ?>
+                        <?php if (session()->getFlashdata('warning')) : ?>
+                            <button type="button" id="alertWarning" style="display: none;"></button>
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    var button = document.getElementById('alertWarning');
+                                    if (button) {
+                                        button.click();
+                                    }
+                                });
+                            </script>
+                        <?php endif ?>
                         <form action="<?= base_url('admin/addKelas') ?>" method="POST">
                             <div class="card-body">
-
                                 <div class="row">
                                     <div class="col-md-6 col-lg-4">
                                         <div class="form-group">
@@ -129,8 +139,11 @@
                                             ?>
                                             <td><?=$kurikulum?></td>
                                             
-                                            <td><button class="btn btn-primary btn-sm"><i class="icon-note"></i> Edit</button>  <a href="<?= base_url('admin/deleteKelas/') . $k['id_kelas']?>" class="btn btn-danger btn-sm" id="alertHapus" style="text-decoration:none"><i class="icon-trash"></i> Hapus</a></td>
+                                            <td>
+                                                <a href="<?= base_url('admin/editKelas/') . $k['id_kelas']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Edit</a>  
+                                                <a href="<?= base_url('admin/deleteKelas/') . $k['id_kelas']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a></td>
                                         </tr>
+                                        
                                         <?php endforeach?>
                                     </tbody>
                                 </table>
@@ -142,3 +155,5 @@
         </div>
     </div>
 </div>
+
+

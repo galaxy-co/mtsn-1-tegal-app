@@ -201,7 +201,7 @@
 	<!-- sweetAlert -->
 	<script>
 		$('#alertSuccess').click(function(e) {
-				swal("Success", "Success", {
+				swal("Success", "<?= session()->getFlashdata('success') ?>", {
 					icon : "success",
 					buttons: {        			
 						confirm: {
@@ -211,9 +211,7 @@
 				});
 			});
 		//== Class Initialization
-	jQuery(document).ready(function() {
-		SweetAlert2Demo.init();
-	});
+
 
 	$('#alertHapus').click(function(e) {
 				swal({
@@ -243,7 +241,30 @@
 					}
 				});
 			})
+	
+			$('#alertWarning').click(function(e) {
+				swal("Peringatan!", "<?= session()->getFlashdata('warning') ?>", {
+					icon : "warning",
+					buttons: {        			
+						confirm: {
+							className : 'btn btn-warning'
+						}
+					},
+				});
+			});
+
+
+			jQuery(document).ready(function() {
+				SweetAlert2Demo.init();
+			});
+	</script>
+	
+	<script>
+	function konfirmasiHapus() {
+		var konfirmasi = confirm("Apakah Anda yakin ingin menghapus ini?");
 		
+		return konfirmasi;
+	}
 	</script>
 </body>
 </html>
