@@ -4,32 +4,32 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Guru extends Migration
+class Mapel extends Migration
 {
     public function up()
     {
         $this->forge->addField([
-            'id_guru' => [
+            'id_mapel' => [
                 'type'           => 'INT',
                 'constraint'     => 5,
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'nuptk' => [
-                'type'          => 'INTEGER',
-                'constraint'    => '10'
-            ],
-            'nama_guru' => [
+            'nama_mapel' => [
                 'type'          => 'VARCHAR',
                 'constraint'    => '10'
             ],
+            'tingkal_kelas' => [
+                'type'          => 'INT',
+                'constraint'    => '10'
+            ],
         ]);
-        $this->forge->addKey('id_guru', true);
-        $this->forge->createTable('guru');
+        $this->forge->addKey('id_mapel', true);
+        $this->forge->createTable('mapel');
     }
 
     public function down()
     {
-        $this->forge->dropTable('guru');
+        $this->forge->dropTable('mapel');
     }
 }

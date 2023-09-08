@@ -7,7 +7,7 @@
             
             <div class="page-header">
             
-                <h4 class="page-title">Guru</h4>
+                <h4 class="page-title">Mapel</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#">
@@ -18,7 +18,7 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Guru</a>
+                        <a href="#">Mapel</a>
                     </li>
                     <li class="separator">
                         <i class="flaticon-right-arrow"></i>
@@ -32,7 +32,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">Input Kelas</div>
+                            <div class="card-title">Input Mapel</div>
                         </div>
                         <?php if(session()->getFlashdata('success')) : ?>
                             <button type="button" class="btn btn-success" id="alertSuccess" style="display: none;"> Success</button>
@@ -56,17 +56,21 @@
                                 });
                             </script>
                         <?php endif ?>
-                        <form action="<?= base_url('admin/addGuru') ?>" method="POST">
+                        <form action="<?= base_url('admin/addMapel') ?>" method="POST">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6 col-lg-4">
                                         <div class="form-group">
-                                            <label for="largeInput">Nama Guru</label>
+                                            <label for="largeInput">Nama Mapel</label>
                                             <input type="text" class="form-control form-control" id="nama_guru" name="nama_guru" placeholder="Nama Guru..." required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="largeInput">NUPTK</label>
-                                            <input type="text" class="form-control form-control" id="nuptk" name="nuptk" placeholder="NUPTK..." required>
+                                            <label for="largeInput">Tingkat Kelas</label>
+                                            <select name="tingkal_kelas" id="tingkal_kelas">
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                            </select>
                                         </div>
                                     </div>
                             <div class="card-action">
@@ -87,18 +91,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class="d-flex align-items-center">
-                                <h4 class="card-title">Data Guru</h4>
-                                <div class="ml-auto">
-                                    <a href="<?= base_url('/template/template_guru.xlsx')?>" class="btn btn-primary btn-round">
-                                        <i class="flaticon-download"></i>
-                                        Download Template Guru
-                                    </a>
-                                    <button class="btn btn-success btn-round" data-toggle="modal" data-target="#exampleModal">
-                                        <i class="flaticon-upward"></i>
-                                        Upload Template Guru
-                                    </button>
-                                </div>
+                                <h4 class="card-title">Data Mappel</h4>
                                 
                             </div>
 
@@ -110,30 +103,30 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Guru</th>
-                                            <th>NUPTK</th>
+                                            <th>Nama Mapel</th>
+                                            <th>Tingkat</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Nama Guru</th>
-                                            <th>NUPTK</th>
+                                            <<th>No</th>
+                                            <th>Nama Mapel</th>
+                                            <th>Tingkat</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <?php $i = 0;?>
-                                        <?php foreach($guru as $k) :?>
+                                        <?php foreach($mapel as $k) :?>
                                         <tr>
                                             <td><?= ++$i ?></td>
-                                            <td><?= $k['nama_guru'] ?></td>
-                                            <td><?= $k['nuptk'] ?></td>
+                                            <td><?= $k['nama_mapel'] ?></td>
+                                            <td><?= $k['tingkat_kelas'] ?></td>
                                             
                                             <td>
-                                                <a href="<?= base_url('admin/editGuru/') . $k['id_guru']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Edit</a>  
-                                                <a href="<?= base_url('admin/deleteGuru/') . $k['id_guru']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a></td>
+                                                <a href="<?= base_url('admin/editMapel/') . $k['id_mapel']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Edit</a>  
+                                                <a href="<?= base_url('admin/deleteMapel/') . $k['id_mapel']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a></td>
                                         </tr>
                                         
                                         <?php endforeach?>
