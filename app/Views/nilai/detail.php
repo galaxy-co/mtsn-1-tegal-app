@@ -90,11 +90,22 @@
                     <div class="card-header">
                         <div class="card-title">Nilai</div>
                         <div class="card-body">
-                            <table class='table table-responsive'>
+                            <table class='table table-responsive table-bordered'>
                                 <thead>
-                                    <th>
-                                        Nama Siswa
-                                    </th>
+                                    <tr>
+                                        <th rowspan='2'>Nama Siswa</th>
+                                        <?php for($i=0; $i < 5 ; $i++) : ?> 
+                                            
+                                            <th colspan='3' class='text-center'>KD</th>
+                                        <?php endfor; ?>
+                                    </tr>
+                                    <tr>
+                                        <?php for($i=0; $i < 5 ; $i++) : ?> 
+                                            <th nowrap>Tes Tertulis</th>
+                                            <th>Tugas</th>
+                                            <th>Remidi</th>
+                                        <?php endfor; ?>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     <?php foreach($siswa as $sis) : ?>

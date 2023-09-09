@@ -114,7 +114,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Data Guru</h4>                
+                                <h4 class="card-title">Data Nilai</h4>                
                             </div>
 
                         </div>
@@ -127,19 +127,32 @@
                                             <th>No</th>
                                             <th>Kelas</th>
                                             <th>Mata Pelajaran</th>
+                                            <th>Guru</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                        <?php foreach($nilai as $n) : ?>
+                                            <tr>
+                                                <td><?= $n['id_nilai'];?></td>
+                                                <td><?= $n['id_kelas'];?></td>
+                                                <td><?= $n['id_mapel'];?></td>
+                                                <td><?= $n['id_guru'];?></td>
+                                                <td>
+                                                <a href="<?= base_url('admin/nilai/detail/') . $n['id_nilai']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Edit</a>  
+                                                <a href="<?= base_url('admin/nilai/delete/') . $n['id_nilai']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
+                                            </td>
+                                            </tr>
+                                        <?php endforeach ?>
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Kelas</th>
-                                            <th>Mata Pelajaran</th>
-                                            <th>Action</th>
-                                        </tr>
+                                        <th>No</th>
+                                        <th>Kelas</th>
+                                        <th>Mata Pelajaran</th>
+                                        <th>Guru</th>
+                                        <th>Action</th>
+                                    </tr>
                                     </tfoot>
                                     <tbody>
                                     

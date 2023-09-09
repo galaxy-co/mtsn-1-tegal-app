@@ -134,7 +134,8 @@
                                             
                                             <td>
                                                 <a href="<?= base_url('admin/guru/edit/') . $k['id_guru']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Edit</a>  
-                                                <a href="<?= base_url('admin/guru/delete/') . $k['id_guru']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a></td>
+                                                <a href="<?= base_url('admin/guru/delete/') . $k['id_guru']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
+                                            </td>
                                         </tr>
                                         
                                         <?php endforeach?>

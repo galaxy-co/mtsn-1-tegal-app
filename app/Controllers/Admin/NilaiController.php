@@ -52,7 +52,9 @@ class NilaiController extends BaseController
 
     public function detail($id){
         $data['nilai'] =$this->NilaiModel->find($id);
-        $data['siswa'] =$this->NilaiModel->find($id);
+        
+        $data['siswa'] =$this->SiswaModel->where('kelas',$data['nilai']['id_kelas'])->findAll();
+        $data['mapel'] =$this->MapelModel->where('tingkal_kelas',$data['nilai']['id_kelas'])->findAll();
         // dd($data);
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
@@ -60,7 +62,7 @@ class NilaiController extends BaseController
         echo view('admin/template_admin/footer');
     }
 
-    public function deleteKelas($id_kelas){
+    public function delete($id_kelas){
         // var_dump($id);
         // die;
         $id_kelas = intval($id_kelas);
@@ -70,7 +72,8 @@ class NilaiController extends BaseController
 
         return redirect()->to('/admin/kelas');
     }
-    public function editKelas($id){
+
+    public function edit($id){
         $data['kelas'] = $this->NilaiModel->find($id);
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
