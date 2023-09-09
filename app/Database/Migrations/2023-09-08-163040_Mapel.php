@@ -17,7 +17,7 @@ class Mapel extends Migration
             ],
             'nama_mapel' => [
                 'type'          => 'VARCHAR',
-                'constraint'    => '10'
+                'constraint'    => '100'
             ],
             'tingkal_kelas' => [
                 'type'          => 'INT',

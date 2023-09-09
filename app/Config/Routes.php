@@ -19,6 +19,7 @@ $routes->group('admin', static function ($routes) {
     // Siswa
     $routes->group('siswa',static function ($routes){
         $routes->get('/', 'Admin\SiswaController::index');
+        $routes->post('/add','Admin\SiswaController::addSiswa');
     });
 
     // Mapel

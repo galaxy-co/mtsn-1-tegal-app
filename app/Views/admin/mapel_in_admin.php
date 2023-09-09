@@ -3,10 +3,8 @@
 <div class="main-panel">
     <!-- Form -->
     <div class="content">
-        <div class="page-inner">
-            
+        <div class="page-inner">  
             <div class="page-header">
-            
                 <h4 class="page-title">Mapel</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
@@ -91,12 +89,8 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                                <h4 class="card-title">Data Mappel</h4>
-                                
-                            </div>
-
+                            <h4 class="card-title">Data Mappel</h4>   
                         </div>
-                       
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table id="multi-filter-select" class="display table table-striped table-hover" >
@@ -110,7 +104,7 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <<th>No</th>
+                                            <th>No</th>
                                             <th>Nama Mapel</th>
                                             <th>Tingkat</th>
                                             <th>Action</th>

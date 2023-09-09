@@ -21,7 +21,7 @@ class Guru extends Migration
             ],
             'nama_guru' => [
                 'type'          => 'VARCHAR',
-                'constraint'    => '10'
+                'constraint'    => '100'
             ],
         ]);
         $this->forge->addKey('id_guru', true);
