@@ -130,6 +130,7 @@
                                             <th>No</th>
                                             <th>NISM</th>
                                             <th>Nama Siswa</th>
+                                            <th>Jenis Kelamin</th>
 											<th>Kelas</th>
                                             <th>Action</th>
                                         </tr>
@@ -139,19 +140,19 @@
 											<th>No</th>
                                             <th>NISM</th>
                                             <th>Nama Siswa</th>
-											<th>Kelas</th>
+											<th>Jenis Kelamin</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <?php $i = 0;?>
-                                        <?php foreach($siswa as $k) :?>
+                                        <?php foreach($siswa_kelas as $k) :?>
                                         <tr>
                                             <td><?= ++$i ?></td>
                                             <td><?= $k['nism'] ?></td>
                                             <td><?= $k['nama_siswa'] ?></td>
-											<td><?= $k['jenis_kelas'] ?></td>
-											<td><?= $k['kelas'] ?></td>
+											<td><?= $k['jenis_kelamin'] ?></td>
+											<td><?= $k['tingkat'] ?> <?= $k['nama_kelas'] ?></td>
                                             <td>
                                                 <a href="<?= base_url('admin/siswa/edit/') . $k['id_siswa']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Edit</a>  
                                                 <a href="<?= base_url('admin/siswa/delete/') . $k['id_siswa']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a></td>
@@ -178,7 +179,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="<?= base_url('admin/guru/upload')?>" method="POST" enctype="multipart/form-data">
+      <form action="<?= base_url('admin/siswa/upload')?>" method="POST" enctype="multipart/form-data">
         <div class="modal-body">
             <div class="form-group">
                 <label for="exampleFormControlFile1">Pilih File Template Guru</label>
