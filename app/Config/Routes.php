@@ -8,7 +8,7 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/login','AuthController::login');
 $routes->post('/login','AuthController::loginPost');
 
-$routes->group('admin', static function ($routes) {
+$routes->group('admin', ['filter'=> 'authGuard'],static function ($routes) {
     $routes->get('/', 'Admin\AdminController::index');
     // user route
     $routes->group('user',static function ($routes){

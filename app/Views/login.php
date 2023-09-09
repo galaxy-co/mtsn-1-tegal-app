@@ -7,8 +7,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
   </head>
   <body>
-    <div class="d-flex justify-content-center align-items-center min-vh-100">
-        <form action="login" method="post" class="w-25">
+    <div class="d-flex flex-column justify-content-center align-items-center min-vh-100">
+      <form action="login" method="post" class="w-25">
+            <?php if(session()->getFlashdata('msg')):?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= session()->getFlashdata('msg') ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif;?>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Username</label>
                 <input type="text" class="form-control" name="username" id="exampleInputEmail1" aria-describedby="emailHelp">
