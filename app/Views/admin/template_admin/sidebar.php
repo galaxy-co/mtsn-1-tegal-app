@@ -79,31 +79,20 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a data-toggle="collapse" href="#sidebarLayouts">
-								<i class="icon-note"></i>
-								<p>Input Nilai</p>
-								<span class="caret"></span>
+							<a href="<?= base_url('/admin/nilai')?>">
+								<i class="icon-people"></i>
+								<p>Nilai</p>
+								<!-- <span class="caret"></span> -->
 							</a>
-							<div class="collapse" id="sidebarLayouts">
-								<ul class="nav nav-collapse">
-									<li>
-										<a href="sidebar-style-1.html">
-											<span class="sub-item">Nilai Kurtilas</span>
-										</a>
-									</li>
-									<li>
-										<a href="overlay-sidebar.html">
-											<span class="sub-item">Nilai KurMer</span>
-										</a>
-									</li>
-									<li>
-										<a href="compact-sidebar.html">
-											<span class="sub-item">Nilai P5</span>
-										</a>
-									</li>
-								</ul>
-							</div>
 						</li>
+						<li class="nav-item">
+							<a href="#">
+								<i class="icon-people"></i>
+								<p>Nilai P5</p>
+								<!-- <span class="caret"></span> -->
+							</a>
+						</li>
+						
 						<!-- <li class="nav-item">
 							<a href="<?= base_url('/admin/inputNilai')?>">
 								<i class="icon-note"></i>

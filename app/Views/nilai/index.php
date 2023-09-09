@@ -4,10 +4,8 @@
     <!-- Form -->
     <div class="content">
         <div class="page-inner">
-            
-            <div class="page-header">
-            
-                <h4 class="page-title">Guru</h4>
+            <div class="page-header">     
+                <h4 class="page-title">Nilai</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#">
@@ -18,7 +16,7 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Guru</a>
+                        <a href="#">Nilai</a>
                     </li>
                     <li class="separator">
                         <i class="flaticon-right-arrow"></i>
@@ -56,19 +54,46 @@
                                 });
                             </script>
                         <?php endif ?>
-                        <form action="<?= base_url('admin/guru/add') ?>" method="POST">
+                        <form action="<?= base_url('admin/nilai/add') ?>" method="POST">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6 col-lg-4">
+                                    <div class="col-md-4 col-lg-4">
                                         <div class="form-group">
-                                            <label for="largeInput">Nama Guru</label>
-                                            <input type="text" class="form-control form-control" id="nama_guru" name="nama_guru" placeholder="Nama Guru..." required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="largeInput">NUPTK</label>
-                                            <input type="text" class="form-control form-control" id="nuptk" name="nuptk" placeholder="NUPTK..." required>
+                                            <label for="defaultSelect">Kelas</label>
+                                            <select class="form-control form-control" id="id_kelas" name="id_kelas">
+                                               <?php foreach($kelas as $ke) : ?>
+                                                    <option value="<?= $ke['id_kelas']; ?>">
+                                                        <?= $ke['tingkat'] .''. $ke['nama_kelas'] ?>
+                                                    </option>
+                                               <?php endforeach ?>
+                                            </select>
                                         </div>
                                     </div>
+                                    <div class="col-md-4 col-lg-4">
+                                        <div class="form-group">
+                                            <label for="defaultSelect">Mapel</label>
+                                            <select class="form-control form-control" id="id_mapel" name="id_mapel">
+                                               <?php foreach($mapel as $ke) : ?>
+                                                    <option value="<?= $ke['id_mapel']; ?>">
+                                                        <?= $ke['nama_mapel'] ?>
+                                                    </option>
+                                               <?php endforeach ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4">
+                                        <div class="form-group">
+                                            <label for="defaultSelect">Guru</label>
+                                            <select class="form-control form-control" id="id_guru" name="id_guru">
+                                               <?php foreach($guru as $ke) : ?>
+                                                    <option value="<?= $ke['id_guru']; ?>">
+                                                        <?= $ke['nama_guru'] ?>
+                                                    </option>
+                                               <?php endforeach ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                             <div class="card-action">
                                 <button class="btn btn-success" type="submit">TAMBAH</button>		
@@ -89,18 +114,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Data Guru</h4>
-                                <div class="ml-auto">
-                                    <a href="<?= base_url('/template/template_guru.xlsx')?>" class="btn btn-primary btn-round">
-                                        <i class="flaticon-download"></i>
-                                        Download Template Guru
-                                    </a>
-                                    <button class="btn btn-success btn-round" data-toggle="modal" data-target="#exampleModal">
-                                        <i class="flaticon-upward"></i>
-                                        Upload Template Guru
-                                    </button>
-                                </div>
-                                
+                                <h4 class="card-title">Data Guru</h4>                
                             </div>
 
                         </div>
@@ -111,33 +125,24 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Guru</th>
-                                            <th>NUPTK</th>
+                                            <th>Kelas</th>
+                                            <th>Mata Pelajaran</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
+                                    <tbody>
+
+                                    </tbody>
                                     <tfoot>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Guru</th>
-                                            <th>NUPTK</th>
+                                            <th>Kelas</th>
+                                            <th>Mata Pelajaran</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <?php $i = 0;?>
-                                        <?php foreach($guru as $k) :?>
-                                        <tr>
-                                            <td><?= ++$i ?></td>
-                                            <td><?= $k['nama_guru'] ?></td>
-                                            <td><?= $k['nuptk'] ?></td>
-                                            
-                                            <td>
-                                                <a href="<?= base_url('admin/guru/edit/') . $k['id_guru']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Edit</a>  
-                                                <a href="<?= base_url('admin/guru/delete/') . $k['id_guru']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a></td>
-                                        </tr>
-                                        
-                                        <?php endforeach?>
+                                    
                                     </tbody>
                                 </table>
                             </div>
@@ -173,5 +178,3 @@
     </div>
   </div>
 </div>
-
-
