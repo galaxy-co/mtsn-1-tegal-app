@@ -101,6 +101,14 @@
 							</a>
 						</li> -->
 					</ul>
+					<ul class="nav nav-warning">
+						<li class="nav-item">
+							<a href="<?= base_url('index.php/logout')?>">
+								<i class="fas fa-sign-out-alt"  style="color: #DC143C;" ></i>
+								<p style="color: #DC143C; font-family: Times;">Logout</p>
+							</a>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>

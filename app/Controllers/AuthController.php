@@ -5,15 +5,16 @@ use App\Models\Admin\UserModel;
 
 class AuthController extends BaseController
 {
-    // public function index(): string
-    // {
-    //     return view('admin/index');
-    // }
+   
 
     protected $userModel;
     public function __construct()
     {
         $this->userModel = new UserModel();
+    }
+    public function index(): string
+    {
+        return view('login');
     }
 
     public function login(){
