@@ -73,14 +73,14 @@
 									<div class="col-md-6 col-lg-4">
 										<div class="form-group">
 											<label for="defaultSelect">Jenis Kelamin</label>
-											<select class="form-control form-control" id="jenis_kelamin" name="jenis_kelamin">
+											<select class="form-control form-control" id="jenis_kelas" name="jenis_kelas">
 												<option value="1">Laki - laki</option>
 												<option value="2">Perempuan</option>
 											</select>
 										</div>
 										<div class="form-group">
 											<label for="defaultSelect">Kelas</label>
-											<select class="form-control form-control" id="jenis_kelamin" name="jenis_kelamin">
+											<select class="form-control form-control" id="kelas" name="kelas">
 												<?php foreach ($kelas as $k) : ?>
 													<option value="<?=$k['id_kelas']?>"><?=$k['tingkat']?> <?=$k['nama_kelas']?></option>
 												<?php endforeach ?>
@@ -150,7 +150,7 @@
                                             <td><?= ++$i ?></td>
                                             <td><?= $k['nism'] ?></td>
                                             <td><?= $k['nama_siswa'] ?></td>
-											<td><?= $k['jenis_kelamin'] ?></td>
+											<td><?= $k['jenis_kelas'] ?></td>
 											<td><?= $k['kelas'] ?></td>
                                             <td>
                                                 <a href="<?= base_url('admin/siswa/edit/') . $k['id_siswa']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Edit</a>  
