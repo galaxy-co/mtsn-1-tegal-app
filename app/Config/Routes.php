@@ -5,6 +5,8 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+$routes->get('/login','AuthController::login');
+$routes->post('/login','AuthController::loginPost');
 
 $routes->group('admin', static function ($routes) {
     $routes->get('/', 'Admin\AdminController::index');
