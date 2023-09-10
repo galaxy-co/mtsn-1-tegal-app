@@ -56,6 +56,7 @@ $routes->group('admin', ['filter'=> 'authGuard'],static function ($routes) {
     $routes->group('nilai',static function ($routes){
         $routes->get('/', 'Admin\NilaiController::index');
         $routes->post('add', 'Admin\NilaiController::add');
+        $routes->post('store', 'Admin\NilaiController::store');
         $routes->get('detail/(:num)', 'Admin\NilaiController::detail/$1');
         $routes->get('delete/(:num)', 'Admin\NilaiController::delete/$1');
         $routes->get('edit/(:num)', 'Admin\NilaiController::edit/$1');
