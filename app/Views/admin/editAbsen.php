@@ -56,6 +56,7 @@
                         <?php endif ?>
                         <form action="<?= base_url('admin/absen/update/' . $absen['id_absen']) ?>" method="POST">
                             <input type="hidden" value="<?=$absen['id_absen']?>" id="id_absen" name="id_absen">
+                            <input type="hidden" value="<?=$absen['id_siswa']?>" id="id_siswa" name="id_siswa">
 
                             <div class="card-body">
                                 <div class="row">

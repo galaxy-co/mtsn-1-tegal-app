@@ -54,7 +54,7 @@ class AbsenController extends BaseController
         $data = $this->request->getPost();;
 
         $this->absenModel->save($data);
-
+             
         session()->setFlashdata('success', 'Input Absen');
 
         return redirect()->to('/admin/absen');
@@ -67,10 +67,15 @@ class AbsenController extends BaseController
         echo view('admin/template_admin/footer');
     }
     public function update($id){
+        $siswa = $this->request->getPost('id_siswa');
+        $kelas = $this->siswaModel->where('id_siswa', $siswa)->first();
+        $idKelas = $kelas['kelas'];
+       
+        
         $data = $this->request->getPost();
         $this->absenModel->update($id, $data);
         session()->setFlashdata('success', 'Update Absen');
 
-        return redirect()->to('/admin/absen');
+        return redirect()->to('/admin/absen/dataSiswa/' . $idKelas);
     }
 }

@@ -4,6 +4,28 @@
         <div class="page-inner">  
             <div class="page-header">
                 <h4 class="page-title">Absensi</h4>
+                <?php if(session()->getFlashdata('success')) : ?>
+                            <button type="button" class="btn btn-success" id="alertSuccess" style="display: none;"> Success</button>
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    var button = document.getElementById('alertSuccess');
+                                    if (button) {
+                                        button.click();
+                                    }
+                                });
+                            </script>
+                        <?php endif ?>
+                        <?php if (session()->getFlashdata('warning')) : ?>
+                            <button type="button" id="alertWarning" style="display: none;"></button>
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    var button = document.getElementById('alertWarning');
+                                    if (button) {
+                                        button.click();
+                                    }
+                                });
+                            </script>
+                        <?php endif ?>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#">
