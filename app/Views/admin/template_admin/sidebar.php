@@ -92,6 +92,20 @@
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>
+						<li class="nav-item">
+							<a href="<?= base_url('/admin/absen')?>">
+								<i class="fas fa-tasks"></i>
+								<p>Absensi & Catatan</p>
+								<!-- <span class="caret"></span> -->
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#">
+								<i class="fas fa-sort-amount-up"></i>
+								<p>Kenaikan</p>
+								<!-- <span class="caret"></span> -->
+							</a>
+						</li>
 						
 						<!-- <li class="nav-item">
 							<a href="<?= base_url('/admin/inputNilai')?>">
