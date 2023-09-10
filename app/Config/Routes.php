@@ -24,6 +24,8 @@ $routes->group('admin', ['filter'=> 'authGuard'],static function ($routes) {
     $routes->group('siswa',static function ($routes){
         $routes->get('/', 'Admin\SiswaController::index');
         $routes->post('add','Admin\SiswaController::addSiswa');
+        $routes->get('delete/(:num)','Admin\SiswaController::delete/$1');
+        $routes->post('upload', 'Admin\SiswaController::upload');
     });
 
     // Mapel

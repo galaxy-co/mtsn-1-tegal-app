@@ -23,8 +23,8 @@ class Siswa extends Migration
                 'type'          => 'VARCHAR',
                 'constraint'    => 100
             ],
-            'jenis_kelas' => [
-                'type'          => 'INT',
+            'jenis_kelamin' => [
+                'type'          => 'VARCHAR',
                 'constraint'    => 5
             ],
             'kelas' => [
