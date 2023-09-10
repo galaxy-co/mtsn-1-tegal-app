@@ -100,9 +100,9 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#">
+							<a href="<?= base_url('/admin/kenaikan')?>">
 								<i class="fas fa-sort-amount-up"></i>
-								<p>Kenaikan</p>
+								<p>Kenaikan dan Kelulusan</p>
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>

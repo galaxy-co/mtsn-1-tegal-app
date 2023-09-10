@@ -51,13 +51,16 @@ class AbsenController extends BaseController
         echo view('admin/template_admin/footer');
     }
     public function add(){
+        $siswa = $this->request->getPost('id_siswa');
+        $kelas = $this->siswaModel->where('id_siswa', $siswa)->first();
+        $idKelas = $kelas['kelas'];
         $data = $this->request->getPost();;
 
         $this->absenModel->save($data);
              
         session()->setFlashdata('success', 'Input Absen');
 
-        return redirect()->to('/admin/absen');
+        return redirect()->to('/admin/absen/dataSiswa/' . $idKelas);
     }
     public function edit($id){
         $data['absen'] = $this->absenModel->find($id);
