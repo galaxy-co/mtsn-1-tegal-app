@@ -68,9 +68,10 @@ $routes->group('admin', ['filter'=> 'authGuard'],static function ($routes) {
     // absen
     $routes->group('absen',static function ($routes){
         $routes->get('/', 'Admin\AbsenController::index');
-        $routes->post('add', 'Admin\GuruController::addGuru');
+        $routes->post('add', 'Admin\AbsenController::add');
+        $routes->post('update/(:num)', 'Admin\AbsenController::update/$1');
         $routes->get('delete/(:num)', 'Admin\GuruController::deleteGuru/$1');
-        $routes->get('edit/(:num)', 'Admin\GuruController::edit/$1');
+        $routes->get('edit/(:num)', 'Admin\AbsenController::edit/$1');
         $routes->post('upload', 'Admin\GuruController::uploadGuru');
         $routes->get('dataSiswa/(:num)', 'Admin\AbsenController::dataSiswa/$1');
         $routes->get('addAbsen/(:num)', 'Admin\AbsenController::addAbsen/$1');

@@ -62,8 +62,24 @@
                                             <td><?= $k['nama_siswa'] ?></td>
                                             
                                             <td>
-                                                <a href="<?= base_url('admin/absen/addAbsen/') . $k['id_siswa']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Input Absensi</a>  
-                                        </tr>
+                                            
+                                                <?php $siswaId = $k['id_siswa'];
+                                                $isSiswaInAbsen = false;
+                                                foreach ($absensi as $absen) {
+                                                    if ($absen['id_siswa'] == $siswaId) {
+                                                        $isSiswaInAbsen = true;
+                                                        break;
+                                                    }
+                                                }
+                                                if ($isSiswaInAbsen) {
+                                                    echo '<a href="' . base_url('admin/absen/edit/') . $absen['id_absen'] . '" class="btn btn-success btn-sm" style="text-decoration:none"><i class="icon-pencil"></i> Edit Absensi</a>';
+                                                } else {
+                                                    echo '<a href=" ' . base_url('admin/absen/addAbsen/') . $k['id_siswa'] . '" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Input Absensi</a>  ';
+                                                }
+                                                ?>
+                                                
+                                                
+                                            </tr>
                                         
                                         <?php endforeach?>
                                     </tbody>
