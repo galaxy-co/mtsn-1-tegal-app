@@ -51,57 +51,76 @@
             </div>
         </div>
     <!-- Tabel -->
-    <form action="">
+    <form action="<?= base_url('admin/kenaikan/add')?>" method="POST">
     <div class="page-inner">
-            <div class="row">
-
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Data Siswa</h4>   
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table id="basic-datatables" class="display table table-striped table-hover" >
-                                    <thead>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Data Siswa</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="basic-datatables" class="display table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Cheklist</th>
+                                        <th>NISM</th>
+                                        <th>Nama</th>
+                                        <th>Jenis Kelamin</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Cheklist</th>
+                                        <th>NISM</th>
+                                        <th>Nama</th>
+                                        <th>Jenis Kelamin</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <?php $i = 0; ?>
+                                    <?php foreach($siswa as $k) : ?>
                                         <tr>
-                                            <th>Cheklist</th>
-                                            <th>NISM</th>
-                                            <th>Nama</th>
-                                            <th>Jenis Kelamin</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Cheklist</th>
-                                            <th>NISM</th>
-                                            <th>Nama</th>
-                                            <th>Jenis Kelamin</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <?php $i = 0;?>
-                                        <?php foreach($siswa as $k) :?>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
+                                            <td><input type="checkbox" name="siswa[]" value="<?= $k['id_siswa'] ?>"></td>
                                             <td><?= $k['nism'] ?></td>
-                                            
                                             <td><?= $k['nama_siswa'] ?></td>
                                             <td><?= $k['jenis_kelamin'] ?></td>
-                                                
-                                                
                                         </tr>
-                                        
-                                        <?php endforeach?>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    <?php endforeach ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
-       
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Naikan Kelas</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="defaultSelect">Naik Ke Kelas</label>
+                                <select class="form-control form-control" id="kelas" name="kelas">
+                                <?php foreach($tingkatan as $t) : ?>
+                                    <option value="<?= $t['id_kelas'] ?>"><?= $t['tingkat'] ?><?= $t['nama_kelas'] ?></option>
+                                <?php endforeach ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <button class="btn btn-success" type="submit">Naikan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
     </div>
 </div>
