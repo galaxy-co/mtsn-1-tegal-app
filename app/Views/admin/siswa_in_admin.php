@@ -73,9 +73,9 @@
 									<div class="col-md-6 col-lg-4">
 										<div class="form-group">
 											<label for="defaultSelect">Jenis Kelamin</label>
-											<select class="form-control form-control" id="jenis_kelas" name="jenis_kelas">
-												<option value="1">Laki - laki</option>
-												<option value="2">Perempuan</option>
+											<select class="form-control form-control" id="jenis_kelamin" name="jenis_kelamin">
+												<option value="L">Laki - laki</option>
+												<option value="P">Perempuan</option>
 											</select>
 										</div>
 										<div class="form-group">
