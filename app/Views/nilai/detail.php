@@ -118,35 +118,50 @@
                             <thead>
                                 <tr>
                                     <th rowspan='2' nowrap>Nama Siswa</th>
-                                    <?php for($i=1; $i < 8 ; $i++) : ?> 
+                                    <?php foreach($header as $head) : ?>
                                         
-                                        <th colspan='3' class='text-center'>
-                                            <input type="text" class='form-control text-center' id="input-kd-<?= $i ?>" value='KD <?= $i ?>'>
-                                        </th>
-                                    <?php endfor; ?>
+                                            <th colspan='3' class='text-center'>
+                                                <input 
+                                                    type="text" 
+                                                    class='form-control text-center kd-name-input' 
+                                                    data-nilaidetailids="<?php echo implode(",",$head['nilai_detail_ids']) ?>" 
+                                                    id="input-kd-<?= $head['kd_name'] ?>" 
+                                                    value='<?= $head['kd_name'] ?>'>
+                                            </th>
+                                       
+                                    <?php endforeach; ?>
                                 </tr>
                                 <tr>
-                                    <?php for($i=1; $i < 8 ; $i++) : ?> 
+                                    <?php foreach($header as $head) : ?>
                                         <?php foreach($rf_nilai_detail as $rf) :?>
                                             <th nowrap class='text-center'><?= $rf['rf_nilai_detail_desc']?></th>
                                         <?php endforeach ?>
-                                    <?php endfor; ?>
+                                    <?php endforeach; ?>
                                 </tr>
                             </thead>
                             <tbody class='tbody-nilai'>
-                                <?php foreach($siswa as $sis) : ?>
+                                <?php foreach($nilai_get as $sis) : ?>
                                     <tr>
                                         <td>
                                             <?php echo $sis['nama_siswa']; ?>
                                         </td>
-                                        <?php for($i=1; $i < 8 ; $i++) : ?>
-                                            <?php foreach($rf_nilai_detail as $rf) :?>
-                                                <td class='p-0' class='data-nilai'>
-                                                    <input type="text" class='form-control td-input td-input-<?= $sis['id_siswa'] ?>' data-idsiswa="<?= $sis['id_siswa']?>" data-inputkd="input-kd-<?= $i ?>" data-rfnilaidetailid='<?= $rf['rf_nilai_detail_id']?>'>
-                                                </td>
+                                        
+                                            <?php foreach($nilai_detail as $nilai_d) : ?>
+                                                <?php if($sis['id_nilai'] == $nilai_d['id_nilai']) : ?>
+                                                    <td class='p-0' class='data-nilai'>
+                                                        <input type="text" 
+                                                            class='form-control td-input td-input-<?= $sis['id_siswa'] ?>' 
+                                                            data-idsiswa="<?= $sis['id_siswa']?>"
+                                                            data-nilaidetailid = "<?= $nilai_d['nilai_detail_id'] ?>" 
+                                                            data-inputkd="input-kd-<?= $nilai_d['kd_name'] ?>" 
+                                                            data-rfnilaidetailid='<?= $nilai_d['rf_nilai_detail_id']?>'
+                                                            value="<?= $nilai_d['nilai'] ?>"
+                                                            >
+                                                    </td>
+                                                <?php endif ?>
                                             <?php endforeach ?>
                                             
-                                        <?php endfor ?>
+                                        
                                     </tr>
                                 <?php endforeach ?>
                             </tbody>
@@ -162,8 +177,8 @@
 </div>
 <script src="<?= base_url('assets/')?>assets/js/core/jquery.3.2.1.min.js"></script>
 <script>
-    async function postData(data){
-        let postAPI = await fetch("http://localhost:8080/admin/nilai/store", {
+    async function postData(url,data){
+        let postAPI = await fetch(url, {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -175,33 +190,24 @@
         return response;
     }
 
+    $('.kd-name-input').on('change',async function(e){
+        let data={
+            nilai_detail_ids : e.target.dataset.nilaidetailids,
+            kd_name : e.target.value,
+        }
+        console.log('DATA',data);
+        let changeKDName =await postData("http://localhost:8080/admin/nilai/storekdname",data);
+        console.log("KD NAME CHANGED",changeKDName);
+    });
+
     $('.td-input').on('change',async function(e){
         // console.log(e)
         // return false;
-        let idsiswa = e.target.dataset.idsiswa;
-        let data = {
-            id_nilai : e.target.dataset.idnilai,
+        data ={
             nilai_detail_id : e.target.dataset.nilaidetailid,
-            id_siswa : idsiswa,
-            rf_nilai_detail_id : e.target.dataset.rfnilaidetailid,
-            kd_name : $('#'+e.target.dataset.inputkd).val(),
-            id_mapel : $('#id_mapel').val(),
-            id_guru  : $('#id_guru').val(),
-            id_kelas  : $('#id_kelas').val(),
-            nilai : e.target.value || '',
+            nilai : e.target.value
         }
-
-        console.log('DATA POST',data);
-        
-        let postNilai =await postData(data);
-        if(postNilai.status == 'OKE'){
-            e.target.dataset.nilaidetailid = postNilai.nilai_detail_id
-            e.target.dataset.idnilai = postNilai.id_nilai
-
-            $(`.td-input-${idsiswa}`).data('idnilai',postNilai.id_nilai)
-
-            $('#'+e.target.dataset.inputkd).data('nilaidetailid',postNilai.nilai_detail_id)
-            $('#'+e.target.dataset.idnilai).data('nilaidetailid',postNilai.id_nilai)
-        }
+        let updateNilai = await  postData("http://localhost:8080/admin/nilai/storenilai",data);
+        console.log('UPDATE NILAI',updateNilai);
     })
 </script>

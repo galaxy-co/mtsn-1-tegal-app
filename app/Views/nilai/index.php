@@ -54,7 +54,7 @@
                                 });
                             </script>
                         <?php endif ?>
-                        <form action="<?= base_url('admin/nilai/add') ?>" method="POST">
+                        <form action="<?= base_url('admin/nilai/detail') ?>" method="POST">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-4 col-lg-4">

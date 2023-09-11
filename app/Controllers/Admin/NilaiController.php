@@ -41,91 +41,136 @@ class NilaiController extends BaseController
         echo view('admin/template_admin/footer');
     }
 
-    public function add(){
+    private function saveNilai($id_nilai=null,$data){
         
+        $saveNilai = $this->NilaiModel->save($data);
+        return $id_nilai ? $id_nilai : $this->NilaiModel->getInsertID();
+    }
+
+    private function saveNilaiDetail($nilai_detail_id=null,$data){
+       
+        $this->NilaiDetailModel->save($data);
+        return $nilai_detail_id ? $nilai_detail_id : $this->NilaiDetailModel->getInsertID();
+    }
+
+    public function generateNilai($input,$data){
+        $inputAsObject = (object)$input;
+        $dataReturn =[];
+        foreach($data['siswa'] as $siswa){
+            $inputAsObject->id_siswa = $siswa['id_siswa'];
+            $nilai_id = $this->saveNilai(null,$inputAsObject);
+            for($i=1; $i < 9 ; $i++){
+                foreach($data['rf_nilai_detail'] as $rf){ 
+                    $dataSaveNilaiDetail =  [
+                        "rf_nilai_detail_id" =>$rf['rf_nilai_detail_id'],
+                        "nilai" =>0,
+                        "notes"=>"sample notes",
+                        "kd_name" => "KD ".$i,
+                        "id_nilai" => $nilai_id
+                    ];
+                    $nilai_detail_id = $this->saveNilaiDetail(null,$dataSaveNilaiDetail);   
+                }
+            }
+        }
+    }
+
+    public function detail(){
+        
+        $inputPost = $this->request->getPost();
         $data['nilai'] = $this->request->getPost();
+        // dd($inputPost);
+       
+        $data['siswa'] =$this->SiswaModel->where('kelas',$inputPost['id_kelas'])->findAll();
         $data['rf_nilai_detail'] = $this->RFNilaiDetailModel->orderBy('rf_nilai_detail_id')->findAll();
-        $data['siswa'] =$this->SiswaModel->where('kelas',$data['nilai']['id_kelas'])->findAll();
-        $data['mapel'] =$this->MapelModel->where('tingkal_kelas',$data['nilai']['id_kelas'])->findAll();
+        $cekData = $this->NilaiModel->where('id_mapel',$inputPost['id_mapel'])
+            ->where('id_kelas',$inputPost['id_kelas'])
+            ->where('id_guru',$inputPost['id_guru'])
+            ->findAll();
+        if(!$cekData){
+            $this->generateNilai($inputPost,$data);
+        }
+        
+        $data['mapel'] =$this->MapelModel->where('tingkal_kelas',$inputPost['id_kelas'])->findAll();
         $data['kelas'] = $this->KelasModel->findAll();
         $data['guru'] = $this->GuruModel->findAll();
         $data['mapel'] = $this->MapelModel->findAll();
 
+        $data['nilai_get'] = $this->NilaiModel
+            ->join('siswa','siswa.id_siswa = nilai.id_siswa','left')
+            ->where('id_kelas',$inputPost['id_kelas'])
+            ->where('id_mapel',$inputPost['id_mapel'])
+            ->findAll();
+
+       
+        $ids_nilai = [];
+        foreach($data['nilai_get'] as $nil){
+            array_push($ids_nilai,$nil['id_nilai']);
+        }
+
+        $data['header']= [];
+        if(count($ids_nilai) > 0){
+            $data['nilai_detail']=$this->NilaiDetailModel->whereIn('id_nilai',$ids_nilai)->findAll();
+            
+            foreach($data['nilai_detail'] as $nilai_detail){
+                $cek = 0;
+                $index = 0;
+                for ($i=0; $i < count($data['header']) ; $i++) { 
+                    $z=$data['header'][$i];
+                    if($nilai_detail['kd_name'] == $z['kd_name']){
+                        $cek ++;
+                        $index = $i;
+                        break;
+                    }
+                } 
+                
+                if(!$cek){
+                    array_push($data['header'],[
+                        "kd_name" => $nilai_detail['kd_name'],
+                        "nilai_detail_ids" => [$nilai_detail['nilai_detail_id']]
+                    ]);
+                }else{
+                    array_push($data['header'][$index]['nilai_detail_ids'],$nilai_detail['nilai_detail_id']);
+                }
+            }
+
+        } 
+
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
         echo view('nilai/detail', $data);
         echo view('admin/template_admin/footer');
-
-        // if($existingData){
-        //     session()->setFlashdata('warning', 'Data Kelas Sudah ada!');
-        //     return redirect()->to('/admin/kelas');
-        // }
-        // $saveNilai = $this->NilaiModel->save($data);
-
-        // $id = $this->NilaiModel->getInsertID();
-
-        // session()->setFlashdata('success', 'Sukses Input Kelas');
-        // return redirect()->to('/admin/nilai/detail/'.$id);
     }
 
-    private function saveNilai($data){
-        $dataNilai = [
-            "id_siswa" => $data->id_siswa,
-            "id_mapel" => $data->id_mapel,
-            "id_guru" => $data->id_guru,
-            "id_kelas" => $data->id_kelas,
-        ];
-        $saveNilai = $this->NilaiModel->save($dataNilai);
-        return $this->NilaiModel->getInsertID();
-    }
+    
 
-    public function store(){
+    public function store_kd_name(){
         $data = $this->request->getJSON();
-        $id_nilai=$this->request->getVar('id_nilai'); 
-        $nilai_detail_id =$this->request->getVar('nilai_detail_id');
-        if(!$nilai_detail_id){
-            $id_nilai = $this->saveNilai($data);
-        }
         
-        $dataNilaiDetail = [
-            "nilai_detail_id" => $nilai_detail_id,
-            "id_nilai" => $id_nilai,
-            "kd_name" =>$data->kd_name,
-            "rf_nilai_detail_id" => $data->rf_nilai_detail_id,
-            "nilai" =>$data->nilai,
-            "notes" =>$this->request->getVar('notes')
-        ];
+       
+        $nilai_detail = $this->NilaiDetailModel->set('kd_name',$data->kd_name)->whereIn("nilai_detail_id",explode(",",$data->nilai_detail_ids))->update();
 
-        $saveNilaiDetail = $this->NilaiDetailModel->save($dataNilaiDetail);
-        if(!$saveNilaiDetail){
-            return respond([
-                "status"=>"FAIL",
-                "message" => "Failed to Save Nilai!"
-            ]);
-        }
-        $nilai_detail_id = $nilai_detail_id ? $nilai_detail_id : $this->NilaiDetailModel->getInsertID();
+        $response = [
+            "status" => "OKE",
+            "message" => "Data KD Name Successfully stored!!",
+            "data" =>$nilai_detail
+        ];
+        return $this->respond($response,200);
+    }
+
+    public function store_nilai(){
+
+        $data = $this->request->getJSON();
+       
+        $this->NilaiDetailModel->save($data);
 
         $response = [
             "status" => "OKE",
             "message" => "Data Nilai Successfully stored!!",
-            "id_nilai" =>$id_nilai,
-            "nilai_detail_id" => $nilai_detail_id
         ];
         return $this->respond($response, 200);
     }
 
-    public function detail($id){
-        $data['nilai'] =$this->NilaiModel->find($id);
-        $data['nilai_detail_kd_name']=['KD 1','KD 2','KD3','KD 4','KD 5','KD 6','KD 7','KD 8'];
-        $data['rf_nilai_detail'] = $this->RFNilaiDetailModel->orderBy('rf_nilai_detail_id')->findAll();
-        $data['siswa'] =$this->SiswaModel->where('kelas',$data['nilai']['id_kelas'])->findAll();
-        $data['mapel'] =$this->MapelModel->where('tingkal_kelas',$data['nilai']['id_kelas'])->findAll();
-        // dd($data);
-        echo view('admin/template_admin/header');
-        echo view('admin/template_admin/sidebar');
-        echo view('nilai/detail', $data);
-        echo view('admin/template_admin/footer');
-    }
+   
 
     public function delete($id_kelas){
         // var_dump($id);
