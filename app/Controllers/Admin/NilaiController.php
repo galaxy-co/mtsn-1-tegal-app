@@ -62,12 +62,13 @@ class NilaiController extends BaseController
 
     public function generateNilai($input,$data){
         $inputAsObject = (object)$input;
-        $dataReturn =[];
+        $counter = $data['rf_nilai_detail'][0]['kurikulum_id'] == 1 ? 9 : 6;
+        
         foreach($data['siswa'] as $siswa){
             $inputAsObject->id_siswa = $siswa['id_siswa'];
             $nilai_id = $this->saveNilai(null,$inputAsObject);
-            for($i=1; $i < 9 ; $i++){
-                foreach($data['rf_nilai_detail'] as $rf){ 
+            for($i=1; $i < $counter ; $i++){
+                foreach($data['rf_nilai_detail'] as $rf){     
                     $dataSaveNilaiDetail =  [
                         "rf_nilai_detail_id" =>$rf['rf_nilai_detail_id'],
                         "nilai" =>0,
@@ -75,7 +76,7 @@ class NilaiController extends BaseController
                         "kd_name" => "KD ".$i,
                         "id_nilai" => $nilai_id
                     ];
-                    $nilai_detail_id = $this->saveNilaiDetail(null,$dataSaveNilaiDetail);   
+                    $nilai_detail_id = $this->saveNilaiDetail(null,$dataSaveNilaiDetail); 
                 }
             }
         }
@@ -88,7 +89,8 @@ class NilaiController extends BaseController
         // dd($inputPost);
        
         $data['siswa'] =$this->SiswaModel->where('kelas',$inputPost['id_kelas'])->findAll();
-        $data['rf_nilai_detail'] = $this->RFNilaiDetailModel->orderBy('rf_nilai_detail_id')->findAll();
+        $kurikulum = $this->KelasModel->select('kurikulum')->where('id_kelas',$inputPost['id_kelas'])->find();
+        $data['rf_nilai_detail'] = $this->RFNilaiDetailModel->where('kurikulum_id',$kurikulum[0]['kurikulum'])->orderBy('rf_nilai_detail_id')->findAll();
         $cekData = $this->NilaiModel->where('id_mapel',$inputPost['id_mapel'])
             ->where('id_kelas',$inputPost['id_kelas'])
             ->where('id_guru',$inputPost['id_guru'])
