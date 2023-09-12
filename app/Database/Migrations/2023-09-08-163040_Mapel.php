@@ -19,6 +19,10 @@ class Mapel extends Migration
                 'type'          => 'VARCHAR',
                 'constraint'    => '100'
             ],
+            'kkm' => [
+                'type'          => 'FLOAT',
+                'constraint'    => ''
+            ],
             'tingkal_kelas' => [
                 'type'          => 'INT',
                 'constraint'    => '10'

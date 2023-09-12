@@ -29,18 +29,28 @@ class NaikKelasController extends BaseController
     {
         
         $data['siswa'] = $this->siswaModel->where('kelas', $id_kelas)->findAll();
-        $id_siswa = array();
-        $kelas = $this->kelasModel->where('id_kelas', $id_kelas)->first();
-        $tingkat = $kelas['tingkat'] + 1;
-        $tingkatKelas = $this->kelasModel->where('tingkat', $tingkat)->findAll();
-        
-        $data['tingkatan'] = $tingkatKelas;
-
-        foreach ($data['siswa'] as $siswa) {
-            $id_siswa[] = $siswa['id_siswa'];
+        if(!empty($data['siswa'])){
+            $id_siswa = array();
+            $kelas = $this->kelasModel->where('id_kelas', $id_kelas)->first();
+            $tingkat = $kelas['tingkat'] + 1;
+            $tingkatKelas = $this->kelasModel->where('tingkat', $tingkat)->findAll();
+            
+            $data['tingkatan'] = $tingkatKelas;
+            if(!empty($data['siswa'])){
+                foreach ($data['siswa'] as $siswa) {
+                    $id_siswa[] = $siswa['id_siswa'];
+                }
+                $absensi = $this->absenModel->whereIn('id_siswa', $id_siswa)->findAll();
+                $data['absensi'] = $absensi;
+            }
+            
+        }else{
+           $data['tingkatan'] = '';
         }
-        $absensi = $this->absenModel->whereIn('id_siswa', $id_siswa)->findAll();
-        $data['absensi'] = $absensi;
+       
+        
+        
+       
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
         echo view('admin/kenaikanSiswa', $data);
