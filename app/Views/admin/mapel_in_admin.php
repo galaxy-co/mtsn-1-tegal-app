@@ -64,13 +64,14 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="largeInput">Tingkat Kelas</label>
-                                            <select name="tingkal_kelas" id="tingkal_kelas">
+                                            <select name="tingkal_kelas" class='form-control' id="tingkal_kelas">
                                                 <option value="7">7</option>
                                                 <option value="8">8</option>
                                                 <option value="9">9</option>
                                             </select>
                                         </div>
                                     </div>
+                            </div>
                             <div class="card-action">
                                 <button class="btn btn-success" type="submit">TAMBAH</button>		
                             </div>
