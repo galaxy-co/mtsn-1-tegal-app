@@ -106,9 +106,11 @@
                             <div class="form-group">
                                 <label for="defaultSelect">Naik Ke Kelas</label>
                                 <select class="form-control form-control" id="kelas" name="kelas">
+                                    <?php if(!empty($tingkatan)) : ?>
                                 <?php foreach($tingkatan as $t) : ?>
                                     <option value="<?= $t['id_kelas'] ?>"><?= $t['tingkat'] ?><?= $t['nama_kelas'] ?></option>
                                 <?php endforeach ?>
+                                <?php endif ?>
                                 </select>
                             </div>
                         </div>

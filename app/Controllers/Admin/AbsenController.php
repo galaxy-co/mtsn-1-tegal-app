@@ -30,13 +30,16 @@ class AbsenController extends BaseController
     {
         
         $data['siswa'] = $this->siswaModel->where('kelas', $id_kelas)->findAll();
-        $id_siswa = array();
+        if(!empty($data['siswa'])){
+            $id_siswa = array();
 
-        foreach ($data['siswa'] as $siswa) {
-            $id_siswa[] = $siswa['id_siswa'];
+            foreach ($data['siswa'] as $siswa) {
+                $id_siswa[] = $siswa['id_siswa'];
+            }
+            $absensi = $this->absenModel->whereIn('id_siswa', $id_siswa)->findAll();
+            $data['absensi'] = $absensi;
         }
-        $absensi = $this->absenModel->whereIn('id_siswa', $id_siswa)->findAll();
-        $data['absensi'] = $absensi;
+        
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
         echo view('admin/dataSiswa', $data);

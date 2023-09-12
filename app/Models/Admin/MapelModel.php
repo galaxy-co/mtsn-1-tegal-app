@@ -14,7 +14,7 @@ class MapelModel extends Model
     protected $returnType           = 'array';
     protected $useSoftDelete        = false;
 
-    protected $allowedFields        = ['nama_mapel', 'tingkal_kelas'];
+    protected $allowedFields        = ['nama_mapel', 'tingkal_kelas', 'kkm'];
     // protected $DBGroup          = 'default';
     // protected $table            = 'mapels';
     // protected $primaryKey       = 'id';

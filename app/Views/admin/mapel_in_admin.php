@@ -60,7 +60,7 @@
                                     <div class="col-md-6 col-lg-4">
                                         <div class="form-group">
                                             <label for="largeInput">Nama Mapel</label>
-                                            <input type="text" class="form-control form-control" id="nama_guru" name="nama_mapel" placeholder="Mata Pelajaran..." required>
+                                            <input type="text" class="form-control form-control" id="nam_mapel" name="nama_mapel" placeholder="Mata Pelajaran..." required>
                                         </div>
                                         <div class="form-group">
                                             <label for="largeInput">Tingkat Kelas</label>
@@ -69,6 +69,12 @@
                                                 <option value="8">8</option>
                                                 <option value="9">9</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-4">
+                                    <div class="form-group">
+                                            <label for="largeInput">KKM</label>
+                                            <input type="text" class="form-control form-control" id="kkm" name="kkm" placeholder="kkm" required>
                                         </div>
                                     </div>
                             <div class="card-action">
@@ -80,6 +86,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 <!-- Tabel -->
     <div class="content">
@@ -93,20 +100,22 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="multi-filter-select" class="display table table-striped table-hover" >
+                                <table id="basic-table" class="display table table-striped table-hover" >
                                     <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Mapel</th>
                                             <th>Tingkat</th>
+                                            <th>KKM</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>No</th>
+                                        <th>No</th>
                                             <th>Nama Mapel</th>
                                             <th>Tingkat</th>
+                                            <th>KKM</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
@@ -117,6 +126,7 @@
                                             <td><?= ++$i ?></td>
                                             <td><?= $k['nama_mapel'] ?></td>
                                             <td><?= $k['tingkal_kelas'] ?></td>
+                                            <td><?= $k['kkm'] ?></td>
                                             
                                             <td>
                                                 <a href="<?= base_url('admin/mapel/edit/') . $k['id_mapel']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Edit</a>  

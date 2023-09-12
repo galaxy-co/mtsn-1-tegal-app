@@ -3,16 +3,19 @@
 namespace App\Controllers\Admin;
 use App\Models\Admin\SiswaModel;
 use App\Models\Admin\KelasModel;
+use App\Models\Admin\UserModel;
 use App\Controllers\BaseController;
 
 class SiswaController extends BaseController
 {
     protected $siswaModel;
     protected $kelasModel;
+    protected $userModel;
     public function __construct()
     {
         $this->siswaModel = new SiswaModel();
         $this->kelasModel = new KelasModel();
+        $this->userModel = new UserModel();
         
     }
     public function index()
@@ -40,16 +43,28 @@ class SiswaController extends BaseController
     public function addSiswa()
     {
         $data = $this->request->getPost();
+        $dataToUser = [
+            'username' => $this->request->getPost('nism'),
+            'name' => $this->request->getPost('nama_siswa'),
+            'password' =>$this->request->getPost('nism'),
+            'role' => 2
+        ];
 
         $this->siswaModel->save($data);
-
+        $this->userModel->save($dataToUser);
         session()->setFlashdata('success', 'Siswa Di Tambahkan');
 
         return redirect()->to('/admin/siswa');
     }
     public function delete($id){
         $id = intval($id);
+        $siswa = $this->siswaModel->where('id_siswa', $id)->first();
+        $nism = $siswa['nism'];
+        $user = $this->userModel->where('username', $nism)->first();
+        $userId = $user['user_id'];
+       
         $this->siswaModel->delete($id);
+        $this->userModel->delete($userId);
 
         session()->setFlashdata('success', 'Sukses Hapus Data');
 
@@ -92,9 +107,16 @@ class SiswaController extends BaseController
                         'jenis_kelamin' => $value[3],
                         'kelas' => $value[4]
                     ];
+                    $dataToUsers = [
+                        'username' => $value[1],
+                        'name' => $value[2],
+                        'password' => $value[1],
+                        'role_id' => 2
+                    ];
                     
                 }
                 $this->siswaModel->save($data);
+                $this->userModel->save($dataToUsers);
             }
            
             session()->setFlashdata('success', 'Berhasil Upload Siswa');
