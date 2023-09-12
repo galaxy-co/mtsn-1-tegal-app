@@ -30,7 +30,12 @@ class NilaiController extends BaseController
 
     public function index()
     {
-        $data['nilai'] = $this->NilaiModel->findAll();
+        $data['nilai'] = $this->NilaiModel
+            ->join('kelas','kelas.id_kelas = nilai.id_kelas')
+            ->join('mapel','mapel.id_mapel = nilai.id_mapel')
+            ->join('guru','guru.id_guru = nilai.id_guru')
+            ->groupBy('nilai.id_kelas')
+            ->findAll();
         $data['kelas'] = $this->KelasModel->findAll();
         $data['guru'] = $this->GuruModel->findAll();
         $data['mapel'] = $this->MapelModel->findAll();

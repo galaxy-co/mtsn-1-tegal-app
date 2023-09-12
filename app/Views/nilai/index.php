@@ -135,13 +135,18 @@
                                         <?php foreach($nilai as $n) : ?>
                                             <tr>
                                                 <td><?= $n['id_nilai'];?></td>
-                                                <td><?= $n['id_kelas'];?></td>
-                                                <td><?= $n['id_mapel'];?></td>
-                                                <td><?= $n['id_guru'];?></td>
-                                                <td>
-                                                <a href="<?= base_url('admin/nilai/detail/') . $n['id_nilai']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Edit</a>  
-                                                <a href="<?= base_url('admin/nilai/delete/') . $n['id_nilai']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
-                                            </td>
+                                                <td><?= $n['nama_kelas'];?></td>
+                                                <td><?= $n['nama_mapel'];?></td>
+                                                <td><?= $n['nama_guru'];?></td>
+                                                <td >
+                                                    <form action="<?= base_url('admin/nilai/detail') ?>" method="post" class="col-6">
+                                                        <input type="hidden" name="id_kelas" value="<?= $n['id_kelas']?>">
+                                                        <input type="hidden" name="id_mapel" value="<?= $n['id_mapel']?>">
+                                                        <input type="hidden" name="id_guru" value="<?= $n['id_guru']?>">
+                                                        <button type="submit"  class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Detail</a>  
+                                                        <!-- <button type="button" class="btn btn-danger btn-sm col-6"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</button> -->
+                                                    </form>
+                                                </td>
                                             </tr>
                                         <?php endforeach ?>
                                     </tbody>
