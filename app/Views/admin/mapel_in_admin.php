@@ -71,6 +71,12 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group">
+                                            <label for="largeInput">KKM</label>
+                                            <input type="text" class="form-control form-control" id="nam_mapel" name="nama_mapel" placeholder="KKM..." required>
+                                        </div>
+                                    </div>
                             <div class="card-action">
                                 <button class="btn btn-success" type="submit">TAMBAH</button>		
                             </div>
