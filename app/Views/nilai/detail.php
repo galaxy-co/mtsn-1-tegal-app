@@ -28,7 +28,11 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">Input Kelas</div>
+                            <div class="row">
+                                <div class="card-title col-11">Nilai Kelas</div>
+                                <div class="btn btn-delete btn-danger">Hapus</div>
+
+                            </div>
                         </div>
                         <?php if(session()->getFlashdata('success')) : ?>
                             <button type="button" class="btn btn-success" id="alertSuccess" style="display: none;"> Success</button>
@@ -52,13 +56,17 @@
                                 });
                             </script>
                         <?php endif ?>
-                        <form action="<?= base_url('admin/nilai/add') ?>" method="POST">
+                        <form action="<?= base_url('admin/nilai/delete') ?>" method="POST" id="form-delete">
+                                
                             <div class="card-body">
                             <div class="row">
+                                    <input type="hidden" name="id_kelas" value="<?= $nilai['id_kelas']?>">
+                                    <input type="hidden" name="id_guru" value="<?= $nilai['id_guru']?>">
+                                    <input type="hidden" name="id_mapel" value="<?= $nilai['id_mapel']?>">
                                     <div class="col-md-4 col-lg-4">
                                         <div class="form-group">
                                             <label for="defaultSelect">Kelas</label>
-                                            <select disabled class="form-control form-control" id="id_kelas" name="id_kelas">
+                                            <select disabled class="form-control form-control" id="id_kelas">
                                                <?php foreach($kelas as $ke) : ?>
                                                     <?php if($nilai['id_kelas'] == $ke['id_kelas']) : ?>
                                                         <option value="<?= $ke['id_kelas']; ?>">
@@ -72,7 +80,7 @@
                                     <div class="col-md-4 col-lg-4">
                                         <div class="form-group">
                                             <label for="defaultSelect">Mapel</label>
-                                            <select disabled class="form-control form-control" id="id_mapel" name="id_mapel">
+                                            <select disabled class="form-control form-control" value="<?= $nilai['id_mapel']?>" id="id_mapel" >
                                                <?php foreach($mapel as $ke) : ?>
                                                     <?php if($nilai['id_mapel'] == $ke['id_mapel']) : ?>
                                                         <option value="<?= $ke['id_mapel']; ?>">
@@ -86,7 +94,7 @@
                                     <div class="col-md-4 col-lg-4">
                                         <div class="form-group">
                                             <label for="defaultSelect">Guru</label>
-                                            <select disabled value="<?php $nilai['id_guru']?>" class="form-control form-control" id="id_guru" name="id_guru">
+                                            <select disabled value="<?php $nilai['id_guru']?>" class="form-control form-control" id="id_guru" >
                                                <?php foreach($guru as $ke) : ?>
                                                     <?php if($nilai['id_guru'] == $ke['id_guru']) : ?>
                                                         <option value="<?= $ke['id_guru']; ?>" selected>
@@ -209,5 +217,14 @@
         }
         let updateNilai = await  postData("http://localhost:8080/admin/nilai/storenilai",data);
         console.log('UPDATE NILAI',updateNilai);
+    })
+
+    $('.btn-delete').click(async function(){
+        let confirm = window.confirm("Are you sure want to delete this data?");
+        if (confirm) {
+            $('#form-delete').trigger('submit')
+        }else{
+            return false;
+        }
     })
 </script>

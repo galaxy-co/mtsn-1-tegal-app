@@ -60,7 +60,7 @@ $routes->group('admin', ['filter'=> 'authGuard'],static function ($routes) {
         $routes->post('detail', 'Admin\NilaiController::detail');
         $routes->post('storenilai', 'Admin\NilaiController::store_nilai');
         $routes->post('storekdname', 'Admin\NilaiController::store_kd_name');
-        $routes->get('delete/(:num)', 'Admin\NilaiController::delete/$1');
+        $routes->post('delete', 'Admin\NilaiController::delete');
         $routes->get('edit/(:num)', 'Admin\NilaiController::edit/$1');
         $routes->post('upload', 'Admin\NilaiController::uploadGuru');
     });

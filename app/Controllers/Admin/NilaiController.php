@@ -177,11 +177,17 @@ class NilaiController extends BaseController
 
    
 
-    public function delete($id_kelas){
+    public function delete(){
         // var_dump($id);
         // die;
-        $id_kelas = intval($id_kelas);
-        $this->NilaiModel->delete($id_kelas);
+        $req = $this->request->getPost();
+        
+        // $this->NilaiModel->delete();
+        $this->NilaiModel
+            ->where('id_kelas',$req['id_kelas'])
+            ->where('id_mapel',$req['id_mapel'])
+            ->where('id_guru',$req['id_guru'])
+            ->delete();
 
         session()->setFlashdata('success', 'Sukses Hapus Data');
 
