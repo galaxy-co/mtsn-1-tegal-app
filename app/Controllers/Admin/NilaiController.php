@@ -35,7 +35,9 @@ class NilaiController extends BaseController
             ->join('mapel','mapel.id_mapel = nilai.id_mapel')
             ->join('guru','guru.id_guru = nilai.id_guru')
             ->groupBy('nilai.id_kelas')
+            ->groupBy('nilai.id_mapel')
             ->findAll();
+        
         $data['kelas'] = $this->KelasModel->findAll();
         $data['guru'] = $this->GuruModel->findAll();
         $data['mapel'] = $this->MapelModel->findAll();
@@ -81,8 +83,8 @@ class NilaiController extends BaseController
 
     public function detail(){
         
-        $inputPost = $this->request->getPost();
-        $data['nilai'] = $this->request->getPost();
+        $inputPost = $this->request->getVar();
+        $data['nilai'] = $this->request->getVar();
         // dd($inputPost);
        
         $data['siswa'] =$this->SiswaModel->where('kelas',$inputPost['id_kelas'])->findAll();

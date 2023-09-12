@@ -54,7 +54,7 @@
                                 });
                             </script>
                         <?php endif ?>
-                        <form action="<?= base_url('admin/nilai/detail') ?>" method="POST">
+                        <form action="<?= base_url('admin/nilai/detail') ?>" method="GET">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-4 col-lg-4">
@@ -135,11 +135,11 @@
                                         <?php foreach($nilai as $n) : ?>
                                             <tr>
                                                 <td><?= $n['id_nilai'];?></td>
-                                                <td><?= $n['nama_kelas'];?></td>
+                                                <td><?= $n['tingkat'].''.$n['nama_kelas'];?></td>
                                                 <td><?= $n['nama_mapel'];?></td>
                                                 <td><?= $n['nama_guru'];?></td>
                                                 <td >
-                                                    <form action="<?= base_url('admin/nilai/detail') ?>" method="post" class="col-6">
+                                                    <form action="<?= base_url('admin/nilai/detail') ?>" method="GET" class="col-6">
                                                         <input type="hidden" name="id_kelas" value="<?= $n['id_kelas']?>">
                                                         <input type="hidden" name="id_mapel" value="<?= $n['id_mapel']?>">
                                                         <input type="hidden" name="id_guru" value="<?= $n['id_guru']?>">
