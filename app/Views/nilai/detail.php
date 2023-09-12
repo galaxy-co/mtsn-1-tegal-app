@@ -128,7 +128,7 @@
                                     <th rowspan='2' nowrap>Nama Siswa</th>
                                     <?php foreach($header as $head) : ?>
                                         
-                                            <th colspan='3' class='text-center'>
+                                            <th colspan='<?php echo count($rf_nilai_detail) ?>' class='text-center'>
                                                 <input 
                                                     type="text" 
                                                     class='form-control text-center kd-name-input' 

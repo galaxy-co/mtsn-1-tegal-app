@@ -14,7 +14,7 @@ class RFNilaiDetailModel extends Model
     protected $returnType           = 'array';
     protected $useSoftDelete        = false;
 
-    protected $allowedFields        = ['rf_nilai_detail_desc'];
+    protected $allowedFields        = ['rf_nilai_detail_desc','kurikulum_id'];
     // protected $DBGroup          = 'default';
     // protected $table            = 'gurus';
     // protected $primaryKey       = 'id';
