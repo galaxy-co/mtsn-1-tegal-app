@@ -42,6 +42,13 @@ class SiswaController extends BaseController
     }
     public function addSiswa()
     {
+        $nism = $this->request->getPost('nism');
+        $existingSiswa = $this->siswaModel->where('nism', $nism)->first();
+        if($existingSiswa){
+            session()->setFlashdata('warning', 'NISM sudah terdaftar');
+
+            return redirect()->to('/admin/siswa');
+        }
         $data = $this->request->getPost();
         $dataToUser = [
             'username' => $this->request->getPost('nism'),
@@ -88,6 +95,12 @@ class SiswaController extends BaseController
                     continue;
                     
                 }else{
+                    $existingSiswa = $this->siswaModel->where('nism', $value[1])->first();
+                    if ($existingSiswa) {
+  
+                        session()->setFlashdata('warning', 'Ada data NISM yang sudah terdaftar');
+                        return redirect()->to('/admin/siswa');
+                    }
                     $kelasId = null;
                     $kelasValue = $value[4];
                     foreach ($kelas as $k) {
