@@ -117,7 +117,7 @@
                        
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="basic-table" class="display table table-striped table-hover" >
+                                <table id="basic-datatables" class="display table table-striped table-hover" >
                                     <thead>
                                         <tr>
                                             <th>No</th>

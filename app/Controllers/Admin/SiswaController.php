@@ -50,11 +50,12 @@ class SiswaController extends BaseController
             return redirect()->to('/admin/siswa');
         }
         $data = $this->request->getPost();
+        $password = $this->request->getPost('nism');
         $dataToUser = [
             'username' => $this->request->getPost('nism'),
             'name' => $this->request->getPost('nama_siswa'),
-            'password' =>$this->request->getPost('nism'),
-            'role' => 2
+            'password' => password_hash($password, PASSWORD_DEFAULT),
+            'role_id' => 2
         ];
 
         $this->siswaModel->save($data);

@@ -40,7 +40,14 @@ class AuthController extends BaseController
                     'isLoggedIn' => TRUE,
                 ];
                 $session->set($ses_data);
-                return redirect()->to('/admin');
+                if($data['role_id'] == 1){
+                    return redirect()->to('/admin');
+                }else if($data['role_id'] == 2){
+                    return redirect()->to('/siswa');
+                }else{
+                    return redirect()->to('/kamad');
+                }
+                
             
             }else{
                 $session->setFlashdata('msg', 'Password is incorrect.');
