@@ -93,6 +93,13 @@ $routes->group('admin', ['filter'=> 'authGuard'],static function ($routes) {
         $routes->get('addAbsen/(:num)', 'Admin\NaikKelasController::addAbsen/$1');
     });
 
+    $routes->group('p5',static function ($routes){
+        $routes->get('/', 'Admin\Nilaip5Controller::index');
+        $routes->get('view/(:any)','Admin\Nilaip5Controller::index/$1');
+        $routes->post('store/(:any)','Admin\Nilaip5Controller::store/$1');
+        $routes->get('delete/(:any)/(:num)','Admin\Nilaip5Controller::delete/$1/$2');
+    });
+
 });
 
 
