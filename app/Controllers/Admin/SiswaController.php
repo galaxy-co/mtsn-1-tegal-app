@@ -138,5 +138,30 @@ class SiswaController extends BaseController
             session()->setFlashdata('warning', 'Ekstensi File Tidak di Izinkan');
             return redirect()->to('/admin/siswa');
         }
+        
+    }
+    public function edit($id){
+        $data['kelas'] = $this->kelasModel->findAll();
+        $data['siswa'] = $this->siswaModel->find($id);
+       
+
+        echo view('admin/template_admin/header');
+        echo view('admin/template_admin/sidebar');
+        echo view('admin/edit_siswa', $data);
+        echo view('admin/template_admin/footer');
+    }
+    public function update($id){
+        $nism = $this->request->getPost('nism');
+        $existingSiswa = $this->siswaModel->where('nism', $nism)->first();
+        if($existingSiswa){
+            session()->setFlashdata('warning', 'NISM sudah terdaftar');
+
+            return redirect()->to('/admin/siswa');
+        }
+        $data = $this->request->getPost();
+        $this->siswaModel->update($id, $data);
+        session()->setFlashdata('success', 'Update Siswa');
+
+        return redirect()->to('/admin/siswa');
     }
 }

@@ -13,5 +13,5 @@ class KelasModel extends Model
     protected $returnType           = 'array';
     protected $useSoftDelete        = false;
 
-    protected $allowedFields        = ['tingkat', 'nama_kelas', 'kurikulum'];
+    protected $allowedFields        = ['tingkat', 'nama_kelas', 'kurikulum', 'id_guru'];
 }

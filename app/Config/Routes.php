@@ -26,6 +26,8 @@ $routes->group('admin', ['filter'=> 'authGuard'],static function ($routes) {
         $routes->post('add','Admin\SiswaController::addSiswa');
         $routes->get('delete/(:num)','Admin\SiswaController::delete/$1');
         $routes->post('upload', 'Admin\SiswaController::upload');
+        $routes->get('edit/(:num)', 'Admin\SiswaController::edit/$1');
+        $routes->post('update/(:num)', 'Admin\SiswaController::update/$1');
     });
 
     // Mapel
@@ -34,6 +36,7 @@ $routes->group('admin', ['filter'=> 'authGuard'],static function ($routes) {
         $routes->post('add','Admin\MapelController::addMapel');
         $routes->get('edit/(:num)','Admin\MapelController::edit/$1');
         $routes->get('delete/(:num)','Admin\MapelController::deleteMapel/$1');
+        $routes->post('update/(:num)', 'Admin\MapelController::update/$1');
     });
     
     //kelas
@@ -43,6 +46,7 @@ $routes->group('admin', ['filter'=> 'authGuard'],static function ($routes) {
         // $routes->get('/edit/(:num)', 'Admin\KelasController::addKelas');
         $routes->get('delete/(:num)', 'Admin\KelasController::deleteKelas/$1');
         $routes->get('edit/(:num)', 'Admin\KelasController::editKelas/$1');
+        $routes->post('update/(:num)', 'Admin\KelasController::update/$1');
     });
 
     // Guru
