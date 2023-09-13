@@ -47,23 +47,24 @@
                                     <tbody>
                                         <?php $i = 0; foreach($nilai as $n) : ?>
                                             <tr>
-                                                <td><?= ++$i?></td>
-                                                <td><?= $n['nama_mapel']?></td>
-                                                <td><?= $n['kkm']?></td>
-                                                <?php $nilai_total = 0;
-                                                $jumlah_nilai_detail = 0; 
-                                                foreach($nilai_detail as $nilai_d) :  ?>
-                                                    <?php if($n['id_nilai'] == $nilai_d['id_nilai']) : $nilai_total += $nilai_d['nilai'];
-                                                    $jumlah_nilai_detail++; ?>
-                                                    <td><?=$nilai_d['nilai']?></td>
-                                                    
-                                                    <?php endif ?>
-                                                    <td><?= $jumlah_nilai_detail;?></td>
-                                                <?php endforeach ?>
-                                                
+                                                <td><?= ++$i ?></td>
+                                                <td><?= $n['nama_mapel'] ?></td>
+                                                <td><?= $n['kkm'] ?></td>
+                                                <?php
+                                                $nilai_total = 0;
+                                                $jumlah_nilai_detail = 0;
+                                                foreach($nilai_detail as $nilai_d) :
+                                                    if($n['id_nilai'] == $nilai_d['id_nilai']) {
+                                                        $nilai_total += $nilai_d['nilai'];
+                                                        $jumlah_nilai_detail++;
+                                                        $nilai = ($nilai_d['nilai'] == 0) ? '-' : $nilai_d['nilai'];
+                                                        echo '<td>' . $nilai . '</td>';
+                                                    }
+                                                endforeach;
+                                                ?>
+                                                <td><?= $jumlah_nilai_detail ?></td>
                                             </tr>
                                         <?php endforeach ?>
-                                       
                                     </tbody>
                                 </table>
                             </div>
