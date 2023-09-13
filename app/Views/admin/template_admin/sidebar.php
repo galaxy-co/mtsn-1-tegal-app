@@ -43,10 +43,11 @@
 								<p>Dashboard</p>
 							</a>
 						</li>
+						
 						<li class="nav-item">
-							<a href="<?= base_url('/admin/user')?>">
-								<i class="icon-home"></i>
-								<p>Users</p>
+							<a href="<?= base_url('/admin/guru')?>">
+								<i class="icon-people"></i>
+								<p>Guru</p>
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>
@@ -57,13 +58,7 @@
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>
-						<li class="nav-item">
-							<a href="<?= base_url('/admin/guru')?>">
-								<i class="icon-people"></i>
-								<p>Guru</p>
-								<!-- <span class="caret"></span> -->
-							</a>
-						</li>
+						
 						<li class="nav-item">
 							<a href="<?= base_url('/admin/mapel')?>">
 								<i class="icon-layers"></i>
@@ -106,7 +101,13 @@
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>
-						
+						<li class="nav-item">
+							<a href="<?= base_url('/admin/user')?>">
+								<i class="icon-home"></i>
+								<p>Users</p>
+								<!-- <span class="caret"></span> -->
+							</a>
+						</li>
 						<!-- <li class="nav-item">
 							<a href="<?= base_url('/admin/inputNilai')?>">
 								<i class="icon-note"></i>

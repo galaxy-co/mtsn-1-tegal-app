@@ -39,6 +39,21 @@ class MapelController extends BaseController
         return redirect()->to('/admin/mapel');
     }
     public function edit($id){
-        die('Edit Will Be Here');
+
+        $data['mapel'] = $this->mapelModel->find($id);
+
+        echo view('admin/template_admin/header');
+        echo view('admin/template_admin/sidebar');
+        echo view('admin/editMapel', $data);
+        echo view('admin/template_admin/footer');
+    }
+
+    public function update($id){
+        
+        $data = $this->request->getPost();
+        $this->mapelModel->update($id, $data);
+        session()->setFlashdata('success', 'Update Mapel');
+
+        return redirect()->to('/admin/mapel');
     }
 }

@@ -2,20 +2,30 @@
 
 namespace App\Controllers\Admin;
 use App\Models\Admin\KelasModel;
+use App\Models\Admin\GuruModel;
 
 use App\Controllers\BaseController;
 
 class KelasController extends BaseController
 {
+    protected $guruModel;
     protected $kelasModel;
     public function __construct()
     {
+        $this->guruModel = new GuruModel();
         $this->kelasModel = new KelasModel();
     }
 
     public function index()
     {
-        $data['kelas'] = $this->kelasModel->findAll();
+        // $data['guru'] = $this->guruModel->findAll();
+        // $data['kelas'] = $this->kelasModel->findAll();
+
+        $data['kelas_guru'] = $this->kelasModel
+        ->select('kelas.*, guru.nama_guru AS nama_guru')
+        ->join('guru', 'guru.id_guru = kelas.id_guru', 'left')
+        ->findAll();
+        
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
         echo view('admin/kelas_in_admin', $data);
@@ -49,10 +59,19 @@ class KelasController extends BaseController
         return redirect()->to('/admin/kelas');
     }
     public function editKelas($id){
+        $data['guru'] = $this->guruModel->findAll();
         $data['kelas'] = $this->kelasModel->find($id);
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
         echo view('admin/edit_kelas_in_admin', $data);
         echo view('admin/template_admin/footer');
+    }
+    public function update($id){
+        
+        $data = $this->request->getPost();
+        $this->kelasModel->update($id, $data);
+        session()->setFlashdata('success', 'Update Kelas');
+
+        return redirect()->to('/admin/kelas');
     }
 }

@@ -83,6 +83,16 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group">
+                                            <label for="defaultSelect">Wali Kelas</label>
+                                            <select class="form-control form-control" id="id_guru" name="id_guru">
+                                                <?php foreach($kelas_guru as $g) : ?>
+                                                <option value="<?= $g['id_guru']?>"><?= $g['nama_guru']?></option>
+                                                <?php endforeach ?>
+                                            </select>
+                                        </div>
+                                    </div>
                             <div class="card-action">
                                 <button class="btn btn-success" type="submit">TAMBAH</button>		
                             </div>
@@ -113,6 +123,7 @@
                                             <th>No</th>
                                             <th>Nama</th>
                                             <th>Kurikulum</th>
+                                            <th>Wali Kelas</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -121,12 +132,13 @@
                                             <th>No</th>
                                             <th>Nama Kelas</th>
                                             <th>Kurikulum</th>
+                                            <th>Wali Kelas</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <?php $i = 0; $kurikulum = '';?>
-                                        <?php foreach($kelas as $k) :?>
+                                        <?php foreach($kelas_guru as $k) :?>
                                         <tr>
                                             <td><?= ++$i ?></td>
                                             <td><?= $k['tingkat'] ?><?= $k['nama_kelas'] ?></td>
@@ -138,7 +150,7 @@
                                             }
                                             ?>
                                             <td><?=$kurikulum?></td>
-                                            
+                                            <td><?= $k['nama_guru']?></td>
                                             <td>
                                                 <a href="<?= base_url('admin/kelas/edit/') . $k['id_kelas']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Edit</a>  
                                                 <a href="<?= base_url('admin/kelas/delete/') . $k['id_kelas']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a></td>
