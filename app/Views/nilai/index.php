@@ -93,14 +93,14 @@
                                             </select>
                                         </div>
                                     </div>
-                                    
                                 </div>
+                                
+                            </div>
                             <div class="card-action">
                                 <button class="btn btn-success" type="submit">TAMBAH</button>		
                             </div>
                             
-                        </div>
-                    </form>
+                        </form>
                 </div>
             </div>
         </div>
