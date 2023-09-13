@@ -86,7 +86,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#">
+							<a  href="<?= base_url('/admin/p5')?>">
 								<i class="icon-people"></i>
 								<p>Nilai P5</p>
 								<!-- <span class="caret"></span> -->

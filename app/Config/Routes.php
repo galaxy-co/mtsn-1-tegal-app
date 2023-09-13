@@ -89,6 +89,31 @@ $routes->group('admin', ['filter'=> 'authGuard'],static function ($routes) {
         $routes->get('addAbsen/(:num)', 'Admin\NaikKelasController::addAbsen/$1');
     });
 
+    $routes->group('p5',static function ($routes){
+        $routes->get('/', 'Admin\Nilaip5Controller::index');
+        $routes->get('view/(:any)','Admin\Nilaip5Controller::index/$1');
+        $routes->post('store/(:any)','Admin\Nilaip5Controller::store/$1');
+        $routes->get('delete/(:any)/(:num)','Admin\Nilaip5Controller::delete/$1/$2');
+
+        // $routes->group('dimensi',static function ($rout){
+        //     $rout->get('/','Admin\Nilaip5Controller::dimensi');
+        //     $rout->get('delete/(:num)','Admin\Nilaip5Controller::delete/$1');
+        //     $rout->post('store/dimensi','Admin\Nilaip5Controller::store/dimensi');
+        // });
+        // $routes->group('elemen',static function ($rout){
+        //     $rout->get('/','Admin\Nilaip5Controller::elemen');
+        // });
+        // $routes->group('nilai',static function ($rout){
+        //     $rout->get('/','Admin\Nilaip5Controller::nilai');
+        // });
+        // $routes->group('proyek',static function ($rout){
+        //     $rout->get('/','Admin\Nilaip5Controller::proyek');
+        // });
+        // $routes->group('penilaian',static function ($rout){
+        //     $rout->get('/','Admin\Nilaip5Controller::penilaian');
+        // });
+    });
+
 });
 
 
