@@ -60,7 +60,9 @@
                                                         $nilai = ($nilai_d['nilai'] == 0) ? '-' : $nilai_d['nilai'];
                                                         echo '<td>' . $nilai . '</td>';
                                                     }
+                                                    
                                                 endforeach;
+                                                echo '<td> Yo</td>';
                                                 ?>
                                                 <td><?= $jumlah_nilai_detail ?></td>
                                             </tr>
