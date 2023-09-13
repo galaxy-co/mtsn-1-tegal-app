@@ -103,7 +103,15 @@ $routes->group('admin', ['filter'=> 'authGuard'],static function ($routes) {
 });
 
 
+$routes->group('siswa', ['filter'=> 'authGuard'],static function ($routes) {
+    $routes->get('/', 'Siswa\SiswaController::index');
 
+    $routes->group('nilaiHarian',static function ($routes){
+        $routes->get('/', 'Siswa\NilaiHarianController::index');
+    });
+
+
+});
 
 
 
