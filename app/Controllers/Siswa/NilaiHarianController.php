@@ -63,8 +63,8 @@ class NilaiHarianController extends BaseController
         $data['header']= [];
         if(count($idNilai) > 0){
             $data['nilai_detail']=$this->nilaiDetailModel->whereIn('id_nilai',$idNilai)->findAll();
-            $data['ratarata'] = 0;
             foreach($data['nilai_detail'] as $nilai_detail){
+                
                 $cek = 0;
                 $index = 0;
                 for ($i=0; $i < count($data['header']) ; $i++) { 
@@ -74,6 +74,8 @@ class NilaiHarianController extends BaseController
                         $index = $i;
                         break;
                     }
+                    
+
                 } 
                 
                 if(!$cek){
@@ -86,7 +88,7 @@ class NilaiHarianController extends BaseController
                 }
             }
         }
-
+        
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar_siswa', $data);
         echo view('siswa/nilaiHarian', $data);
