@@ -21,9 +21,10 @@
                                             <th rowspan='2' nowrap>No</th>
                                             <th rowspan='2' nowrap>Nama Mapel</th>
                                             <th rowspan='2' nowrap>KKM</th>
+                                            <th rowspan='2' nowrap>Guru Pengampu</th>
                                             <?php foreach($header as $head) : ?>
                                         
-                                                <th colspan='<?php echo count($rf_nilai_detail) + 1?>' class='text-center'>
+                                                <th colspan='<?php echo count($rf_nilai_detail)?>' class='text-center'>
                                                     <input 
                                                         type="text" 
                                                         class='form-control text-center kd-name-input' 
@@ -38,8 +39,7 @@
                                             <?php foreach($header as $head) : ?>
                                                 <?php foreach($rf_nilai_detail as $rf) :?>
                                                     <th nowrap class='text-center'><?= $rf['rf_nilai_detail_desc']?></th>
-                                                <?php endforeach ?>
-                                                <th nowrap class='text-center'>Nilai Akhir</th>
+                                                <?php endforeach; ?>
                                             <?php endforeach; ?>
                                             
                                         </tr>
@@ -48,25 +48,20 @@
                                         <?php $i = 0; foreach($nilai as $n) : ?>
                                             <tr>
                                                 <td><?= ++$i ?></td>
-                                                <td><?= $n['nama_mapel'] ?></td>
-                                                <td><?= $n['kkm'] ?></td>
-                                                <?php
-                                                $nilai_total = 0;
-                                                $jumlah_nilai_detail = 0;
-                                                foreach($nilai_detail as $nilai_d) :
-                                                    if($n['id_nilai'] == $nilai_d['id_nilai']) {
-                                                        $nilai_total += $nilai_d['nilai'];
-                                                        $jumlah_nilai_detail++;
-                                                        $nilai = ($nilai_d['nilai'] == 0) ? '-' : $nilai_d['nilai'];
-                                                        echo '<td>' . $nilai . '</td>';
-                                                    }
-                                                    
-                                                endforeach;
-                                                echo '<td> Yo</td>';
-                                                ?>
-                                                <td><?= $jumlah_nilai_detail ?></td>
+                                                <td><b><?= $n['nama_mapel'] ?></b></td>
+                                                <td><b><?= $n['kkm'] ?></b></td>
+                                                <td><b><?= $n['nama_guru'] ?></b></td>
+                                                <?php foreach($nilai_detail as $nilai_d) : ?>
+                                                    <?php if($n['id_nilai'] == $nilai_d['id_nilai']) : ?>
+                                                        <?php if($nilai_d['nilai'] <= $n['kkm']) :?>
+                                                            <td style="color:red"><?= $nilai_d['nilai'] == 0 ? '-' : $nilai_d['nilai'] ?></td>
+                                                        <?php elseif($nilai_d['nilai'] >= $n['kkm']) : ?>
+                                                            <td><?= $nilai_d['nilai'] == 0 ? '-' : $nilai_d['nilai'] ?></td>
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
                                             </tr>
-                                        <?php endforeach ?>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>

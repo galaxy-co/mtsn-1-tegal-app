@@ -20,6 +20,10 @@ class RFNilaiDetailSeeder extends Seeder
                 "rf_nilai_detail_desc" => "Remidi",
                 "kurikulum_id" => 1
             ],[
+                "rf_nilai_detail_desc" => "Nilai Akhir",
+                "kurikulum_id" => 1
+            ],
+            [
                 "rf_nilai_detail_desc" => "TP 1",
                 "kurikulum_id" => 2
             ],[

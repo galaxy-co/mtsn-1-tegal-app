@@ -24,6 +24,7 @@ class SiswaController extends BaseController
         $data['siswa_kelas'] = [];
         foreach ($siswa as $row) {
             $kelas = $this->kelasModel->where('id_kelas', $row['kelas'])->first();
+            // var_dump($kelas); die;
             $data['siswa_kelas'][] = [
                 'nama_siswa' => $row['nama_siswa'],
                 'nama_kelas' => $kelas['nama_kelas'],

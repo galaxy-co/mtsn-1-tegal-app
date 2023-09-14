@@ -5,7 +5,7 @@
 			<div class="content">
 				<div class="d-flex align-items-center justify-content-center mt-5">
 					<div class="img">
-						<img src="<?=base_url('assets/')?>assets/img/logo.png" alt="" height="400px" width="400px">
+						<img src="<?=base_url('assets/')?>assets/img/logo.png" alt="" height="300px" width="300px">
 					</div>
 					
 				</div>

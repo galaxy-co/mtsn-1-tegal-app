@@ -176,7 +176,7 @@
                         </table>
                     </div>
                     <div class="card-footer">
-                        <!-- <button class='btn btn-primary' id='save-data'>SAVE</button>    -->
+                        <a href="<?=base_url('admin/nilai')?>" class="btn btn-success">SIMPAN</a>   
                     </div>
                 </div>
             </div>
