@@ -34,5 +34,6 @@ class Nilaip5 extends Migration
     public function down()
     {
         //
+        $this->forge->dropTable('nilaip5');
     }
 }

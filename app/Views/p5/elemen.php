@@ -36,8 +36,8 @@
                           <div class="form-group">
                             <label for="dimensi">DIMENSI</label>
                             <select name="dimensi" id="" class='form-control'>
+                              <option value=""></option>
                               <?php foreach($dimensi as $dimen) : ?>
-                                <option value=""></option>
                                 <option value="<?php echo $dimen['id_dimensi']?>"> <?= $dimen['kode_dimensi'].' - '.$dimen['dimensi']?></option>
                               <?php endforeach ?>
                             </select>
@@ -53,15 +53,19 @@
                           
                         </div>
                         <div class="col-md-6">
+                          <?php if(count($elemen) > 0): ?>
                           <div class="form-group">
                             <label for="dimensi">Parent Elemen</label>
                             <select name="id_parent_element" id="" class='form-control'>
                               <option value="null"></option>
                               <?php foreach($elemen as $el): ?>
-                                <option value="<?= $el['id_element']?>"><?php echo $el['kode_element'].' '. $el['desc'] ?></option>
+                                <?php if($el['id_parent_element'] == null): ?>
+                                  <option value="<?= $el['id_element']?>"><?php echo $el['kode_element'].' '. $el['desc'] ?></option>
+                                <?php endif ?>
                               <?php endforeach ?>
                             </select>
                           </div>
+                          <?php endif ?>
                           <div class="form-group d-none sub-element-input">
                             <label for="dimensi">Nilai Rahmatan Lil Alamin</label>
                             <input type="text" name="nilai_rahmatan_lil_alamin" class='form-control'>
@@ -94,18 +98,18 @@
                           </thead>
                           <tbody>
                             <?php $temp=''; foreach($elemen as $el) : ?>
-                              <?php if($el['kode_parent_element'] != $temp && $el['kode_parent_element']):?>
+                              <?php if(!$el['kode_parent_element']):?>
                               <tr>
                                 <td><?= $el['dimensi']?></td>
-                                <td><?= $el['kode_parent_element']?></td>
-                                <td><?= $el['element_parent_desc'] ?></td>
+                                <td><?= $el['kode_element']?></td>
+                                <td><?= $el['desc'] ?></td>
                                 <td>
                                     <button 
                                       class='btn btn-info btn-sm btn-edit-element'
                                       data-dimensi="<?= $el['id_dimensi']?>"
-                                      data-idelement="<?= $el['id_parent_element']?>"
-                                      data-kodeelement="<?= $el['kode_parent_element']?>"
-                                      data-desc="<?= $el['element_parent_desc']  ?>"
+                                      data-idelement="<?= $el['id_element']?>"
+                                      data-kodeelement="<?= $el['kode_element']?>"
+                                      data-desc="<?= $el['desc']  ?>"
                                       data-nilairahmatanlilalamin=""
                                       data-subnilai=""
                                       style="text-decoration:none"
@@ -141,11 +145,12 @@
                           </thead>
                           <tbody>
                             <?php $tempSub=''; ?>
+                            <?php $tempSubElementParent=''; ?>
                             <?php foreach($elemen as $el) : ?>
                               <?php if($el['kode_parent_element']): ?>
                               <tr>
                                 <td class='fw-bold'><?= $tempSub !== $el['id_dimensi'] ? $el['dimensi'] : ''?></td>
-                                <td class='fw-bold'><?= $tempSub !== $el['id_dimensi'] ? $el['element_parent_desc'] : '' ?></td>
+                                <td class='fw-bold'><?= $tempSubElementParent !== $el['element_parent_desc'] ? $el['element_parent_desc'] : '' ?></td>
                                 <td><?= $el['kode_element']?></td>
                                 <td><?= $el['desc'] ?> </td>
                                 <td><?= $el['nilai_rahmatan_lil_alamin'] ?></td>
@@ -168,6 +173,7 @@
                                 </td>
                               </tr>
                               <?php $tempSub = $el['id_dimensi']; ?>
+                              <?php $tempSubElementParent = $el['element_parent_desc']; ?>
                               <?php endif ?>
                             <?php endforeach ?>
                           </tbody>
@@ -199,7 +205,9 @@
                             <select name="id_parent_element" id="parent-element-capaian" class='form-control'>
                               <option value="null"></option>
                               <?php foreach($elemen as $el): ?>
-                                <option data-kodeelement='<?php echo $el['kode_element'] ?>' value="<?= $el['id_element']?>"><?php echo $el['kode_element'].' '. $el['desc'] ?></option>
+                                <?php if($el['id_parent_element']): ?>
+                                  <option data-kodeelement='<?php echo $el['kode_element'] ?>' value="<?= $el['id_element']?>"><?php echo $el['kode_element'].' '. $el['desc'] ?></option>
+                                <?php endif ?>
                               <?php endforeach ?>
                             </select>
                           </div>

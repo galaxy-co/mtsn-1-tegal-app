@@ -4,6 +4,7 @@ namespace App\Controllers\Admin;
 use App\Models\Admin\KelasModel;
 use App\Models\Admin\DimensiModel;
 use App\Models\Admin\ProyekModel;
+use App\Models\Admin\ProjectDimensiModel;
 use App\Models\Admin\ElemenModel;
 use App\Models\Admin\CapaianModel;
 use App\Models\Admin\RFNilaiP5Model;
@@ -21,6 +22,7 @@ class Nilaip5Controller extends BaseController
         $this->ElemenModel = new ElemenModel();
         $this->CapaianModel = new CapaianModel();
         $this->RFNilaiP5Model = new RFNilaiP5Model();
+        $this->ProjectDimensiModel = new ProjectDimensiModel();
     }
 
     private function getData($key = ''){
@@ -32,33 +34,44 @@ class Nilaip5Controller extends BaseController
                     'dimensi' => $this->DimensiModel->join('kelas','kelas.id_kelas = dimensi_p5.id_kelas','left')->findAll(),
                 ];
                 break;
-            case 'elemen':
-                return [
-                    'elemen' => $this->ElemenModel
+                case 'elemen':
+                    return [
+                        'elemen' => $this->ElemenModel
                         ->select('dimensi_p5.id_dimensi,dimensi_p5.dimensi,
-                                element_p5.id_element,element_p5.kode_element,element_p5.desc,element_p5.id_parent_element,element_p5.nilai_rahmatan_lil_alamin,element_p5.sub_nilai,
-                                element_p5_child.desc as element_parent_desc,element_p5_child.kode_element as kode_parent_element
-                                '
-                                )
+                        element_p5.id_element,element_p5.kode_element,element_p5.desc,element_p5.id_parent_element,element_p5.nilai_rahmatan_lil_alamin,element_p5.sub_nilai,
+                        element_p5_child.desc as element_parent_desc,element_p5_child.kode_element as kode_parent_element
+                        '
+                        )
                         ->join('element_p5 AS element_p5_child','element_p5_child.id_element = element_p5.id_parent_element','left')
                         ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi','left')
                         ->findAll(),
-                    'capaian' => $this->CapaianModel
+                        'capaian' => $this->CapaianModel
                         ->select('capaian_p5.kode_capaian,capaian_p5.nilai_rahmatan_lil_alamin,capaian_p5.sub_nilai,capaian_p5.id_capaian,capaian_p5.desc,capaian_p5.id_parent_element, 
                         element_p5.desc as element_desc')
                         ->join('element_p5','element_p5.id_element = capaian_p5.id_parent_element','left')
                         ->findAll(),
-                    'dimensi' => $this->DimensiModel->findAll()
-                ];
-                break;
+                        'dimensi' => $this->DimensiModel->findAll()
+                    ];
+                    break;
             case 'proyek':
-                return [
-                    'proyek' => $this->ProyekModel->findAll(),
-                ];
+                    return [
+                        'dimensi' => $this->DimensiModel->findAll(),
+                        'proyek' => $this->ProyekModel->findAll(),
+                        'capaian' => $this->CapaianModel
+                            ->join('element_p5','element_p5.id_element = capaian_p5.id_parent_element','left')
+                            ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi','left')
+                            ->findAll(),
+                        'project_dimensi' =>$this->ProjectDimensiModel
+                            ->select('dimensi_p5.dimensi,dimensi_p5.id_dimensi,dimensi_p5.kode_dimensi,capaian_p5.*,project_dimensi.id_project_dimensi')
+                            ->join('dimensi_p5','dimensi_p5.id_dimensi = project_dimensi.id_dimensi','left')
+                            ->join('capaian_p5','capaian_p5.id_capaian = project_dimensi.kode_capaian_fase','left')
+                            ->findAll()
+                    ];
                 break;
             case 'nilai':
                 return [
                     'nilai' => $this->RFNilaiP5Model->findAll(),
+                    'kelas' => []
                 ];
                 break;
             case 'penilaian':
@@ -70,6 +83,20 @@ class Nilaip5Controller extends BaseController
                 # code...
                 break;
         }
+    }
+
+    public function index($key = 'dimensi')
+    {
+        if($key == 'capaian') $key ='elemen';
+        if($key == 'capaian_proyek') $key ='proyek';
+        $data = $this->getData($key);
+
+        // dd($data);
+
+        echo view('admin/template_admin/header');
+        echo view('admin/template_admin/sidebar');
+        echo view('p5/'.$key, $data);
+        echo view('admin/template_admin/footer');
     }
 
     private function getModel($key){
@@ -86,6 +113,9 @@ class Nilaip5Controller extends BaseController
             case 'proyek':
                 return new ProyekModel();
                 break;
+            case 'capaian_proyek':
+                return new ProjectDimensiModel();
+                break;
             case 'nilai':
                 return new RFNilaiP5Model();
                 break;
@@ -95,24 +125,19 @@ class Nilaip5Controller extends BaseController
         }
     }
 
-    public function index($key = 'dimensi')
-    {
-        if($key == 'capaian') $key ='elemen';
-        $data = $this->getData($key);
-
-        echo view('admin/template_admin/header');
-        echo view('admin/template_admin/sidebar');
-        echo view('p5/'.$key, $data);
-        echo view('admin/template_admin/footer');
-    }
+   
 
     public function store($key=null){
         $data = $this->request->getPost();
-        // dd($data);
+        if($key == 'elemen' && $this->request->getPost('id_parent_element') == 'null'){
+            $data['id_parent_element'] = null;
+        }
+        // dd($data,$key);
         $model = $this->getModel($key);
 
         
-        $model->save($data);
+        $save=$model->save($data);
+        
         session()->setFlashdata('success', 'Sukses Input Kelas');
         return redirect()->to('/admin/p5/view/'.$key);
     }
