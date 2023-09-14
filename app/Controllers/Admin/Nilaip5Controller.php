@@ -8,6 +8,7 @@ use App\Models\Admin\ProjectDimensiModel;
 use App\Models\Admin\ElemenModel;
 use App\Models\Admin\CapaianModel;
 use App\Models\Admin\RFNilaiP5Model;
+use App\Models\Admin\PenilaianP5Model;
 
 use App\Controllers\BaseController;
 
@@ -23,6 +24,7 @@ class Nilaip5Controller extends BaseController
         $this->CapaianModel = new CapaianModel();
         $this->RFNilaiP5Model = new RFNilaiP5Model();
         $this->ProjectDimensiModel = new ProjectDimensiModel();
+        $this->PenilaianP5Model = new PenilaianP5Model();
     }
 
     private function getData($key = ''){
@@ -76,7 +78,8 @@ class Nilaip5Controller extends BaseController
                 break;
             case 'penilaian':
                 return [
-                    'penilaian' => $this->PenilaianModel->findAll(),
+                    'penilaian' => $this->PenilaianP5Model->findAll(),
+                    'proyek' =>$this->ProyekModel->findAll()
                 ];
                 break;
             default:

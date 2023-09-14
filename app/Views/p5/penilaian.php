@@ -22,7 +22,20 @@
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                
+              <ul class="nav nav-tabs">
+                <?php foreach($proyek as $pro): ?>
+                  <li class="nav-item">
+                      <a class="nav-link" href="<?= base_url('admin/p5/view/penilaian/').$pro['id_project'] ?>"><?php echo $pro['name']?></a>
+                  </li>
+                <?php endforeach ?>
+              </ul>
+              <div class="tab-content" id="myTabContent2">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title"></div>
+                  </div>
+                </div>
+              </div>
             </div>
        </div> 
     </div>
