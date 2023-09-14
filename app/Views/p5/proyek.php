@@ -94,12 +94,12 @@
                       <table class='table phtable-bordered text-center' border="1">
                           <thead>
                             <tr>
+                              <th rowspan="2">ACTION</th>
                               <th rowspan="2">JUDUL PROYEK</th>
                               <th rowspan="2">TEMA PROYEK</th>
                               <?php foreach($project_dimensi as $prodim): ?>
                                 <th colspan="4"><?= $prodim['dimensi']?></th>
                               <?php endforeach ?>
-                              <th rowspan="2">ACTION</th>
                             </tr>
                             <tr>
                             <?php foreach($project_dimensi as $prodim): ?>
@@ -114,9 +114,31 @@
                           <tbody>
                             <?php foreach($proyek as $proy) : ?>
                               <tr>
+                              <td>
+                                    <button 
+                                      class='btn btn-info btn-xs btn-tambah-penilaian-proyek'
+                                      data-name="<?= $proy['name']?>" 
+                                      data-theme="<?= $proy['theme']?>" 
+                                      data-idproject="<?= $proy['id_project']?>" 
+                                      style="text-decoration:none"
+                                      >
+                                      <i class="icon-note"></i> Tambah Penilaian
+                                    </button>
+                                    <button 
+                                      class='btn btn-info btn-xs btn-edit-proyek'
+                                      data-name="<?= $proy['name']?>" 
+                                      data-theme="<?= $proy['theme']?>" 
+                                      data-idproject="<?= $proy['id_project']?>" 
+                                      style="text-decoration:none"
+                                      >
+                                      <i class="icon-note"></i> Edit
+                                    </button>  
+                                    <a href="<?= base_url('admin/p5/delete/proyek/') . $proy['id_project']?>" class="btn btn-danger btn-xs"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
+                                </td>
                                 <td><?= $proy['name'] ?></td>
                                 <td><?= $proy['theme'] ?></td>
                                 <?php foreach($project_dimensi as $prodim): ?>
+                                  <?php if($proy['id_project'] == $prodim['id_project']) : ?>
                                   <td><?php echo $prodim['kode_dimensi']?></td>
                                   <td>
                                     <?php echo $prodim['kode_capaian']?>
@@ -135,28 +157,14 @@
                                   </td>
                                   <td><?php echo $prodim['nilai_rahmatan_lil_alamin']?></td>
                                   <td><?php echo $prodim['sub_nilai']?></td>
+                                  <?php else : ?>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                  <?php endif ?>
                                 <?php endforeach ?>
-                                <td>
-                                    <button 
-                                      class='btn btn-info btn-sm btn-tambah-penilaian-proyek'
-                                      data-name="<?= $proy['name']?>" 
-                                      data-theme="<?= $proy['theme']?>" 
-                                      data-idproject="<?= $proy['id_project']?>" 
-                                      style="text-decoration:none"
-                                      >
-                                      <i class="icon-note"></i> Tambah Penilaian
-                                    </button>
-                                    <button 
-                                      class='btn btn-info btn-sm btn-edit-proyek'
-                                      data-name="<?= $proy['name']?>" 
-                                      data-theme="<?= $proy['theme']?>" 
-                                      data-idproject="<?= $proy['id_project']?>" 
-                                      style="text-decoration:none"
-                                      >
-                                      <i class="icon-note"></i> Edit
-                                    </button>  
-                                    <a href="<?= base_url('admin/p5/delete/proyek/') . $proy['id_project']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
-                                </td>
+                                
                               </tr>
                             <?php endforeach ?>
                           </tbody>

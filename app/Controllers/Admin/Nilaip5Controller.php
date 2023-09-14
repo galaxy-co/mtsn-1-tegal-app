@@ -64,7 +64,10 @@ class Nilaip5Controller extends BaseController
                             ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi','left')
                             ->findAll(),
                         'project_dimensi' =>$this->ProjectDimensiModel
-                            ->select('dimensi_p5.dimensi,dimensi_p5.id_dimensi,dimensi_p5.kode_dimensi,capaian_p5.*,project_dimensi.id_project_dimensi')
+                            ->select('
+                                dimensi_p5.dimensi,dimensi_p5.id_dimensi,dimensi_p5.kode_dimensi,
+                                capaian_p5.*,
+                                project_dimensi.id_project_dimensi,project_dimensi.id_project')
                             ->join('dimensi_p5','dimensi_p5.id_dimensi = project_dimensi.id_dimensi','left')
                             ->join('capaian_p5','capaian_p5.id_capaian = project_dimensi.kode_capaian_fase','left')
                             ->findAll()
