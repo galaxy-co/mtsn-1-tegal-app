@@ -18,7 +18,7 @@ class KelasController extends BaseController
 
     public function index()
     {
-        // $data['guru'] = $this->guruModel->findAll();
+        $data['guru'] = $this->guruModel->findAll();
         // $data['kelas'] = $this->kelasModel->findAll();
 
         $data['kelas_guru'] = $this->kelasModel

@@ -87,7 +87,7 @@
                                         <div class="form-group">
                                             <label for="defaultSelect">Wali Kelas</label>
                                             <select class="form-control form-control" id="id_guru" name="id_guru">
-                                                <?php foreach($kelas_guru as $g) : ?>
+                                                <?php foreach($guru as $g) : ?>
                                                 <option value="<?= $g['id_guru']?>"><?= $g['nama_guru']?></option>
                                                 <?php endforeach ?>
                                             </select>
