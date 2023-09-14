@@ -34,7 +34,20 @@ class Nilaip5Controller extends BaseController
                 break;
             case 'elemen':
                 return [
-                    'elemen' => $this->ElemenModel->findAll(),
+                    'elemen' => $this->ElemenModel
+                        ->select('dimensi_p5.id_dimensi,dimensi_p5.dimensi,
+                                element_p5.id_element,element_p5.kode_element,element_p5.desc,element_p5.id_parent_element,element_p5.nilai_rahmatan_lil_alamin,element_p5.sub_nilai,
+                                element_p5_child.desc as element_parent_desc,element_p5_child.kode_element as kode_parent_element
+                                '
+                                )
+                        ->join('element_p5 AS element_p5_child','element_p5_child.id_element = element_p5.id_parent_element','left')
+                        ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi','left')
+                        ->findAll(),
+                    'capaian' => $this->CapaianModel
+                        ->select('capaian_p5.kode_capaian,capaian_p5.nilai_rahmatan_lil_alamin,capaian_p5.sub_nilai,capaian_p5.id_capaian,capaian_p5.desc,capaian_p5.id_parent_element, 
+                        element_p5.desc as element_desc')
+                        ->join('element_p5','element_p5.id_element = capaian_p5.id_parent_element','left')
+                        ->findAll(),
                     'dimensi' => $this->DimensiModel->findAll()
                 ];
                 break;
@@ -67,6 +80,9 @@ class Nilaip5Controller extends BaseController
             case 'elemen' :
                 return new ElemenModel();
                 break;
+            case 'capaian' :
+                return new CapaianModel();
+                break;
             case 'proyek':
                 return new ProyekModel();
                 break;
@@ -81,6 +97,7 @@ class Nilaip5Controller extends BaseController
 
     public function index($key = 'dimensi')
     {
+        if($key == 'capaian') $key ='elemen';
         $data = $this->getData($key);
 
         echo view('admin/template_admin/header');
