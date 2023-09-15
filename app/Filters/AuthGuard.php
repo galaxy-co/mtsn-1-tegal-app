@@ -13,6 +13,11 @@ class AuthGuard implements FilterInterface
             return redirect()
                 ->to('/login');
         }
+        
+        if($arguments[0] !== session()->get('role_id')){
+            return redirect()->back();
+        }
+        
     }
     
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
