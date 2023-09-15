@@ -118,7 +118,10 @@ class Nilaip5Controller extends BaseController
         
         // $data = $this->getData('penilaian',);
         $data=[
-            'penilaian' => $this->PenilaianP5Model->findAll(),
+            'penilaian' => $this->PenilaianP5Model
+                ->select('nilaip5.*,rf_nilai_p5_options.desc')
+                ->join('rf_nilai_p5_options','rf_nilai_p5_options.id_nilaip5_option = nilaip5.nilai','left')
+                ->findAll(),
             'proyek' =>$this->ProyekModel->findAll(),
             'proyek_detail'=>$this->ProyekModel->find($id),
             'project_dimensi' =>$this->ProjectDimensiModel
