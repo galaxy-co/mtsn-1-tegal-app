@@ -14,7 +14,7 @@ class PenilaianP5Model extends Model
     protected $returnType           = 'array';
     protected $useSoftDelete        = false;
 
-    protected $allowedFields        = ['id_siswa', 'sakit', 'izin', 'alpa', 'catatan'];
+    protected $allowedFields        = ['id_siswa', 'id_project_dimensi','nilai'];
     // protected $DBGroup          = 'default';
     // protected $table            = 'absens';
     // protected $primaryKey       = 'id';

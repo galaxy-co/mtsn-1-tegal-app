@@ -9,12 +9,16 @@ use App\Models\Admin\ElemenModel;
 use App\Models\Admin\CapaianModel;
 use App\Models\Admin\RFNilaiP5Model;
 use App\Models\Admin\PenilaianP5Model;
+use App\Models\Admin\SiswaModel;
 
 use App\Controllers\BaseController;
+
+use CodeIgniter\API\ResponseTrait;
 
 class Nilaip5Controller extends BaseController
 {
     protected $kelasModel;
+    use ResponseTrait;
     public function __construct()
     {
         $this->kelasModel = new KelasModel();
@@ -25,9 +29,10 @@ class Nilaip5Controller extends BaseController
         $this->RFNilaiP5Model = new RFNilaiP5Model();
         $this->ProjectDimensiModel = new ProjectDimensiModel();
         $this->PenilaianP5Model = new PenilaianP5Model();
+        $this->SiswaModel = new SiswaModel();
     }
 
-    private function getData($key = ''){
+    private function getData($key = '',$param = null){
         switch ($key) {
             case 'dimensi':
                 
@@ -81,7 +86,6 @@ class Nilaip5Controller extends BaseController
                 break;
             case 'penilaian':
                 return [
-                    'penilaian' => $this->PenilaianP5Model->findAll(),
                     'proyek' =>$this->ProyekModel->findAll()
                 ];
                 break;
@@ -93,15 +97,46 @@ class Nilaip5Controller extends BaseController
 
     public function index($key = 'dimensi')
     {
+        
         if($key == 'capaian') $key ='elemen';
         if($key == 'capaian_proyek') $key ='proyek';
         $data = $this->getData($key);
 
-        // dd($data);
+        if($key =='penilaian'){
+            return redirect()->to('/admin/p5/view/penilaian/'.$data['proyek'][0]['id_project']);
+        }
+
 
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
         echo view('p5/'.$key, $data);
+        echo view('admin/template_admin/footer');
+    }
+
+    public function penilaian($id){ // VIEW/PREMALINK
+        $id_kelas = $this->request->getVar('id_kelas');
+        
+        // $data = $this->getData('penilaian',);
+        $data=[
+            'penilaian' => $this->PenilaianP5Model->findAll(),
+            'proyek' =>$this->ProyekModel->findAll(),
+            'proyek_detail'=>$this->ProyekModel->find($id),
+            'project_dimensi' =>$this->ProjectDimensiModel
+                    ->select('
+                        dimensi_p5.dimensi,dimensi_p5.id_dimensi,dimensi_p5.kode_dimensi,
+                        capaian_p5.*,
+                        project_dimensi.id_project_dimensi,project_dimensi.id_project')
+                    ->join('dimensi_p5','dimensi_p5.id_dimensi = project_dimensi.id_dimensi','left')
+                    ->join('capaian_p5','capaian_p5.id_capaian = project_dimensi.kode_capaian_fase','left')
+                    ->findAll(),
+            'siswa'=> $this->SiswaModel->where('kelas',$id_kelas)->findAll(),
+            'kelas' => $this->kelasModel->findAll(),
+            'nilai' => $this->RFNilaiP5Model->findAll()
+        ];
+        // dd($data);
+        echo view('admin/template_admin/header');
+        echo view('admin/template_admin/sidebar');
+        echo view('p5/penilaian', $data);
         echo view('admin/template_admin/footer');
     }
 
@@ -146,6 +181,20 @@ class Nilaip5Controller extends BaseController
         
         session()->setFlashdata('success', 'Sukses Input Kelas');
         return redirect()->to('/admin/p5/view/'.$key);
+    }
+
+    public function store_nilai(){
+        $dataPost = $this->request->getVar();
+
+        $save = $this->PenilaianP5Model->save($dataPost);
+        $id= $this->request->getVar('id_nilai') ? $this->request->getVar('id_nilai') : $this->PenilaianP5Model->getInsertID();
+        $response = [
+            "status" => "OKE",
+            "message" => "Data Nilai Successfully stored!!",
+            "id_nilai"=> $id
+        ];
+
+        return $this->respond($response,200);
     }
 
 

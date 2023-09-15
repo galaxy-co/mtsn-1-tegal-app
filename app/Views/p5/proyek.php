@@ -39,7 +39,7 @@
                       <div class="form-group">
                         <label for="theme">TEMA PROYEK</label>
                         <textarea name="theme" id="" cols="30" rows="3" class="form-control"></textarea>
-                        </div>
+                      </div>
                     </div>
                     <div class="card-footer">
                       <button type="submit" class='btn btn-info btn-submit'>SAVE</button>

@@ -95,8 +95,9 @@ $routes->group('admin', ['filter'=> 'authGuard'],static function ($routes) {
 
     $routes->group('p5',static function ($routes){
         $routes->get('/', 'Admin\Nilaip5Controller::index');
+        $routes->get('view/penilaian/(:any)','Admin\Nilaip5Controller::penilaian/$1');
+        $routes->post('penilaian','Admin\Nilaip5Controller::store_nilai');
         $routes->get('view/(:any)','Admin\Nilaip5Controller::index/$1');
-        $routes->get('view/penilaian/(:any)','Admin\Nilaip5Controller::index/$1');
         $routes->post('store/(:any)','Admin\Nilaip5Controller::store/$1');
         $routes->get('delete/(:any)/(:num)','Admin\Nilaip5Controller::delete/$1/$2');
     });
