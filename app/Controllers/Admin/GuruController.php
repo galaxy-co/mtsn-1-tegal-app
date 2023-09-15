@@ -68,6 +68,20 @@ class GuruController extends BaseController
     }
 
     public function edit($id){
-        die('Edit will be here...');
+        // $data['guru'] = $this->guruModel->findAll();
+        $data['guru'] = $this->guruModel->find($id);
+        echo view('admin/template_admin/header');
+        echo view('admin/template_admin/sidebar');
+        echo view('admin/edit_guru', $data);
+        echo view('admin/template_admin/footer');
+    }
+
+    public function update($id){
+        
+        $data = $this->request->getPost();
+        $this->guruModel->update($id, $data);
+        session()->setFlashdata('success', 'Update Guru');
+
+        return redirect()->to('/admin/guru');
     }
 }
