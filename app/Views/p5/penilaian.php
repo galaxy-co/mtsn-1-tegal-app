@@ -110,16 +110,46 @@
                                   <?php echo $sis['nama_siswa'] ?>
                                 </td>
                                 <?php foreach($project_dimensi as $prodim): ?>
+
+                                  <?php
+                                    $id_nilai = '';
+                                    $nilaiSelected='';
+                                    foreach ($penilaian as $pen) {
+                                      if($prodim['id_project_dimensi'] == $pen['id_project_dimensi'] && $sis['id_siswa']== $pen['id_siswa']){
+                                        $id_nilai = $pen['id_nilai'];
+                                        $nilaiSelected = $pen['nilai'];
+                                      }
+                                    }  
+                                  ?>
                                   <td>
-                                    <select name="" id="" class='form-control select-nilai'>
+                                    <select 
+                                      name="" id="" 
+                                      class='form-control select-nilai' 
+                                      value="<?= $nilaiSelected ?>" 
+                                      data-id_nilai="<?= $id_nilai ?>"
+                                      >
+                                      
                                       <?php foreach($nilai as $ni) :?>
                                         <!-- nilai desc value must be from nilai desc instead from dimensi desc, but, in showcase project(xls app), the desc is from dimensi -->
-                                        <option value="<?php echo $ni['id_nilaip5_option']?>" class='opt-nilai' data-desc="<?= $prodim['desc']?>" data-idsiswa='<?= $sis['id_siswa']?>' data-idprojectdimensi='<?= $prodim['id_project_dimensi']?>'><?php echo $ni['nilai']?></option>
+                                        
+                                        <option 
+                                          value="<?php echo $ni['id_nilaip5_option']?>" 
+                                          class='opt-nilai' data-desc="<?= $prodim['desc']?>" 
+                                          data-idsiswa='<?= $sis['id_siswa']?>' 
+                                          data-idprojectdimensi='<?= $prodim['id_project_dimensi']?>'
+                                          <?php if($nilaiSelected == $ni['id_nilaip5_option']) :?> selected <?php endif ?>
+                                          >
+                                          <?php echo $ni['nilai']?>
+                                        </option>
                                       <?php endforeach ?>
                                     </select>
                                   </td>
                                   <td>
+                                  <?php if($id_nilai) :?>
+                                      <p id="<?= 'desc-'.$sis['id_siswa'].'-'.$prodim['id_project_dimensi'] ?>"><?php echo $prodim['desc'] ?></p>
+                                  <?php else:        ?>
                                       <p id="<?= 'desc-'.$sis['id_siswa'].'-'.$prodim['id_project_dimensi'] ?>"></p>
+                                  <?php endif ?>
                                   </td>
                                 <?php endforeach ?>
                               </tr>
