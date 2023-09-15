@@ -56,6 +56,7 @@ $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
         $routes->get('delete/(:num)', 'Admin\GuruController::deleteGuru/$1');
         $routes->get('edit/(:num)', 'Admin\GuruController::edit/$1');
         $routes->post('upload', 'Admin\GuruController::uploadGuru');
+        $routes->post('update/(:num)', 'Admin\GuruController::update/$1');
     });
 
     // Nilai
