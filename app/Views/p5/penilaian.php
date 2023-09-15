@@ -114,10 +114,12 @@
                                   <?php
                                     $id_nilai = '';
                                     $nilaiSelected='';
+                                    $arti_nilai='';
                                     foreach ($penilaian as $pen) {
                                       if($prodim['id_project_dimensi'] == $pen['id_project_dimensi'] && $sis['id_siswa']== $pen['id_siswa']){
                                         $id_nilai = $pen['id_nilai'];
                                         $nilaiSelected = $pen['nilai'];
+                                        $arti_nilai = $pen['desc'];
                                       }
                                     }  
                                   ?>
@@ -134,7 +136,8 @@
                                         
                                         <option 
                                           value="<?php echo $ni['id_nilaip5_option']?>" 
-                                          class='opt-nilai' data-desc="<?= $prodim['desc']?>" 
+                                          class='opt-nilai' 
+                                          data-desc="<?= $ni['desc']?>" 
                                           data-idsiswa='<?= $sis['id_siswa']?>' 
                                           data-idprojectdimensi='<?= $prodim['id_project_dimensi']?>'
                                           <?php if($nilaiSelected == $ni['id_nilaip5_option']) :?> selected <?php endif ?>
@@ -145,11 +148,7 @@
                                     </select>
                                   </td>
                                   <td>
-                                  <?php if($id_nilai) :?>
-                                      <p id="<?= 'desc-'.$sis['id_siswa'].'-'.$prodim['id_project_dimensi'] ?>"><?php echo $prodim['desc'] ?></p>
-                                  <?php else:        ?>
-                                      <p id="<?= 'desc-'.$sis['id_siswa'].'-'.$prodim['id_project_dimensi'] ?>"></p>
-                                  <?php endif ?>
+                                      <p id="<?= 'desc-'.$sis['id_siswa'].'-'.$prodim['id_project_dimensi'] ?>"><?php echo $arti_nilai ?></p>
                                   </td>
                                 <?php endforeach ?>
                               </tr>

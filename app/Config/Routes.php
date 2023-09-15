@@ -10,7 +10,7 @@ $routes->post('/login','AuthController::loginPost');
 
 $routes->get('/logout','LogoutController::index');
 
-$routes->group('admin', ['filter'=> 'authGuard'],static function ($routes) {
+$routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
     $routes->get('/', 'Admin\AdminController::index');
     // user route
     $routes->group('user',static function ($routes){
@@ -117,7 +117,7 @@ $routes->group('admin', ['filter'=> 'authGuard'],static function ($routes) {
 });
 
 
-$routes->group('siswa', ['filter'=> 'authGuard'],static function ($routes) {
+$routes->group('siswa', ['filter'=> 'authGuard:2'],static function ($routes) {
     $routes->get('/', 'Siswa\SiswaController::index');
 
     $routes->group('nilaiHarian',static function ($routes){
