@@ -75,14 +75,21 @@
 						</li>
 						<li class="nav-item">
 							<a href="<?= base_url('/admin/nilai')?>">
-								<i class="icon-people"></i>
+								<i class="fas fa-list-ol"></i>
 								<p>Nilai</p>
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>
 						<li class="nav-item">
+							<a href="<?= base_url('/admin/pas')?>">
+								<i class="fas fa-list-ol"></i>
+								<p>Semester</p>
+								<!-- <span class="caret"></span> -->
+							</a>
+						</li>
+						<li class="nav-item">
 							<a  href="<?= base_url('/admin/p5')?>">
-								<i class="icon-people"></i>
+								<i class="fas fa-list-ol"></i>
 								<p>Nilai P5</p>
 								<!-- <span class="caret"></span> -->
 							</a>
