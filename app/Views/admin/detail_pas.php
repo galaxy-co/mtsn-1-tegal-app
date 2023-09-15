@@ -1,5 +1,3 @@
-
-        
 <div class="main-panel">
     <!-- Form -->
     <div class="content">
@@ -30,7 +28,11 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">Input Kelas</div>
+                            <div class="row">
+                                <div class="card-title col-11">Nilai Kelas</div>
+                                <div class="btn btn-delete btn-danger">Hapus</div>
+
+                            </div>
                         </div>
                         <?php if(session()->getFlashdata('success')) : ?>
                             <button type="button" class="btn btn-success" id="alertSuccess" style="display: none;"> Success</button>
@@ -60,7 +62,7 @@
                                     <div class="col-md-4 col-lg-4">
                                         <div class="form-group">
                                             <label for="defaultSelect">Kelas</label>
-                                            <select class="form-control form-control" id="id_kelas" name="id_kelas">
+                                            <select class="form-control form-control" id="id_kelas" name="id_kelas" disabled>
                                                <?php foreach($kelas as $ke) : ?>
                                                     <option value="<?= $ke['id_kelas']; ?>">
                                                         <?= $ke['tingkat'] .''. $ke['nama_kelas'] ?>
@@ -72,7 +74,7 @@
                                     <div class="col-md-4 col-lg-4">
                                         <div class="form-group">
                                             <label for="defaultSelect">Mapel</label>
-                                            <select class="form-control form-control" id="id_mapel" name="id_mapel">
+                                            <select class="form-control form-control" id="id_mapel" name="id_mapel" disabled>
                                                <?php foreach($mapel as $ke) : ?>
                                                     <option value="<?= $ke['id_mapel']; ?>">
                                                         <?= $ke['nama_mapel'] ?>
@@ -84,7 +86,7 @@
                                     <div class="col-md-4 col-lg-4">
                                         <div class="form-group">
                                             <label for="defaultSelect">Guru</label>
-                                            <select class="form-control form-control" id="id_guru" name="id_guru">
+                                            <select class="form-control form-control" id="id_guru" name="id_guru" disabled>
                                                <?php foreach($guru as $ke) : ?>
                                                     <option value="<?= $ke['id_guru']; ?>">
                                                         <?= $ke['nama_guru'] ?>
@@ -105,94 +107,66 @@
             </div>
         </div>
     </div>
-<!-- Tabel -->
+
     <div class="content">
-        <div class="page-inner">
-            <div class="row">
-
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex align-items-center">
-                                <h4 class="card-title">Data Nilai</h4>                
-                            </div>
-
-                        </div>
-                       
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table id="basic-datatables" class="display table table-striped table-hover" >
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Kelas</th>
-                                            <th>Mata Pelajaran</th>
-                                            <th>Guru</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach($nilai_pas as $n) : ?>
-                                            <tr>
-                                                <td><?= $n['id_nilai_pas'];?></td>
-                                                <td><?= $n['tingkat'].''.$n['nama_kelas'];?></td>
-                                                <td><?= $n['nama_mapel'];?></td>
-                                                <td><?= $n['nama_guru'];?></td>
-                                                <td >
-                                                    <form action="<?= base_url('admin/nilai/detail') ?>" method="GET" class="col-6">
-                                                        <input type="hidden" name="id_kelas" value="<?= $n['id_kelas']?>">
-                                                        <input type="hidden" name="id_mapel" value="<?= $n['id_mapel']?>">
-                                                        <input type="hidden" name="id_guru" value="<?= $n['id_guru']?>">
-                                                        <button type="submit"  class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Detail</a>  
-                                                        <!-- <button type="button" class="btn btn-danger btn-sm col-6"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</button> -->
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach ?>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                        <th>No</th>
-                                        <th>Kelas</th>
-                                        <th>Mata Pelajaran</th>
-                                        <th>Guru</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Nilai</div>
+                    </div>
+                    <div class="card-body">
+                    </div>
+                    <div class="card-footer">
+                        <a href="<?=base_url('admin/nilai')?>" class="btn btn-success">SIMPAN</a>   
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Upload File</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form action="<?= base_url('admin/guru/upload')?>" method="POST" enctype="multipart/form-data">
-        <div class="modal-body">
-            <div class="form-group">
-                <label for="exampleFormControlFile1">Pilih File Template Guru</label>
-                <input type="file" name="upload_guru" class="form-control-file" id="exampleFormControlFile1" required>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Upload</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+<script src="<?= base_url('assets/')?>assets/js/core/jquery.3.2.1.min.js"></script>
+<script>
+    async function postData(url,data){
+        let postAPI = await fetch(url, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        });
+        let response = await postAPI.json()
+        return response;
+    }
+
+    $('.kd-name-input').on('change',async function(e){
+        let data={
+            nilai_detail_ids : e.target.dataset.nilaidetailids,
+            kd_name : e.target.value,
+        }
+        console.log('DATA',data);
+        let changeKDName =await postData("http://localhost:8080/admin/nilai/storekdname",data);
+        console.log("KD NAME CHANGED",changeKDName);
+    });
+
+    $('.td-input').on('change',async function(e){
+        // console.log(e)
+        // return false;
+        data ={
+            nilai_detail_id : e.target.dataset.nilaidetailid,
+            nilai : e.target.value
+        }
+        let updateNilai = await  postData("http://localhost:8080/admin/nilai/storenilai",data);
+        console.log('UPDATE NILAI',updateNilai);
+    })
+
+    $('.btn-delete').click(async function(){
+        let confirm = window.confirm("Are you sure want to delete this data?");
+        if (confirm) {
+            $('#form-delete').trigger('submit')
+        }else{
+            return false;
+        }
+    })
+</script>

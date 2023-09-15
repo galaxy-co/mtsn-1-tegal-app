@@ -108,13 +108,13 @@
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>
-						<li class="nav-item">
+						<!-- <li class="nav-item">
 							<a href="<?= base_url('/admin/user')?>">
 								<i class="icon-home"></i>
-								<p>Users</p>
+								<p>Users</p> -->
 								<!-- <span class="caret"></span> -->
-							</a>
-						</li>
+							<!-- </a>
+						</li> -->
 						<!-- <li class="nav-item">
 							<a href="<?= base_url('/admin/inputNilai')?>">
 								<i class="icon-note"></i>

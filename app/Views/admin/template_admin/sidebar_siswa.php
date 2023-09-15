@@ -45,13 +45,13 @@
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>
-						<li class="nav-item">
+						<!-- <li class="nav-item">
 							<a href="<?= base_url('/siswa/raport')?>">
 								<i class="icon-layers"></i>
-								<p>Raport</p>
+								<p>Raport</p> -->
 								<!-- <span class="caret"></span> -->
-							</a>
-						</li>
+							<!-- </a>
+						</li> -->
 					<ul class="nav nav-warning">
 						<li class="nav-item">
 							<a href="<?= base_url('index.php/logout')?>">

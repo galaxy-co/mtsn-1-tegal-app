@@ -93,16 +93,10 @@ $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
         $routes->get('addAbsen/(:num)', 'Admin\NaikKelasController::addAbsen/$1');
     });
 
-    // absen
+    // pas
     $routes->group('pas',static function ($routes){
         $routes->get('/', 'Admin\PASController::index');
-        $routes->post('add', 'Admin\ASController::add');
-        $routes->post('update/(:num)', 'Admin\ASController::update/$1');
-        $routes->get('delete/(:num)', 'Admin\GuruController::deleteGuru/$1');
-        $routes->get('edit/(:num)', 'Admin\ASController::edit/$1');
-        $routes->post('upload', 'Admin\GuruController::uploadGuru');
-        $routes->get('dataSiswa/(:num)', 'Admin\ASController::dataSiswa/$1');
-        $routes->get('addAbsen/(:num)', 'Admin\ASController::addAbsen/$1');
+        $routes->get('detail', 'Admin\PASController::detail');
     });
 
     $routes->group('p5',static function ($routes){

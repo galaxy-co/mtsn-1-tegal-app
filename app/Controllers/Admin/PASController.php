@@ -40,7 +40,7 @@ class PASController extends BaseController
             ->groupBy('nilai_pas.id_kelas')
             ->groupBy('nilai_pas.id_mapel')
             ->findAll();
-            var_dump($data['nilai_pas']); die;
+            // dd($data);
         $data['kelas'] = $this->kelasModel->findAll();
         $data['guru'] = $this->guruModel->findAll();
         $data['mapel'] = $this->mapelModel->findAll();
@@ -48,5 +48,24 @@ class PASController extends BaseController
         echo view('admin/template_admin/sidebar');
         echo view('admin/pas', $data);
         echo view('admin/template_admin/footer');
+    }
+    public function detail(){
+        $dataInput = $this->request->getVar();
+        $kelas = $dataInput['id_kelas'];
+        $siswa = $this->siswaModel
+            ->join('nilai_pas','siswa.id_siswa = nilai_pas.id_siswa','left')
+            ->join('mapel','mapel.id_mapel = nilai_pas.id_mapel','left')
+            ->join('kelas','kelas.id_kelas = nilai_pas.id_kelas','left')
+            ->where('kelas.id_kelas',$dataInput['id_kelas'])
+            ->where('mapel.id_mapel',$dataInput['id_mapel'])
+            ->findAll();
+            $data['kelas'] = $this->kelasModel->findAll();
+            $data['guru'] = $this->guruModel->findAll();
+            $data['mapel'] = $this->mapelModel->findAll();
+
+            echo view('admin/template_admin/header');
+            echo view('admin/template_admin/sidebar');
+            echo view('admin/detail_pas', $data);
+            echo view('admin/template_admin/footer');
     }
 }
