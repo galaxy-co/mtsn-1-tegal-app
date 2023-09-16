@@ -1,4 +1,11 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/mtsntega/mtsn-1-tegal-1pp/
+    - export DEPLOYPATH=/home/mtsntega/raport-app.mtsn1tegal.sch.id/
     - /bin/cp -R * $DEPLOYPATH
+
+
+#     ---
+# deployment:
+#   tasks:
+#     - export DEPLOYPATH=/home/svnvbkdl/rizalazky.engineer/
+#     - /bin/cp -r * $DEPLOYPATH
