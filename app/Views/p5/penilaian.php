@@ -137,7 +137,7 @@
                                         <option 
                                           value="<?php echo $ni['id_nilaip5_option']?>" 
                                           class='opt-nilai' 
-                                          data-desc="<?= $ni['desc']?>" 
+                                          data-desc="<?= $ni['desc']?> <?= $prodim['desc']?>" 
                                           data-idsiswa='<?= $sis['id_siswa']?>' 
                                           data-idprojectdimensi='<?= $prodim['id_project_dimensi']?>'
                                           <?php if($nilaiSelected == $ni['id_nilaip5_option']) :?> selected <?php endif ?>
@@ -148,7 +148,7 @@
                                     </select>
                                   </td>
                                   <td>
-                                      <p id="<?= 'desc-'.$sis['id_siswa'].'-'.$prodim['id_project_dimensi'] ?>"><?php echo $arti_nilai ?></p>
+                                      <p id="<?= 'desc-'.$sis['id_siswa'].'-'.$prodim['id_project_dimensi'] ?>"><?php echo $arti_nilai ?><?php echo $prodim['desc'] ?></p>
                                   </td>
                                 <?php endforeach ?>
                               </tr>

@@ -1,0 +1,5 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/mtsntega/mtsn-1-tegal-1pp/
+    # - /bin/cp index.html $DEPLOYPATH
+    # - /bin/cp style.css $DEPLOYPATH
