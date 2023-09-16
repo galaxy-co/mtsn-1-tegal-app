@@ -1,4 +1,4 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/mtsntega/public_html/
+    - export DEPLOYPATH=/home/mtsntega/mtsn-1-tegal-1pp/
     - /bin/cp -R * $DEPLOYPATH
