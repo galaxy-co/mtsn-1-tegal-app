@@ -14,7 +14,7 @@ class PASModel extends Model
     protected $returnType           = 'array';
     protected $useSoftDelete        = false;
 
-    protected $allowedFields        = ['id_siswa', 'id_guru','id_mapel','nilai', 'type_test'];
+    protected $allowedFields        = ['id_siswa', 'id_guru','id_mapel','id_kelas','nilai', 'type_test'];
     // protected $DBGroup          = 'default';
     // protected $table            = 'pas';
     // protected $primaryKey       = 'id';

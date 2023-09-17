@@ -23,73 +23,15 @@
                         <a href="#"></a>
                     </li>
                 </ul>
+                
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="card-title col-11">Nilai Semester</div>
-                                <div class="btn btn-delete btn-danger">Hapus</div>
-
-                            </div>
-                        </div>
-                        <?php if(session()->getFlashdata('success')) : ?>
-                            <button type="button" class="btn btn-success" id="alertSuccess" style="display: none;"> Success</button>
-                            <script>
-                                document.addEventListener("DOMContentLoaded", function () {
-                                    var button = document.getElementById('alertSuccess');
-                                    if (button) {
-                                        button.click();
-                                    }
-                                });
-                            </script>
-                        <?php endif ?>
-                        <?php if (session()->getFlashdata('warning')) : ?>
-                            <button type="button" id="alertWarning" style="display: none;"></button>
-                            <script>
-                                document.addEventListener("DOMContentLoaded", function () {
-                                    var button = document.getElementById('alertWarning');
-                                    if (button) {
-                                        button.click();
-                                    }
-                                });
-                            </script>
-                        <?php endif ?>
-                      <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-4 col-lg-4">
-                                    <label for="">Mapel</label>
-                                    <input type="text" class="form-control" value="<?= $mapel['nama_mapel']?>" disabled>
-                                </div>
-                                <div class="col-md-4 col-lg-4">
-                                    <label for="">KKM</label>
-                                    <input type="text" class="form-control" value="<?= $mapel['kkm']?>" disabled>
-                                </div>
-                                <div class="col-md-4 col-lg-4">
-                                    <label for="">Guru Pengampu</label>
-                                    <input type="text" class="form-control" value="<?= $guru['nama_guru']?>" disabled>
-                                </div>
-                            </div>
-
-                      </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="content">
-        <div class="page-inner">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
                             <div class="card-title">Nilai Semester</div>
                         </div>
-                        <form action="<?= base_url('admin/pas/store')?>" method="POST">
-                        <input type="hidden" name="id_kelas" value="<?= $kelas['id_kelas']?>">
-                        <input type="hidden" name="id_mapel" value="<?= $mapel['id_mapel']?>">
-                        <input type="hidden" name="id_guru" value="<?= $guru['id_guru']?>">
+                        <form action="<?= base_url('admin/pas/update')?>" method="POST">
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
@@ -97,16 +39,37 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Nama Siswa</th>
+                                                <th>Mapel</th>
+                                                <th>KKM</th>
+                                                <th>Guru Pengampu</th>
+                                                <th>Kelas</th>
                                                 <th>Nilasi Semester</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $no = 0; foreach($siswa as $s) : ?>
+                                            <?php
+                                             $idNilaitoUpdate = []; 
+                                             $nilaiToUpdate = [];
+                                             ?>
+                                            <?php $no = 0; foreach($nilai_pas as $s) : ?>
                                                 <tr>
                                                     <td scope="row"><?= ++$no ?></td>
                                                     <td><?= $s['nama_siswa']?></td>
-                                                    <td><input type="text" class="form-control" name="nilai[]">
+                                                    <td><?= $s['nama_mapel']?></td>
+                                                    <td><?= $s['kkm']?></td>
+                                                    <td><?= $s['nama_guru']?></td>
+                                                    <td><?= $s['tingkat'] . $s['nama_kelas']?></td>
+                                                    <td>
+                                                        <?php if($s['nilai'] < $s['kkm']) : ?>
+                                                        <input type="text" class="form-control" name="nilai[]" style="color:red" value="<?= $s['nilai']?>">
+                                                        <?php else : ?>
+                                                            <input type="text" class="form-control" name="nilai[]" value="<?= $s['nilai']?>">
+                                                            <?php endif ?>
+                                                    <input type="hidden" class="form-control" name="id_nilai_pas[]" value="<?= $s['id_nilai_pas']?>">
+                                                    <input type="hidden" class="form-control" name="id_kelas[]" value="<?= $s['id_kelas']?>">
+                                                    <input type="hidden" class="form-control" name="id_mapel[]" value="<?= $s['id_mapel']?>">
                                                     <input type="hidden" class="form-control" name="id_siswa[]" value="<?= $s['id_siswa']?>">
+                                                    <input type="hidden" class="form-control" name="id_guru[]" value="<?= $s['id_guru']?>">
                                                     </td>
                                                 </tr>
                                             <?php endforeach ?>
@@ -121,6 +84,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+            
     </div>
     </div>
 </div>
