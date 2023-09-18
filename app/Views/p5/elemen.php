@@ -65,7 +65,7 @@
                                       >
                                       <i class="icon-note"></i> Edit
                                     </button>  
-                                    <a href="<?= base_url('admin/p5/delete/elemen/') . $el['id_element']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
+                                    <a href="<?= base_url('admin/p5/delete/elemen/') . $el['id_element'].'?tingkat='.$tingkat?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
                                 </td>
                               </tr>
                               <?php $temp =$el['kode_parent_element']; ?>
@@ -128,7 +128,7 @@
                                       >
                                       <i class="icon-note"></i> Edit
                                     </button>  
-                                    <a href="<?= base_url('admin/p5/delete/elemen/') . $el['id_element']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
+                                    <a href="<?= base_url('admin/p5/delete/elemen/') . $el['id_element'].'?tingkat='.$tingkat?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
                                 </td>
                               </tr>
                               <?php $tempSub = $el['id_dimensi']; ?>
@@ -189,7 +189,7 @@
                                       >
                                       <i class="icon-note"></i> Edit
                                     </button>  
-                                    <a href="<?= base_url('admin/p5/delete/capaian/') . $el['id_capaian']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
+                                    <a href="<?= base_url('admin/p5/delete/capaian/') . $el['id_capaian'].'?tingkat='.$tingkat?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
                                 </td>
                               </tr>
                               <?php endif ?>
@@ -214,7 +214,7 @@
         <h1 class="modal-title fs-5" id="exampleModalLabel">FORM ELEMENT</h1>
         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="<?= base_url('admin/p5/store/elemen')?>" id='form-elemen' method="post">
+      <form action="<?= base_url('admin/p5/store/elemen?tingkat='.$tingkat)?>" id='form-elemen' method="post">
         <div class="modal-body">  
             <input type="hidden" name="id_element">
             <div class="card-body">
@@ -281,10 +281,10 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">FORM ELEMENT</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">FORM CAPAIAN</h1>
         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="<?= base_url('admin/p5/store/capaian')?>" method="post">
+      <form action="<?= base_url('admin/p5/store/capaian?tingkat='.$tingkat)?>" method="post">
       <div class="modal-body">  
           <input type="hidden" name="id_capaian">
           <div class="row">
@@ -308,9 +308,7 @@
               </div>
               <div class="form-group">
                 <label for="dimensi">Capaian</label>
-                <textarea name="desc" id="" class='form-control' cols="30" rows="10">
-                  
-                </textarea>
+                <textarea name="desc" id="" class='form-control' cols="30" rows="3"></textarea>
               </div>
             </div>
             <div class="col-md-6">
