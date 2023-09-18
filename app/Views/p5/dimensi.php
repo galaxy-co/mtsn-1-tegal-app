@@ -28,7 +28,7 @@
                       FORM DIMENSI
                     </h5>
                   </div>
-                  <form action="<?= base_url('admin/p5/store/dimensi')?>" method="post">
+                  <form action="<?= base_url('admin/p5/store/dimensi?tingkat='.$tingkat)?>" method="post">
                     <input type="hidden" name="id_dimensi">
                     <div class="card-body">
                       <div class="form-group">
@@ -80,7 +80,7 @@
                                       >
                                       <i class="icon-note"></i> Edit
                                     </button>  
-                                    <a href="<?= base_url('admin/p5/delete/dimensi/') . $dimen['id_dimensi']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
+                                    <a href="<?= base_url('admin/p5/delete/dimensi/') . $dimen['id_dimensi'].'?tingkat='.$tingkat ?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
                                 </td>
                               </tr>
                             <?php endforeach ?>
