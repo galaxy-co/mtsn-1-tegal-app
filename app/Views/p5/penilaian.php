@@ -21,6 +21,9 @@
                     <a class="nav-link active" aria-current="page" href="<?= base_url('admin/p5/view/penilaian?tingkat='.$tingkat) ?>">PENILAIAN</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="<?= base_url('admin/p5/view/cek_deskripsi?tingkat='.$tingkat) ?>">CEK DESKRIPSI</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="<?= base_url('admin/p5/view/raport?tingkat='.$tingkat) ?>">RAPORT</a>
                 </li>
             </ul>
@@ -151,7 +154,9 @@
                                       </select>
                                     </td>
                                     <td>
-                                        <p id="<?= 'desc-'.$sis['id_siswa'].'-'.$prodim['id_project_dimensi'] ?>"><?php echo $arti_nilai ?><?php echo $prodim['desc'] ?></p>
+                                      
+                                      <p id="<?= 'desc-'.$sis['id_siswa'].'-'.$prodim['id_project_dimensi'] ?>"><?php echo $arti_nilai ?><?php if($nilaiSelected) : ?><?php echo $prodim['desc'] ?><?php endif ?></p>
+                                      
                                     </td>
                                   <?php endforeach ?>
                                 </tr>

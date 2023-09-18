@@ -71,7 +71,7 @@ class NilaiController extends BaseController
                 foreach($data['rf_nilai_detail'] as $rf){     
                     $dataSaveNilaiDetail =  [
                         "rf_nilai_detail_id" =>$rf['rf_nilai_detail_id'],
-                        "nilai" =>0,
+                        
                         "notes"=>"sample notes",
                         "kd_name" => "KD ".$i,
                         "id_nilai" => $nilai_id
