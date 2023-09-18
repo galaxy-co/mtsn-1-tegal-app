@@ -5,7 +5,7 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">     
-                <h4 class="page-title">Nilai</h4>
+                <h4 class="page-title">Nilai Semester</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#">
@@ -16,7 +16,7 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Nilai</a>
+                        <a href="#">Nilai Semester</a>
                     </li>
                     <li class="separator">
                         <i class="flaticon-right-arrow"></i>
@@ -30,7 +30,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">Input Kelas</div>
+                            <div class="card-title">Pilih Kelas, Mapel dan Guru</div>
                         </div>
                         <?php if(session()->getFlashdata('success')) : ?>
                             <button type="button" class="btn btn-success" id="alertSuccess" style="display: none;"> Success</button>
@@ -139,13 +139,7 @@
                                                 <td><?= $n['nama_mapel'];?></td>
                                                 <td><?= $n['nama_guru'];?></td>
                                                 <td >
-                                                    <form action="<?= base_url('admin/nilai/detail') ?>" method="GET" class="col-6">
-                                                        <input type="hidden" name="id_kelas" value="<?= $n['id_kelas']?>">
-                                                        <input type="hidden" name="id_mapel" value="<?= $n['id_mapel']?>">
-                                                        <input type="hidden" name="id_guru" value="<?= $n['id_guru']?>">
-                                                        <button type="submit"  class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Detail</a>  
-                                                        <!-- <button type="button" class="btn btn-danger btn-sm col-6"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</button> -->
-                                                    </form>
+                                                   <a href="<?= base_url('admin/pas/edit/') . $n['id_nilai_pas']?>" class="btn btn-info">Detail</a>
                                                 </td>
                                             </tr>
                                         <?php endforeach ?>

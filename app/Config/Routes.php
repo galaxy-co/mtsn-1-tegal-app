@@ -98,6 +98,9 @@ $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
     $routes->group('pas',static function ($routes){
         $routes->get('/', 'Admin\PASController::index');
         $routes->get('detail', 'Admin\PASController::detail');
+        $routes->post('store', 'Admin\PASController::store');
+        $routes->get('edit/(:num)', 'Admin\PASController::edit/$1');
+        $routes->post('update', 'Admin\PASController::update');
     });
 
     $routes->group('p5',static function ($routes){
