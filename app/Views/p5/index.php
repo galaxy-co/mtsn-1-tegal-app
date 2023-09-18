@@ -4,32 +4,15 @@
     <!-- Form -->
     <div class="content">
        <div class="page-inner">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="<?= base_url('admin/p5/dimensi') ?>">DIMENSI</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/p5/view/elemen') ?>">ELEMEN DAN CAPAIAN</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/p5/view/nilai') ?>">NILAI</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/p5/view/proyek') ?>">PROYEK</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/p5/view/penilaian') ?>">PENILAIAN</a>
-                </li>
-            </ul>
-            <div class="tab-content" id="myTabContent">
-                <table class='table table-responsive'>
-                    <thead>
-                        <th>KODE</th>
-                        <th>DIMENSI</th>
-                    </thead>
-                    
-                </table>
-            </div>
+        <?php foreach ($tingkat_kelas as $ting) { ?>
+            <a class="card" href="<?= base_url('admin/p5/view/dimensi?tingkat='.$ting)?>">
+                <div class="card-body">
+                    <div class="card-tit">
+                        P5 TINGKAT <?php echo $ting ?>
+                    </div>
+                </div>
+            </a>
+        <?php } ?>
        </div> 
     </div>
 </div>

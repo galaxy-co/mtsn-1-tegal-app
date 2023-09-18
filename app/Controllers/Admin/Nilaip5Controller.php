@@ -37,8 +37,9 @@ class Nilaip5Controller extends BaseController
             case 'dimensi':
                 
                 return [
+                    'tingkat' => $this->request->getVar('tingkat'),
                     'kelas' => $this->kelasModel->where('kurikulum',2)->findAll(),
-                    'dimensi' => $this->DimensiModel->findAll(),
+                    'dimensi' => $this->DimensiModel->where('id_kelas',$this->request->getVar('tingkat'))->findAll(),
                 ];
                 break;
                 case 'elemen':
@@ -50,12 +51,14 @@ class Nilaip5Controller extends BaseController
                         '
                         )
                         ->join('element_p5 AS element_p5_child','element_p5_child.id_element = element_p5.id_parent_element','left')
-                        ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi','left')
+                        ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi AND dimensi_p5.id_kelas='.$this->request->getVar('tingkat'),'left')
                         ->findAll(),
                         'capaian' => $this->CapaianModel
                         ->select('capaian_p5.kode_capaian,capaian_p5.nilai_rahmatan_lil_alamin,capaian_p5.sub_nilai,capaian_p5.id_capaian,capaian_p5.desc,capaian_p5.id_parent_element, 
-                        element_p5.desc as element_desc')
+                        element_p5.desc as element_desc,
+                        dimensi_p5.id_dimensi')
                         ->join('element_p5','element_p5.id_element = capaian_p5.id_parent_element','left')
+                        ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi AND dimensi_p5.id_kelas='.$this->request->getVar('tingkat'),'left')
                         ->findAll(),
                         'dimensi' => $this->DimensiModel->findAll()
                     ];
@@ -66,14 +69,14 @@ class Nilaip5Controller extends BaseController
                         'proyek' => $this->ProyekModel->findAll(),
                         'capaian' => $this->CapaianModel
                             ->join('element_p5','element_p5.id_element = capaian_p5.id_parent_element','left')
-                            ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi','left')
+                            ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi AND dimensi_p5.id_kelas='.$this->request->getVar('tingkat'),'left')
                             ->findAll(),
                         'project_dimensi' =>$this->ProjectDimensiModel
                             ->select('
                                 dimensi_p5.dimensi,dimensi_p5.id_dimensi,dimensi_p5.kode_dimensi,
                                 capaian_p5.*,
                                 project_dimensi.id_project_dimensi,project_dimensi.id_project')
-                            ->join('dimensi_p5','dimensi_p5.id_dimensi = project_dimensi.id_dimensi','left')
+                            ->join('dimensi_p5','dimensi_p5.id_dimensi = project_dimensi.id_dimensi AND dimensi_p5.id_kelas='.$this->request->getVar('tingkat'),'left')
                             ->join('capaian_p5','capaian_p5.id_capaian = project_dimensi.kode_capaian_fase','left')
                             ->findAll()
                     ];
@@ -90,20 +93,24 @@ class Nilaip5Controller extends BaseController
                 ];
                 break;
             default:
-                # code...
+               return [
+                'tingkat_kelas' => [7,8,9]
+               ];
                 break;
         }
     }
 
-    public function index($key = 'dimensi')
+    public function index($key = 'index')
     {
         
         if($key == 'capaian') $key ='elemen';
         if($key == 'capaian_proyek') $key ='proyek';
+        
         $data = $this->getData($key);
 
+        $data['tingkat'] = $this->request->getVar('tingkat');
         if($key =='penilaian'){
-            return redirect()->to('/admin/p5/view/penilaian/'.$data['proyek'][0]['id_project']);
+            return redirect()->to('/admin/p5/view/penilaian/'.$data['proyek'][0]['id_project'].'?tingkat='.$data['tingkat']);
         }
 
 
@@ -115,6 +122,7 @@ class Nilaip5Controller extends BaseController
 
     public function penilaian($id){ // VIEW/PREMALINK
         $id_kelas = $this->request->getVar('id_kelas');
+        
         
         // $data = $this->getData('penilaian',);
         $data=[
@@ -136,6 +144,7 @@ class Nilaip5Controller extends BaseController
             'kelas' => $this->kelasModel->findAll(),
             'nilai' => $this->RFNilaiP5Model->findAll()
         ];
+        $data['tingkat'] = $this->request->getVar('tingkat');
         // dd($data);
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
@@ -183,7 +192,7 @@ class Nilaip5Controller extends BaseController
         $save=$model->save($data);
         
         session()->setFlashdata('success', 'Sukses Input Kelas');
-        return redirect()->to('/admin/p5/view/'.$key);
+        return redirect()->to('/admin/p5/view/'.$key.'?tingkat='.$this->request->getVar('tingkat'));
     }
 
     public function store_nilai(){
@@ -205,7 +214,7 @@ class Nilaip5Controller extends BaseController
         $model = $this->getModel($key);
         $model->delete($id);
         session()->setFlashdata('success', 'Sukses Delete Data');
-        return redirect()->to('/admin/p5/view/'.$key);
+        return redirect()->to('/admin/p5/view/'.$key.'?tingkat='.$this->request->getVar('tingkat'));
     }
 
 }

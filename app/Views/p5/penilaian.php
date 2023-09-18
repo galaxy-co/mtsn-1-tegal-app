@@ -6,26 +6,26 @@
        <div class="page-inner">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/p5/view/dimensi') ?>">DIMENSI</a>
+                    <a class="nav-link" href="<?= base_url('admin/p5/view/dimensi?tingkat='.$tingkat) ?>">DIMENSI</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"  href="<?= base_url('admin/p5/view/elemen') ?>">ELEMEN DAN CAPAIAN</a>
+                    <a class="nav-link"  href="<?= base_url('admin/p5/view/elemen?tingkat='.$tingkat) ?>">ELEMEN DAN CAPAIAN</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/p5/view/nilai') ?>">NILAI</a>
+                    <a class="nav-link" href="<?= base_url('admin/p5/view/nilai?tingkat='.$tingkat) ?>">NILAI</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/p5/view/proyek') ?>">PROYEK</a>
+                    <a class="nav-link" href="<?= base_url('admin/p5/view/proyek?tingkat='.$tingkat) ?>">PROYEK</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="<?= base_url('admin/p5/view/penilaian') ?>">PENILAIAN</a>
+                    <a class="nav-link active" aria-current="page" href="<?= base_url('admin/p5/view/penilaian?tingkat='.$tingkat) ?>">PENILAIAN</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
               <ul class="nav nav-tabs">
                 <?php foreach($proyek as $pro): ?>
                   <li class="nav-item">
-                      <a class="nav-link <?php echo $pro['id_project'] == $proyek_detail['id_project'] ?  'active' :  '' ?>" href="<?= base_url('admin/p5/view/penilaian/').$pro['id_project'] ?>"><?php echo $pro['name']?></a>
+                      <a class="nav-link <?php echo $pro['id_project'] == $proyek_detail['id_project'] ?  'active' :  '' ?>" href="<?= base_url('admin/p5/view/penilaian/').$pro['id_project'].'?tingkat='.$tingkat ?>"><?php echo $pro['name']?></a>
                   </li>
                 <?php endforeach ?>
               </ul>

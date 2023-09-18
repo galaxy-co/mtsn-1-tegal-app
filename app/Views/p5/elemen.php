@@ -6,19 +6,19 @@
        <div class="page-inner">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/p5/view/dimensi') ?>">DIMENSI</a>
+                    <a class="nav-link" href="<?= base_url('admin/p5/view/dimensi?tingkat='.$tingkat) ?>">DIMENSI</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="<?= base_url('admin/p5/view/elemen') ?>">ELEMEN DAN CAPAIAN</a>
+                    <a class="nav-link active" aria-current="page" href="<?= base_url('admin/p5/view/elemen?tingkat='.$tingkat) ?>">ELEMEN DAN CAPAIAN</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/p5/view/nilai') ?>">NILAI</a>
+                    <a class="nav-link" href="<?= base_url('admin/p5/view/nilai?tingkat='.$tingkat) ?>">NILAI</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/p5/view/proyek') ?>">PROYEK</a>
+                    <a class="nav-link" href="<?= base_url('admin/p5/view/proyek?tingkat='.$tingkat) ?>">PROYEK</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/p5/view/penilaian') ?>">PENILAIAN</a>
+                    <a class="nav-link" href="<?= base_url('admin/p5/view/penilaian?tingkat='.$tingkat) ?>">PENILAIAN</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -46,7 +46,7 @@
                           </thead>
                           <tbody>
                             <?php $temp=''; foreach($elemen as $el) : ?>
-                              <?php if(!$el['kode_parent_element']):?>
+                              <?php if(!$el['kode_parent_element']  && $el['id_dimensi']):?>
                               <tr>
                                 <td><?= $el['dimensi']?></td>
                                 <td><?= $el['kode_element']?></td>
@@ -104,7 +104,7 @@
                             <?php $tempSub=''; ?>
                             <?php $tempSubElementParent=''; ?>
                             <?php foreach($elemen as $el) : ?>
-                              <?php if($el['kode_parent_element']): ?>
+                              <?php if($el['kode_parent_element'] && $el['id_dimensi']): ?>
                               <tr>
                                 <td class='fw-bold'><?= $tempSub !== $el['id_dimensi'] ? $el['dimensi'] : ''?></td>
                                 <td class='fw-bold'><?= $tempSubElementParent !== $el['element_parent_desc'] ? $el['element_parent_desc'] : '' ?></td>
@@ -168,7 +168,7 @@
                           </thead>
                           <tbody>
                             <?php foreach($capaian as $el) : ?>
-                              
+                              <?php if($el['id_dimensi']) :?>
                               <tr>
                                 <td><?= $el['kode_capaian']?></td>
                                 <td><?= $el['element_desc'] ?></td>
@@ -192,7 +192,7 @@
                                     <a href="<?= base_url('admin/p5/delete/capaian/') . $el['id_capaian']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
                                 </td>
                               </tr>
-                              
+                              <?php endif ?>
                             <?php endforeach ?>
                           </tbody>
                       </table>
