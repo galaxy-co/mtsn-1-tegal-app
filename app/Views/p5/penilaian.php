@@ -20,6 +20,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="<?= base_url('admin/p5/view/penilaian?tingkat='.$tingkat) ?>">PENILAIAN</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="<?= base_url('admin/p5/view/raport?tingkat='.$tingkat) ?>">RAPORT</a>
+                </li>
             </ul>
             <div class="tab-content" id="myTabContent">
               <ul class="nav nav-tabs">
