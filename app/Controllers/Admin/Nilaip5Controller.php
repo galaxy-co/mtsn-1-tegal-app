@@ -89,7 +89,7 @@ class Nilaip5Controller extends BaseController
                 break;
             case 'penilaian':
                 return [
-                    'proyek' =>$this->ProyekModel->findAll()
+                    'proyek' =>$this->ProyekModel->where('tingkat',$this->request->getVar('tingkat'))->findAll()
                 ];
                 break;
             default:
@@ -111,7 +111,10 @@ class Nilaip5Controller extends BaseController
 
         $data['tingkat'] = $this->request->getVar('tingkat');
         if($key =='penilaian'){
-            return redirect()->to('/admin/p5/view/penilaian/'.$data['proyek'][0]['id_project'].'?tingkat='.$data['tingkat']);
+            // dd($data);
+            if(count($data['proyek']) > 0){
+                return redirect()->to('/admin/p5/view/penilaian/'.$data['proyek'][0]['id_project'].'?tingkat='.$data['tingkat']);
+            }
         }
 
 
@@ -131,7 +134,7 @@ class Nilaip5Controller extends BaseController
                 ->select('nilaip5.*,rf_nilai_p5_options.desc')
                 ->join('rf_nilai_p5_options','rf_nilai_p5_options.id_nilaip5_option = nilaip5.nilai','left')
                 ->findAll(),
-            'proyek' =>$this->ProyekModel->findAll(),
+            'proyek' =>$this->ProyekModel->where('tingkat',$this->request->getVar('tingkat'))->findAll(),
             'proyek_detail'=>$this->ProyekModel->find($id),
             'project_dimensi' =>$this->ProjectDimensiModel
                     ->select('
@@ -140,12 +143,14 @@ class Nilaip5Controller extends BaseController
                         project_dimensi.id_project_dimensi,project_dimensi.id_project')
                     ->join('dimensi_p5','dimensi_p5.id_dimensi = project_dimensi.id_dimensi','left')
                     ->join('capaian_p5','capaian_p5.id_capaian = project_dimensi.kode_capaian_fase','left')
+                    ->where('project_dimensi.id_project',$id)
                     ->findAll(),
             'siswa'=> $this->SiswaModel->where('kelas',$id_kelas)->findAll(),
-            'kelas' => $this->kelasModel->findAll(),
+            'kelas' => $this->kelasModel->where('tingkat', $this->request->getVar('tingkat'))->findAll(),
             'nilai' => $this->RFNilaiP5Model->findAll()
         ];
         $data['tingkat'] = $this->request->getVar('tingkat');
+        $data['id_kelas'] = $id_kelas;
         // dd($data);
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');

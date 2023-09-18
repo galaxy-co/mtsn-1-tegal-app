@@ -29,6 +29,7 @@
                   </li>
                 <?php endforeach ?>
               </ul>
+              <?php if(count($proyek) > 0) :?>
               <div class="tab-content" id="myTabContent2">
                 <div class="card">
                   <div class="card-header">
@@ -57,109 +58,119 @@
                     <div class="col-8">
                       <div class="card-title">PENILAIAN</div>
                     </div>
-                    
+                    <div class="col-4">
+                      <form action="<?= base_url('admin/p5/view/penilaian/'.$proyek_detail['id_project'])?>" method="get">
+                        <input type="hidden" name="tingkat" value="<?= $tingkat ?>">
+                        <div class="input-group mb-3">
+                          <select name="id_kelas" id="" class='form-control'>
+                            <?php foreach($kelas as $kel) :?>
+                              <option value="">Hello, Select me first!</option>
+                              <option value="<?= $kel['id_kelas']?>" <?php if($kel['id_kelas'] == $id_kelas ) :?> selected <?php endif ?>><?= $kel['tingkat'] .$kel['nama_kelas']?></option>
+                            <?php endforeach?>
+                          </select>
+                          <button class="btn btn-outline-secondary" type="submit" id="button-addon2">SUBMIT</button>
+                        </div>
+                      </form>
+                    </div>
                   </div>
                   <div class="card-body">
-                    <div class="row">
-                      <div class="col-8"></div>
-                      <div class="col-4">
-                            <form action="<?= base_url('admin/p5/view/penilaian/'.$proyek_detail['id_project'])?>" method="get">
-                              <div class="input-group mb-3">
-                                <select name="id_kelas" id="" class='form-control'>
-                                  <?php foreach($kelas as $kel) :?>
-                                    <option value="<?= $kel['id_kelas']?>"><?= $kel['tingkat'] .$kel['nama_kelas']?></option>
-                                  <?php endforeach?>
-                                </select>
-                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">SUBMIT</button>
-                              </div>
-                            </form>
-                      </div>
-                    </div>
-                    <div class="table-responsive col-md-12">
-                      <table class='table phtable-bordered text-center fs-6 table-sm' border="1">
-                          <thead>
-                            <tr>
-                              <th rowspan="4">NAMA SISWA</th>
-                              <?php foreach($project_dimensi as $prodim): ?>
-                                <th colspan="2"><?= $prodim['dimensi']?></th>
-                              <?php endforeach ?>
-                            </tr>
-                            <tr>
-                            <?php foreach($project_dimensi as $prodim): ?>
-                              <th>DIMENSI</th>
-                              <th>CAPAIAN</th>
-                            <?php endforeach ?>
-                            </tr>
-                            <tr>
-                            <?php foreach($project_dimensi as $prodim): ?>
-                              <th><p class='fs-6'><?php echo $prodim['dimensi'] ?></p></th>
-                              <th><p class='fs-6'><?php echo $prodim['desc'] ?></p></th>
-                            <?php endforeach ?>
-                            </tr>
-                            <tr>
-                            <?php foreach($project_dimensi as $prodim): ?>
-                              <th>NILAI</th>
-                              <th>DESKRIPSI</th>
-                            <?php endforeach ?>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <?php foreach($siswa as $sis):?>
+                    <?php if(count($siswa) > 0) : ?>
+                      <div class="table-responsive col-md-12">
+                        <table class='table phtable-bordered text-center fs-6 table-sm' border="1">
+                            <thead>
                               <tr>
-                                <td>
-                                  <?php echo $sis['nama_siswa'] ?>
-                                </td>
+                                <th rowspan="4">NAMA SISWA</th>
                                 <?php foreach($project_dimensi as $prodim): ?>
-
-                                  <?php
-                                    $id_nilai = '';
-                                    $nilaiSelected='';
-                                    $arti_nilai='';
-                                    foreach ($penilaian as $pen) {
-                                      if($prodim['id_project_dimensi'] == $pen['id_project_dimensi'] && $sis['id_siswa']== $pen['id_siswa']){
-                                        $id_nilai = $pen['id_nilai'];
-                                        $nilaiSelected = $pen['nilai'];
-                                        $arti_nilai = $pen['desc'];
-                                      }
-                                    }  
-                                  ?>
-                                  <td>
-                                    <select 
-                                      name="" id="" 
-                                      class='form-control select-nilai' 
-                                      value="<?= $nilaiSelected ?>" 
-                                      data-id_nilai="<?= $id_nilai ?>"
-                                      >
-                                      
-                                      <?php foreach($nilai as $ni) :?>
-                                        <!-- nilai desc value must be from nilai desc instead from dimensi desc, but, in showcase project(xls app), the desc is from dimensi -->
-                                        
-                                        <option 
-                                          value="<?php echo $ni['id_nilaip5_option']?>" 
-                                          class='opt-nilai' 
-                                          data-desc="<?= $ni['desc']?> <?= $prodim['desc']?>" 
-                                          data-idsiswa='<?= $sis['id_siswa']?>' 
-                                          data-idprojectdimensi='<?= $prodim['id_project_dimensi']?>'
-                                          <?php if($nilaiSelected == $ni['id_nilaip5_option']) :?> selected <?php endif ?>
-                                          >
-                                          <?php echo $ni['nilai']?>
-                                        </option>
-                                      <?php endforeach ?>
-                                    </select>
-                                  </td>
-                                  <td>
-                                      <p id="<?= 'desc-'.$sis['id_siswa'].'-'.$prodim['id_project_dimensi'] ?>"><?php echo $arti_nilai ?><?php echo $prodim['desc'] ?></p>
-                                  </td>
+                                  <th colspan="2"><?= $prodim['dimensi']?></th>
                                 <?php endforeach ?>
                               </tr>
-                            <?php endforeach ?>
-                          </tbody>
-                      </table>
-                    </div>
+                              <tr>
+                              <?php foreach($project_dimensi as $prodim): ?>
+                                <th>DIMENSI</th>
+                                <th>CAPAIAN</th>
+                              <?php endforeach ?>
+                              </tr>
+                              <tr>
+                              <?php foreach($project_dimensi as $prodim): ?>
+                                <th><p class='fs-6'><?php echo $prodim['dimensi'] ?></p></th>
+                                <th><p class='fs-6'><?php echo $prodim['desc'] ?></p></th>
+                              <?php endforeach ?>
+                              </tr>
+                              <tr>
+                              <?php foreach($project_dimensi as $prodim): ?>
+                                <th>NILAI</th>
+                                <th>DESKRIPSI</th>
+                              <?php endforeach ?>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <?php foreach($siswa as $sis):?>
+                                <tr>
+                                  <td>
+                                    <?php echo $sis['nama_siswa'] ?>
+                                  </td>
+                                  <?php foreach($project_dimensi as $prodim): ?>
+  
+                                    <?php
+                                      $id_nilai = '';
+                                      $nilaiSelected='';
+                                      $arti_nilai='';
+                                      foreach ($penilaian as $pen) {
+                                        if($prodim['id_project_dimensi'] == $pen['id_project_dimensi'] && $sis['id_siswa']== $pen['id_siswa']){
+                                          $id_nilai = $pen['id_nilai'];
+                                          $nilaiSelected = $pen['nilai'];
+                                          $arti_nilai = $pen['desc'];
+                                        }
+                                      }  
+                                    ?>
+                                    <td>
+                                      <select 
+                                        name="" id="" 
+                                        class='form-control select-nilai' 
+                                        value="<?= $nilaiSelected ?>" 
+                                        data-id_nilai="<?= $id_nilai ?>"
+                                        >
+                                        
+                                        <?php foreach($nilai as $ni) :?>
+                                          <!-- nilai desc value must be from nilai desc instead from dimensi desc, but, in showcase project(xls app), the desc is from dimensi -->
+                                          
+                                          <option 
+                                            value="<?php echo $ni['id_nilaip5_option']?>" 
+                                            class='opt-nilai' 
+                                            data-desc="<?= $ni['desc']?> <?= $prodim['desc']?>" 
+                                            data-idsiswa='<?= $sis['id_siswa']?>' 
+                                            data-idprojectdimensi='<?= $prodim['id_project_dimensi']?>'
+                                            <?php if($nilaiSelected == $ni['id_nilaip5_option']) :?> selected <?php endif ?>
+                                            >
+                                            <?php echo $ni['nilai']?>
+                                          </option>
+                                        <?php endforeach ?>
+                                      </select>
+                                    </td>
+                                    <td>
+                                        <p id="<?= 'desc-'.$sis['id_siswa'].'-'.$prodim['id_project_dimensi'] ?>"><?php echo $arti_nilai ?><?php echo $prodim['desc'] ?></p>
+                                    </td>
+                                  <?php endforeach ?>
+                                </tr>
+                              <?php endforeach ?>
+                            </tbody>
+                        </table>
+                      </div>
+
+                    <?php endif ?>
                   </div>
                 </div>
 
               </div>
+              <?php else: ?>
+                <div class="jumbotron">
+                  <h1 class="display-4">Upss!</h1>
+                  <p class="lead">It seems that <span class='fw-bold'>"tingkat <?= $tingkat ?>"</span> does not have a project yet!</p>
+                  <hr class="my-4">
+                  <p>Click Here to add projects.</p>
+                  <a class="btn btn-primary btn-lg" href="<?= base_url('admin/p5/view/proyek?tingkat='.$tingkat) ?>" role="button">Add Projects</a>
+                </div>
+              <?php endif ?>
             </div>
        </div> 
     </div>
