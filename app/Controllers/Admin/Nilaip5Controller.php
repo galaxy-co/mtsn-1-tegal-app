@@ -38,7 +38,7 @@ class Nilaip5Controller extends BaseController
                 
                 return [
                     'kelas' => $this->kelasModel->where('kurikulum',2)->findAll(),
-                    'dimensi' => $this->DimensiModel->join('kelas','kelas.id_kelas = dimensi_p5.id_kelas','left')->findAll(),
+                    'dimensi' => $this->DimensiModel->findAll(),
                 ];
                 break;
                 case 'elemen':

@@ -40,11 +40,11 @@
                         <input type="text" name="dimensi" class='form-control'>
                       </div>
                       <div class="form-group">
-                        <label for="dimensi">KELAS</label>
-                        <select name="id_kelas" id="" class='form-control'>
-                          <?php foreach($kelas as $kel) : ?>
-                            <option value="<?php echo $kel['id_kelas']?>"> <?= $kel['tingkat'] .''. $kel['nama_kelas'] ?></option>
-                          <?php endforeach ?>
+                        <label for="dimensi">TINGKAT</label>
+                        <select class="form-control form-control" id="id_kelas" name="id_kelas">
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
                         </select>
                       </div>
                     </div>
@@ -63,7 +63,7 @@
                           <thead>
                               <th>KODE</th>
                               <th>DIMENSI</th>
-                              <th>KELAS</th>
+                              <th>TINGKAT</th>
                               <th>ACTION</th>
                           </thead>
                           <tbody>
@@ -71,7 +71,7 @@
                               <tr>
                                 <td><?= $dimen['kode_dimensi']?></td>
                                 <td><?= $dimen['dimensi']?></td>
-                                <td><?= $dimen['tingkat'].''.$dimen['nama_kelas']?></td>
+                                <td><?= $dimen['id_kelas'] ?></td>
                                 <td>
                                     <button 
                                       class='btn btn-info btn-sm btn-edit-dimensi'
