@@ -66,7 +66,7 @@ class Nilaip5Controller extends BaseController
             case 'proyek':
                     return [
                         'dimensi' => $this->DimensiModel->findAll(),
-                        'proyek' => $this->ProyekModel->findAll(),
+                        'proyek' => $this->ProyekModel->where('tingkat',$this->request->getVar('tingkat'))->findAll(),
                         'capaian' => $this->CapaianModel
                             ->join('element_p5','element_p5.id_element = capaian_p5.id_parent_element','left')
                             ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi AND dimensi_p5.id_kelas='.$this->request->getVar('tingkat'),'left')
@@ -107,6 +107,7 @@ class Nilaip5Controller extends BaseController
         if($key == 'capaian_proyek') $key ='proyek';
         
         $data = $this->getData($key);
+
 
         $data['tingkat'] = $this->request->getVar('tingkat');
         if($key =='penilaian'){
