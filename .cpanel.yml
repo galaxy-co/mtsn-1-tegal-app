@@ -1,6 +1,6 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/mtsntega/raport-app.mts1tegal.sch.id/
+    - export DEPLOYPATH=/home/mtsntega/raport.mtsn1tegal.sch.id/
     - /bin/cp -R * $DEPLOYPATH
 
 

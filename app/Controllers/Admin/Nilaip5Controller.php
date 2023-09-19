@@ -45,21 +45,21 @@ class Nilaip5Controller extends BaseController
                 case 'elemen':
                     return [
                         'elemen' => $this->ElemenModel
-                        ->select('dimensi_p5.id_dimensi,dimensi_p5.dimensi,
-                        element_p5.id_element,element_p5.kode_element,element_p5.desc,element_p5.id_parent_element,element_p5.nilai_rahmatan_lil_alamin,element_p5.sub_nilai,
-                        element_p5_child.desc as element_parent_desc,element_p5_child.kode_element as kode_parent_element
-                        '
-                        )
-                        ->join('element_p5 AS element_p5_child','element_p5_child.id_element = element_p5.id_parent_element','left')
-                        ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi AND dimensi_p5.id_kelas='.$this->request->getVar('tingkat'),'left')
-                        ->findAll(),
+                            ->select('dimensi_p5.id_dimensi,dimensi_p5.dimensi,
+                            element_p5.id_element,element_p5.kode_element,element_p5.desc,element_p5.id_parent_element,element_p5.nilai_rahmatan_lil_alamin,element_p5.sub_nilai,
+                            element_p5_child.desc as element_parent_desc,element_p5_child.kode_element as kode_parent_element
+                            '
+                            )
+                            ->join('element_p5 AS element_p5_child','element_p5_child.id_element = element_p5.id_parent_element','left')
+                            ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi AND dimensi_p5.id_kelas='.$this->request->getVar('tingkat'),'left')
+                            ->findAll(),
                         'capaian' => $this->CapaianModel
-                        ->select('capaian_p5.kode_capaian,capaian_p5.nilai_rahmatan_lil_alamin,capaian_p5.sub_nilai,capaian_p5.id_capaian,capaian_p5.desc,capaian_p5.id_parent_element, 
-                        element_p5.desc as element_desc,
-                        dimensi_p5.id_dimensi')
-                        ->join('element_p5','element_p5.id_element = capaian_p5.id_parent_element','left')
-                        ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi AND dimensi_p5.id_kelas='.$this->request->getVar('tingkat'),'left')
-                        ->findAll(),
+                            ->select('capaian_p5.kode_capaian,capaian_p5.nilai_rahmatan_lil_alamin,capaian_p5.sub_nilai,capaian_p5.id_capaian,capaian_p5.desc,capaian_p5.id_parent_element, 
+                            element_p5.desc as element_desc,
+                            dimensi_p5.id_dimensi')
+                            ->join('element_p5','element_p5.id_element = capaian_p5.id_parent_element','left')
+                            ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi AND dimensi_p5.id_kelas='.$this->request->getVar('tingkat'),'left')
+                            ->findAll(),
                         'dimensi' => $this->DimensiModel->findAll()
                     ];
                     break;
@@ -92,6 +92,13 @@ class Nilaip5Controller extends BaseController
                     'proyek' =>$this->ProyekModel->where('tingkat',$this->request->getVar('tingkat'))->findAll()
                 ];
                 break;
+            case 'cek_deskripsi':
+                return [
+                    'siswa' =>$this->SiswaModel->findAll(),
+                    'header_dimensi'=>$this->DimensiModel->where('id_kelas',$this->request->getVar('tingkat'))->findAll(),
+                    'header_project' => $this->ProyekModel->where('tingkat',$this->request->getVar('tingkat'))->findAll()
+                ];
+                break;
             default:
                return [
                 'tingkat_kelas' => [7,8,9]
@@ -107,7 +114,7 @@ class Nilaip5Controller extends BaseController
         if($key == 'capaian_proyek') $key ='proyek';
         
         $data = $this->getData($key);
-
+        // dd($data);
 
         $data['tingkat'] = $this->request->getVar('tingkat');
         if($key =='penilaian'){

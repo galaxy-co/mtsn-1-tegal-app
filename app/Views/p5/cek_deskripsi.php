@@ -26,9 +26,40 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="table-responsive">
-                    <table class='table table-responsive'>
-                        <th>NISM</th>
-                        <th>NAMA SISWA</th>
+                    <table class='table table-bordered text-center' >
+                        <thead>
+                            <tr>
+                                <th rowspan='4'>NISM</th>
+                                <th rowspan='4'>NAMA SISWA</th>
+                                <?php foreach($header_dimensi as $hd): ?>
+                                    <th colspan='6'><?= $hd['dimensi'] ?></th>
+                                <?php endforeach ?>
+                            </tr>
+                            <tr>
+                                <?php foreach($header_dimensi as $hd): ?>
+                                    <th colspan="<?php echo count($header_project)+1?>">TEST</th>
+                                    <th colspan='2'>TEST</th>
+                                <?php endforeach ?>
+                            </tr>
+                            <tr>
+                                <?php foreach($header_dimensi as $hd): ?>
+                                    <?php $index=1; foreach($header_project as $hp): ?>
+                                        <th><?php echo 'PROYEK'. $index; $index++; ?></th>
+                                    <?php endforeach ?>
+                                    <th>MODUS</th>
+                                    <th nowrap>Rahmatan Lil Alamin</th>
+                                    <th nowrap>Sub Nilai</th>
+                                <?php endforeach ?>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($siswa as $sis): ?>
+                                <tr>
+                                    <td><?php echo $sis['nism']?></td>
+                                    <td nowrap><?php echo $sis['nama_siswa']?></td>
+                                </tr>
+                            <?php endforeach ?>
+                        </tbody>
                     </table>
                 </div>
             </div>
