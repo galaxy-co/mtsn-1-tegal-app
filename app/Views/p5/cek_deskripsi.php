@@ -37,45 +37,102 @@
                                     <th colspan='6'><?= $hd['dimensi'] ?></th>
                                     <?php $temp=$hd['dimensi'];endif ?>
                                 <?php endforeach ?>
+                                <th rowspan='4'>MODUS GAB</th>
+                                <th rowspan='4'>PREDIKAT</th>
+                                <th rowspan='4'>DESKRIPSI 1</th>
+                                <th rowspan='4'>DESKRIPSI 2</th>
+                                <th rowspan='4'>AKHIR DESKRIPSI</th>
                             </tr>
                             <tr>
+                                <?php $temp ='' ?>
+                                <?php $nilai_rahmatan_lil_alamin= '' ?>
+                                <?php $sub_nilai = '' ?>
                                 <?php foreach($header_dimensi as $hd): ?>
-                                    <th colspan="<?php echo count($header_project)+1?>">TEST</th>
-                                    <th colspan='2'>TEST</th>
+                                    <?php
+                                        $nilai_rahmatan_lil_alamin .= $hd['nilai_rahmatan_lil_alamin'];
+                                        $sub_nilai .= $hd['sub_nilai'];
+                                    ?>
+                                    <?php if($hd['dimensi'] !== $temp) : ?>
+                                    <th colspan="<?php echo count($header_project)+1?>">
+                                        <?php echo $nilai_rahmatan_lil_alamin ?>
+                                    </th>
+                                    <th colspan='2'>
+                                        <?= $sub_nilai ?>
+                                    </th>
+                                    <?php $temp=$hd['dimensi'];endif ?>
                                 <?php endforeach ?>
                             </tr>
                             <tr>
+                                <?php $temp ='' ?>
                                 <?php foreach($header_dimensi as $hd): ?>
+                                    <?php if($hd['dimensi'] !== $temp) : ?>
                                     <?php $index=1; foreach($header_project as $hp): ?>
                                         <th><?php echo 'PROYEK'. $index; $index++; ?></th>
                                     <?php endforeach ?>
                                     <th>MODUS</th>
                                     <th nowrap>Rahmatan Lil Alamin</th>
                                     <th nowrap>Sub Nilai</th>
+                                    <?php $temp=$hd['dimensi'];endif ?>
                                 <?php endforeach ?>
                             </tr>
                         </thead>
+                        <?php 
+                            function getModus($data){
+                                $frekuensi = array_count_values($data);
+                                arsort($frekuensi); 
+                                $nilai_terbanyak = key($frekuensi); 
+                                return $nilai_terbanyak;
+                            }
+
+                            function getPredikat($pred,$dt){
+                                foreach($pred as $pre){
+                                    if($dt == $pre['id_nilaip5_option']){
+                                        return $pre['arti'];
+                                    }
+                                }
+                            }
+                        ?>
                         <tbody>
                             <?php foreach($siswa as $sis): ?>
                                 <tr>
                                     <td><?php echo $sis['nism']?></td>
                                     <td nowrap><?php echo $sis['nama_siswa']?></td>
+                                    <?php $dataModusGabungan = [] ?>
+                                    <?php $temp ='' ?>
                                     <?php foreach($header_dimensi as $hd): ?>
+                                        <?php if($hd['dimensi'] !== $temp) : ?>
+                                        <?php $dataNilaiPerDimensi = [] ?>
                                         <?php foreach($header_project as $hp): ?>
                                             <?php 
                                                 $nilaiTemp='';
                                                 foreach($nilai as $nil){
                                                     if($nil['id_siswa'] == $sis['id_siswa'] && $nil['id_dimensi'] == $hd['id_dimensi'] && $nil['id_project'] == $hp['id_project']){
                                                         $nilaiTemp = $nil['nilai'];
+                                                        array_push($dataNilaiPerDimensi,$nilaiTemp);
                                                     }
                                                 }
                                             ?>
                                             <td><?php echo $nilaiTemp ?></td>
                                         <?php endforeach ?>
-                                        <td>MODUS</td>
+                                        <?php 
+                                            $modus = getModus($dataNilaiPerDimensi);
+                                            if($modus){
+                                                array_push($dataModusGabungan,$modus);
+                                            }
+                                            // var_dump($dataModusGabungan)
+                                            // dd($dataModusGabungan);
+                                            // array_push($dataNilaiPerDimensi,$nilaiTemp);
+                                        ?>
+                                        <td><?php echo $modus?></td>
                                         <td>rahmatan lil alamin</td>
                                         <td>sub nilai</td>
+                                        <?php $temp=$hd['dimensi'];endif ?>
                                     <?php endforeach ?>
+                                    <td><?php echo getModus($dataModusGabungan);?></td>
+                                    <td><?php echo getPredikat($predikat,getModus($dataModusGabungan))?></td>
+                                    <td>DESKRIPSI 1</td>
+                                    <td>DESKRIPSI 2</td>
+                                    <td>AKHIR DESKRIPSI</td>
                                 </tr>
                             <?php endforeach ?>
                         </tbody>
