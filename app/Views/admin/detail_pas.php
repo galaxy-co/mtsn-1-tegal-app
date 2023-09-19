@@ -147,7 +147,7 @@
             kd_name : e.target.value,
         }
         console.log('DATA',data);
-        let changeKDName =await postData("http://localhost:8080/admin/nilai/storekdname",data);
+        let changeKDName =await postData("<?= base_url('admin/nilai/storekdname')?>",data);
         console.log("KD NAME CHANGED",changeKDName);
     });
 
@@ -158,7 +158,7 @@
             nilai_detail_id : e.target.dataset.nilaidetailid,
             nilai : e.target.value
         }
-        let updateNilai = await  postData("http://localhost:8080/admin/nilai/storenilai",data);
+        let updateNilai = await  postData("<?= base_url('admin/nilai/storenilai')?>",data);
         console.log('UPDATE NILAI',updateNilai);
     })
 

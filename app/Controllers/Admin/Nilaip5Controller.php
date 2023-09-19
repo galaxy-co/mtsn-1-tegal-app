@@ -95,7 +95,22 @@ class Nilaip5Controller extends BaseController
             case 'cek_deskripsi':
                 return [
                     'siswa' =>$this->SiswaModel->findAll(),
-                    'header_dimensi'=>$this->DimensiModel->where('id_kelas',$this->request->getVar('tingkat'))->findAll(),
+                    'header_dimensi'=>$this->DimensiModel->findAll(),
+                    'nilai' =>  $this->DimensiModel
+                            ->select('
+                                dimensi_p5.dimensi,dimensi_p5.id_dimensi,dimensi_p5.id_kelas,
+                                nilaip5.nilai,
+                                siswa.nama_siswa,siswa.id_siswa,
+                                project_dimensi.id_project
+                            ')
+                            ->join('project_dimensi','project_dimensi.id_dimensi = dimensi_p5.id_dimensi','LEFT')
+                            ->join('nilaip5','nilaip5.id_project_dimensi = project_dimensi.id_project_dimensi','LEFT')
+                            ->join('siswa','siswa.id_siswa = nilaip5.id_siswa','LEFT')
+                            ->where('dimensi_p5.id_kelas',$this->request->getVar('tingkat'))
+                            ->orderBy('siswa.nama_siswa','ASC')
+                            ->orderBy('dimensi_p5.id_dimensi','ASC')
+                            ->orderBy('project_dimensi.id_project','ASC')
+                            ->findAll(),
                     'header_project' => $this->ProyekModel->where('tingkat',$this->request->getVar('tingkat'))->findAll()
                 ];
                 break;

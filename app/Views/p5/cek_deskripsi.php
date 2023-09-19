@@ -31,8 +31,11 @@
                             <tr>
                                 <th rowspan='4'>NISM</th>
                                 <th rowspan='4'>NAMA SISWA</th>
+                                <?php $temp ='' ?>
                                 <?php foreach($header_dimensi as $hd): ?>
+                                    <?php if($hd['dimensi'] !== $temp) : ?>
                                     <th colspan='6'><?= $hd['dimensi'] ?></th>
+                                    <?php $temp=$hd['dimensi'];endif ?>
                                 <?php endforeach ?>
                             </tr>
                             <tr>
@@ -57,6 +60,22 @@
                                 <tr>
                                     <td><?php echo $sis['nism']?></td>
                                     <td nowrap><?php echo $sis['nama_siswa']?></td>
+                                    <?php foreach($header_dimensi as $hd): ?>
+                                        <?php foreach($header_project as $hp): ?>
+                                            <?php 
+                                                $nilaiTemp='';
+                                                foreach($nilai as $nil){
+                                                    if($nil['id_siswa'] == $sis['id_siswa'] && $nil['id_dimensi'] == $hd['id_dimensi'] && $nil['id_project'] == $hp['id_project']){
+                                                        $nilaiTemp = $nil['nilai'];
+                                                    }
+                                                }
+                                            ?>
+                                            <td><?php echo $nilaiTemp ?></td>
+                                        <?php endforeach ?>
+                                        <td>MODUS</td>
+                                        <td>rahmatan lil alamin</td>
+                                        <td>sub nilai</td>
+                                    <?php endforeach ?>
                                 </tr>
                             <?php endforeach ?>
                         </tbody>
