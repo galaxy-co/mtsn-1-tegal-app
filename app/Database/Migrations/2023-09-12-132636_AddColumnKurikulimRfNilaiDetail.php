@@ -16,7 +16,7 @@ class AddColumnKurikulimRfNilaiDetail extends Migration
                 'null' => true,
             ],
         ];
-        $this->forge->addColumn('rfnilaidetail', $fields);
+        $this->forge->addColumn('rfNilaiDetail', $fields);
     }
 
     public function down()
