@@ -87,6 +87,8 @@
                             <div class="card-title">Nilai Semester</div>
                         </div>
                         <form action="<?= base_url('admin/pas/store')?>" method="POST">
+                        <input type="hidden" name="semester" value="<?= $input['semester']?>">
+                        <input type="hidden" name="tahun_ajaran" value="<?= $input['tahun_ajaran']?>">
                         <input type="hidden" name="id_kelas" value="<?= $kelas['id_kelas']?>">
                         <input type="hidden" name="id_mapel" value="<?= $mapel['id_mapel']?>">
                         <input type="hidden" name="id_guru" value="<?= $guru['id_guru']?>">
