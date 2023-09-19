@@ -125,7 +125,7 @@ class SiswaController extends BaseController
                     $dataToUsers = [
                         'username' => $value[1],
                         'name' => $value[2],
-                        'password' => $value[1],
+                        'password' => password_hash($value[1], PASSWORD_DEFAULT),
                         'role_id' => 2
                     ];
                     

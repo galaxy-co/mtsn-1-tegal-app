@@ -37,6 +37,8 @@ class PASController extends BaseController
             ->join('kelas','kelas.id_kelas = nilai_pas.id_kelas')
             ->join('mapel','mapel.id_mapel = nilai_pas.id_mapel')
             ->join('guru','guru.id_guru = nilai_pas.id_guru')
+            ->groupBy('nilai_pas.tahun_ajaran')
+            ->groupBy('nilai_pas.semester')
             ->groupBy('nilai_pas.id_kelas')
             ->groupBy('nilai_pas.id_mapel')
             ->findAll();
@@ -50,6 +52,7 @@ class PASController extends BaseController
     }
     public function detail(){
         $dataInput = $this->request->getVar();
+        $data['input'] = $dataInput;
         // $siswa = $this->siswaModel
         //     ->join('nilai_pas','siswa.id_siswa = nilai_pas.id_siswa','left')
         //     ->join('mapel','mapel.id_mapel = nilai_pas.id_mapel','left')
@@ -74,9 +77,12 @@ class PASController extends BaseController
     }
     public function store()
     {
+        
         $idGuru = $this->request->getPost('id_guru');
         $idKelas = $this->request->getPost('id_kelas');
         $idMapel = $this->request->getPost('id_mapel');
+        $semester = $this->request->getPost('semester');
+        $ta = $this->request->getPost('tahun_ajaran');
 
         $array_idSiswa = $this->request->getPost('id_siswa');
         $array_nilai = $this->request->getPost('nilai');
@@ -88,7 +94,9 @@ class PASController extends BaseController
                 'id_mapel' => $idMapel,
                 'id_siswa' => $id_siswa,
                 'nilai' => $array_nilai[$key],
-                'type_test' => 1
+                'type_test' => 1,
+                'semester' => $semester,
+                'tahun_ajaran' => $ta
             ];
     
             $this->pasModel->save($data);
@@ -103,12 +111,16 @@ class PASController extends BaseController
         $nilai = $this->pasModel->where('id_nilai_pas', $id)->first();
         $kelas = $nilai['id_kelas'];
         $mapel = $nilai['id_mapel'];
+        $semester = $nilai['semester'];
+        $ta = $nilai['tahun_ajaran'];
 
         $data['nilai_pas'] = $this->pasModel
                             ->join('kelas', 'kelas.id_kelas = nilai_pas.id_kelas')
                             ->join('siswa', 'siswa.id_siswa = nilai_pas.id_siswa')
                             ->join('mapel', 'mapel.id_mapel = nilai_pas.id_mapel')
                             ->join('guru', 'guru.id_guru = nilai_pas.id_guru')
+                            ->where('nilai_pas.semester', $semester)
+                            ->where('nilai_pas.tahun_ajaran', $ta)
                             ->where('nilai_pas.id_kelas', $kelas)
                             ->where('nilai_pas.id_mapel', $mapel)
                             ->findAll();

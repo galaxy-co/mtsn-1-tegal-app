@@ -121,6 +121,9 @@ $routes->group('siswa', ['filter'=> 'authGuard:2'],static function ($routes) {
     $routes->group('nilaiHarian',static function ($routes){
         $routes->get('/', 'Siswa\NilaiHarianController::index');
     });
+    $routes->group('nilaiSemester',static function ($routes){
+        $routes->get('/', 'Siswa\NilaiSemesterController::index');
+    });
 
 
 });
