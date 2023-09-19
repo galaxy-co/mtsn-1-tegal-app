@@ -41,7 +41,7 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-xl-5 col-md-8">
-          <form class="rounded shadow-5-strong p-5" action="login" method="post" style="background-color: rgba(255, 255, 255, 0.9);">
+          <form class="rounded shadow-5-strong p-5" action="<?= base_url("login")?>" method="post" style="background-color: rgba(255, 255, 255, 0.9);">
             <div class="d-flex justify-content-center pb-3">
               <img src="<?= base_url('login/img/logo.png') ?>" alt="" height="70px">
             </div>
