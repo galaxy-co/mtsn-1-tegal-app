@@ -20,9 +20,6 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="<?= base_url('admin/p5/view/cek_deskripsi?tingkat='.$tingkat) ?>">CEK DESKRIPSI</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="<?= base_url('admin/p5/view/raport?tingkat='.$tingkat) ?>">RAPORT</a>
-                </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="table-responsive">
@@ -62,10 +59,10 @@
 
                                     ?>
                                     <?php if($hd['dimensi'] !== $header_dimensi[ isset($header_dimensi[$i+1]) ? $i+1 : $i]['dimensi'] || $i == count($header_dimensi)-1 ) : ?> 
-                                        <th colspan="<?php echo count($header_project)+1?>">
+                                        <th colspan="<?php echo count($header_project)+1?>" id='th-rla-<?= $hd['id_dimensi']?>'>
                                             <?php echo implode(", ",array_unique($nilai_rahmatan_lil_alamin)) ?>
                                         </th>
-                                        <th colspan='2'>
+                                        <th colspan='2' id='th-subnilai-<?= $hd['id_dimensi']?>'>
                                             <?= implode(", ",array_unique($sub_nilai)) ?>
                                         </th>
                                     <?php endif ?>
@@ -128,20 +125,18 @@
                                             if($modus){
                                                 array_push($dataModusGabungan,$modus);
                                             }
-                                            // var_dump($dataModusGabungan)
-                                            // dd($dataModusGabungan);
-                                            // array_push($dataNilaiPerDimensi,$nilaiTemp);
+                                           
                                         ?>
-                                        <td><?php echo $modus?></td>
-                                        <td>rahmatan lil alamin</td>
-                                        <td>sub nilai</td>
+                                        <td class='td-modus' data-idsiswa="<?= $sis['id_siswa']?>" data-iddimensi ="<?= $hd['id_dimensi'];?>"><?php echo $modus?></td>
+                                        <td id='td-rla-<?= $hd['id_dimensi'].'-'.$sis['id_siswa'] ?>'></td>
+                                        <td id='td-subnilai-<?= $hd['id_dimensi'].'-'.$sis['id_siswa'] ?>'></td>
                                         <?php $temp=$hd['dimensi'];endif ?>
                                     <?php endforeach ?>
-                                    <td><?php echo getModus($dataModusGabungan);?></td>
+                                    <td class='td-modus-gab' data-idsiswa='<?= $sis['id_siswa']?>' data-predikat='<?php echo getPredikat($predikat,getModus($dataModusGabungan))?>'><?php echo getModus($dataModusGabungan);?></td>
                                     <td><?php echo getPredikat($predikat,getModus($dataModusGabungan))?></td>
-                                    <td>DESKRIPSI 1</td>
-                                    <td>DESKRIPSI 2</td>
-                                    <td>AKHIR DESKRIPSI</td>
+                                    <td class='text-left' id='td-deskripsi1-<?= $sis['id_siswa'] ?>' nowrap></td>
+                                    <td class='text-left' id='td-deskripsi2-<?= $sis['id_siswa'] ?>' nowrap></td>
+                                    <td class='text-left' id='td-akhir-deskripsi-<?= $sis['id_siswa'] ?>' nowrap></td>
                                 </tr>
                             <?php endforeach ?>
                         </tbody>
@@ -157,3 +152,42 @@
 <!-- 
 Ananda menunjukkan pribadi yang ${AP9} dalam ${AQ9}  dengan perwujudan sebagai seorang yang memiliki sikap ${AR9}  yang senantiasa perlu dibimbing dan dikembangkan untuk kesuksesannya di masa depan
  -->
+ <script src="<?= base_url('assets/')?>assets/js/core/jquery.3.2.1.min.js"></script>
+<script>
+        let deskripsi1 = [];
+        let deskripsi2 = [];
+        const tdModus = document.getElementsByClassName('td-modus')
+        const tdModusGab = document.getElementsByClassName('td-modus-gab')
+        for (let index = 0; index < tdModus.length; index++) {
+            const tdM = tdModus[index];
+            let value = tdM.innerText;
+            let idDimensi = tdM.dataset.iddimensi
+            let idSiswa = tdM.dataset.idsiswa
+   
+            if(value){
+                let headerRLA = document.getElementById(`th-rla-${idDimensi}`).innerText;
+                let headerSubNilai =document.getElementById(`th-subnilai-${idDimensi}`).innerText;
+                 console.log(idDimensi)
+                 document.getElementById(`td-rla-${idDimensi}-${idSiswa}`).innerText = headerRLA
+                 document.getElementById(`td-subnilai-${idDimensi}-${idSiswa}`).innerText = headerSubNilai
+                 deskripsi1.push(...headerRLA.split(','))
+                 deskripsi2.push(...headerSubNilai.split(','))
+            }
+        }
+
+        for (let i = 0; i < tdModusGab.length; i++) {
+            const tdMG = tdModusGab[i];
+            let value = tdMG.innerText;
+            let idSiswa = tdMG.dataset.idsiswa
+            let predikat = tdMG.dataset.predikat
+            console.log('DESC',deskripsi1)
+            if(value){
+                let akhirDeskripsi = `Ananda menunjukkan pribadi yang ${predikat} dalam ${[...new Set(deskripsi1)]}  dengan perwujudan sebagai seorang yang memiliki sikap ${[...new Set(deskripsi2)]}  yang senantiasa perlu dibimbing dan dikembangkan untuk kesuksesannya di masa depan`
+                document.getElementById(`td-deskripsi1-${idSiswa}`).innerText= [...new Set(deskripsi1)]            
+                document.getElementById(`td-deskripsi2-${idSiswa}`).innerText= [...new Set(deskripsi2)]
+                document.getElementById(`td-akhir-deskripsi-${idSiswa}`).innerText= akhirDeskripsi
+            }
+        }
+        
+    
+</script>
