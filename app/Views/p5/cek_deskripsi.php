@@ -28,7 +28,7 @@
                 <div class="table-responsive">
                     <table class='table table-bordered text-center' >
                         <thead>
-                            <tr>
+                        <tr>
                                 <th rowspan='4'>NISM</th>
                                 <th rowspan='4'>NAMA SISWA</th>
                                 <?php $temp ='' ?>
@@ -45,22 +45,31 @@
                             </tr>
                             <tr>
                                 <?php $temp ='' ?>
-                                <?php $nilai_rahmatan_lil_alamin= '' ?>
-                                <?php $sub_nilai = '' ?>
-                                <?php foreach($header_dimensi as $hd): ?>
+                                <?php $nilai_rahmatan_lil_alamin= [] ?>
+                                <?php $sub_nilai = [] ?>
+                                <?php for($i=0;$i< count($header_dimensi) ;$i++): ?>
+                                    <?php $hd=$header_dimensi[$i]; ?>
                                     <?php
-                                        $nilai_rahmatan_lil_alamin .= $hd['nilai_rahmatan_lil_alamin'];
-                                        $sub_nilai .= $hd['sub_nilai'];
+                                        if($hd['dimensi'] == $header_dimensi[$i > 0 ? $i-1 : $i]['dimensi']){
+                                            array_push($nilai_rahmatan_lil_alamin,$hd['nilai_rahmatan_lil_alamin']);
+                                            array_push($sub_nilai,$hd['sub_nilai']);
+                                        }else{
+                                            $nilai_rahmatan_lil_alamin = [];
+                                            $sub_nilai = [];
+                                            array_push($nilai_rahmatan_lil_alamin,$hd['nilai_rahmatan_lil_alamin']);
+                                            array_push($sub_nilai,$hd['sub_nilai']);
+                                        }
+
                                     ?>
-                                    <?php if($hd['dimensi'] !== $temp) : ?>
-                                    <th colspan="<?php echo count($header_project)+1?>">
-                                        <?php echo $nilai_rahmatan_lil_alamin ?>
-                                    </th>
-                                    <th colspan='2'>
-                                        <?= $sub_nilai ?>
-                                    </th>
-                                    <?php $temp=$hd['dimensi'];endif ?>
-                                <?php endforeach ?>
+                                    <?php if($hd['dimensi'] !== $header_dimensi[ isset($header_dimensi[$i+1]) ? $i+1 : $i]['dimensi'] || $i == count($header_dimensi)-1 ) : ?> 
+                                        <th colspan="<?php echo count($header_project)+1?>">
+                                            <?php echo implode(", ",array_unique($nilai_rahmatan_lil_alamin)) ?>
+                                        </th>
+                                        <th colspan='2'>
+                                            <?= implode(", ",array_unique($sub_nilai)) ?>
+                                        </th>
+                                    <?php endif ?>
+                                <?php endfor ?>
                             </tr>
                             <tr>
                                 <?php $temp ='' ?>
@@ -136,6 +145,7 @@
                                 </tr>
                             <?php endforeach ?>
                         </tbody>
+                        
                     </table>
                 </div>
             </div>
