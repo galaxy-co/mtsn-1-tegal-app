@@ -5,8 +5,11 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/login','AuthController::login');
-$routes->post('/login','AuthController::loginPost');
+$routes->get('/',function(){
+    die('HELO');
+});
+$routes->get('/signin','AuthController::login');
+$routes->post('/signin','AuthController::loginPost');
 
 $routes->get('/logout','LogoutController::index');
 

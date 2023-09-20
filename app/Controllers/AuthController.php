@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+use App\Controllers\BaseController; 
 use App\Models\Admin\UserModel;
 
 class AuthController extends BaseController
@@ -51,11 +52,11 @@ class AuthController extends BaseController
             
             }else{
                 $session->setFlashdata('msg', 'Password is incorrect.');
-                return redirect()->to('/login');
+                return redirect()->to('/signin');
             }
         }else{
             $session->setFlashdata('msg', 'Username does not exist.');
-            return redirect()->to('/login');
+            return redirect()->to('/signin');
         }
     }
 
