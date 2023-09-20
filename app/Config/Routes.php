@@ -114,7 +114,16 @@ $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
         $routes->get('delete/(:any)/(:num)','Admin\Nilaip5Controller::delete/$1/$2');
     });
 
+      // kenaikan
+      $routes->group('raportp5',static function ($routes){
+        $routes->get('/', 'Admin\RaportP5Controller::index');
+        $routes->get('dataSiswa/(:num)', 'Admin\RaportP5Controller::dataSiswa/$1');
+        $routes->get('cetakRaport/(:num)', 'Admin\RaportP5Controller::cetakRaport/$1');
+    });
+
 });
+
+
 
 
 $routes->group('siswa', ['filter'=> 'authGuard:2'],static function ($routes) {

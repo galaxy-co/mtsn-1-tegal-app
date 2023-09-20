@@ -90,6 +90,13 @@
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>
+						<li class="nav-item">
+							<a href="<?= base_url('/admin/raportp5')?>">
+								<i class="fas fa-book-open"></i>
+								<p>Raport P5</p>
+								<!-- <span class="caret"></span> -->
+							</a>
+						</li>
 						<!-- <li class="nav-item">
 							<a href="<?= base_url('/admin/user')?>">
 								<i class="icon-home"></i>
