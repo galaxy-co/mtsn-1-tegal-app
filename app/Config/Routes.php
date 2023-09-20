@@ -5,9 +5,8 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/',function(){
-    die('HELO');
-});
+
+$routes->get('/','AuthController::login');
 $routes->get('/signin','AuthController::login');
 $routes->post('/signin','AuthController::loginPost');
 
