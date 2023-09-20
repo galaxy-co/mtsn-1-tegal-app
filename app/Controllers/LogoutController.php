@@ -9,6 +9,6 @@ class LogoutController extends BaseController
     public function index()
     {
         session()->destroy();
-        return redirect()->to(base_url('index.php/login'));
+        return redirect()->to(base_url('signin'));
     }
 }

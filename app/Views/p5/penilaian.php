@@ -210,7 +210,7 @@
         console.log('DATA',data);
 
         $(`#desc-${data.id_siswa}-${data.id_project_dimensi}`).text(data.desc)
-        let storeNilai =await postData("http://localhost:8080/admin/p5/penilaian",data);
+        let storeNilai =await postData("<?= base_url('admin/p5/penilaian') ?>",data);
         console.log("Respon",storeNilai);
         e.target.dataset.id_nilai = storeNilai.id_nilai;
     });
