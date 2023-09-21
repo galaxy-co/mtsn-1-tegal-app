@@ -185,7 +185,7 @@
         </tbody>
     </table>
     
-    <table class="tg" width="100%"  style="table-layout:fixed; margin-top: 30px;">
+    <table class="tg" width="100%"  style="table-layout:fixed; margin-top: 30px; font-size:x-small;">
         <thead>
             <tr>
                 <td style="width: 5%;"></td>
@@ -196,20 +196,115 @@
         </thead>
         <tbody>
             <tr>
-                <td style="background-color:grey;" class="bordered-td">No</td>
-                <td style="background-color:grey;" class="bordered-td">DIMENSI P5 PPRA</td>
-                <td style="background-color:grey;" class="bordered-td">NILAI</td>
-                <td style="background-color:grey;" class="bordered-td">DESKRIPSI CAPAIAN</td>
+                <td style="background-color:#ADABAB;" class="bordered-td">No</td>
+                <td style="background-color:#ADABAB;" class="bordered-td">DIMENSI P5 PPRA</td>
+                <td style="background-color:#ADABAB;" class="bordered-td">NILAI</td>
+                <td style="background-color:#ADABAB;" class="bordered-td">DESKRIPSI CAPAIAN</td>
+            </tr>
+            <tr style="height: 30px;">
+                <td style="background-color:#ADABAB;" class="bordered-td"></td>
+                <td style="background-color:#ADABAB;" class="bordered-td"></td>
+                <td style="background-color:#ADABAB;" class="bordered-td"></td>
+                <td style="background-color:#ADABAB;" class="bordered-td"></td>
+            </tr>
+            <?php
+            $no = 1;
+            $groupedData = [];
+
+            foreach ($nilaip5 as $n) {
+                $id_nilai = $n['id_nilai'];
+                
+                if (!isset($groupedData[$id_nilai])) {
+                    $groupedData[$id_nilai] = [];
+                }
+
+                $groupedData[$id_nilai][] = $n;
+            }
+
+            foreach ($groupedData as $id_nilai => $group) {
+                $nilaiPrinted = false; // Variabel untuk melacak apakah nilai sudah dicetak kedua kali
+
+                ?>
+                <tr>
+                    <td style="background-color:#FAF5F5;" class="bordered-td"><?= ++$no; ?></td>
+                    <?php foreach ($group as $index => $n) : ?>
+                        <td style="background-color:#FAF5F5;" class="bordered-td"><?= $n['desc']; ?></td> <!-- Cetak desc dua kali -->
+                        <td style="background-color:#FAF5F5;" class="bordered-td">
+                            <?php 
+                            if ($index === 0 || !$nilaiPrinted) {
+                                echo $n['nilai'];
+                                if ($index === 0) {
+                                    $nilaiPrinted = true; // Setel ke true jika nilai pertama kali dicetak
+                                }
+                            }
+                            ?>
+                        </td>
+                    <?php endforeach ?>
+                </tr>
+                <?php
+            }
+            ?>
+
+
+            <tr>
+                <td colspan="4" style="background-color:#ADABAB;" class="bordered-td">Catatan Untuk Orang Tua</td>
             </tr>
             <tr>
-                <td style="background-color:grey;" class="bordered-td"></td>
-                <td style="background-color:grey;" class="bordered-td"></td>
-                <td style="background-color:grey;" class="bordered-td"></td>
-                <td style="background-color:grey;" class="bordered-td"></td>
+                <td colspan="4" style="background-color:#FAF5F5; padding-bottom: 20px;" class="bordered-td"></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <table class="tg" width="100%"  style="table-layout:fixed; margin-top: 30px;">
+    <thead>
+        <tr>
+            <td style="width: 10%;"></td>
+            <td style="width: 25%;"></td>
+            <td style="width: 65%;"></td>
+        </tr>
+    </thead>
+    <tbody>
+             <?php foreach($rfnilai as $rf) : ?>
+            <tr style="font-size: xx-small; margin-top: 10px;">
+                <td class="bordered-td" style="background-color:#FAF5F5;"><?= $rf['nilai']?></td>
+                <td class="bordered-td" style="background-color:#FAF5F5;"><?= $rf['arti']?></td>
+            </tr>
+            <?php endforeach ?>
+    </tbody>
+    </table>
+    <table class="tg" width="100%"  style="table-layout:fixed; margin-top: 30px;">
+        <thead>
+            <tr>
+                <td style="width: 40%;"></td>
+                <td style="width: 20%;"></td>
+                <td style="width: 40%;"></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Mengetahui :</td>
+                <td></td>
+                <td>Lebaksiu,</td>
+            </tr>
+            <tr>
+                <td>Kepala Madrasah</td>
+                <td></td>
+                <td>Wali Kelas</td>
+            </tr>
+            <tr >
+                <td style="padding-bottom: 40px;"></td>
+                <td style="padding-bottom: 40px;"></td>
+                <td style="padding-bottom: 40px;"></td>
+            </tr>
+            <tr>
+                <td>Drs. H. Azki Sleng, M.Pd</td>
+                <td></td>
+                <td><?= $guru['nama_guru']?></td>
             </tr>
         </tbody>
-
     </table>
+
+    
 
 </body>
 </html>
