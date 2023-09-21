@@ -208,7 +208,7 @@
                 <td style="background-color:#ADABAB;" class="bordered-td"></td>
             </tr>
             <?php
-            $no = 1;
+            $no = 0;
             $groupedData = [];
 
             foreach ($nilaip5 as $n) {
