@@ -228,7 +228,7 @@
                 <td colspan="4" style="background-color:#ADABAB;" class="bordered-td">Catatan Untuk Orang Tua</td>
             </tr>
             <tr>
-                <td colspan="4" style="background-color:#FAF5F5; padding-bottom: 20px;" class="bordered-td">Ananda menunjukkan pribadi yang <?= $modus['arti']?> dalam <?= $desc['capaian_desc'] ?>dengan perwujudan sebagai seorang yang memiliki sikap <?= $modus['nilai_rahmatan_lil_alamin']?> yang senantiasa perlu dibimbing dan dikembangkan untuk kesuksesannya di masa depan</td>
+                <td colspan="4" style="background-color:#FAF5F5; padding-bottom: 20px;" class="bordered-td">Ananda menunjukkan pribadi yang <?= $modus['arti']?> dalam <?= $desc['capaian_desc'] ?> dengan perwujudan sebagai seorang yang memiliki sikap <?= $modus['nilai_rahmatan_lil_alamin']?> yang senantiasa perlu dibimbing dan dikembangkan untuk kesuksesannya di masa depan</td>
             </tr>
             
         </tbody>
@@ -254,8 +254,8 @@
         <thead>
             <tr>
                 <td style="width: 40%;"></td>
-                <td style="width: 20%;"></td>
-                <td style="width: 40%;"></td>
+                <td style="width: 30%;"></td>
+                <td style="width: 30%;"></td>
             </tr>
         </thead>
         <tbody>
