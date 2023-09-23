@@ -107,6 +107,12 @@
             <td style="width: 15%;"></td>
         </tr>
     </thead>
+    <?php 
+        $path = 'assets/assets/img/kemenag_logo.png';
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+    ?>
     <tbody>
         <tr>
             <td><img src="public_path(localhost:8080/assets/assets/img/logo.jpg)" alt=""></td>

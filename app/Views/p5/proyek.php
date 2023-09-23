@@ -74,7 +74,7 @@
                                 >
                                 <i class="icon-note"></i> Edit
                               </button>  
-                              <a href="<?= base_url('admin/p5/delete/proyek/') . $proy['id_project']?>" class="btn btn-danger btn-xs"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
+                              <a href="<?= base_url('admin/p5/delete/proyek/') . $proy['id_project']?>.?tingkat=<?= $tingkat ?>" class="btn btn-danger btn-xs"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
                             </div>
                           </div>
 

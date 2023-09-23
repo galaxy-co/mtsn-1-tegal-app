@@ -27,7 +27,7 @@
                       FORM NILAI
                     </h5>
                   </div>
-                  <form action="<?= base_url('admin/p5/store/nilai')?>" method="post">
+                  <form action="<?= base_url('admin/p5/store/nilai?tingkat='.$tingkat)?>" method="post">
                     <!-- <input type="hidden" name="id_nilaip5_options"> -->
                     <div class="card-body">
                       <div class="row">
@@ -100,7 +100,7 @@
                                       >
                                       <i class="icon-note"></i> Edit
                                     </button>  
-                                    <a href="<?= base_url('admin/p5/delete/nilai/') . $dimen['id_nilaip5_option']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
+                                    <a href="<?= base_url('admin/p5/delete/nilai/') . $dimen['id_nilaip5_option']?>?tingkat=<?= $tingkat ?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
                                 </td>
                               </tr>
                             <?php endforeach ?>
