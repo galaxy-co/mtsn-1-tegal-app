@@ -107,9 +107,15 @@
             <td style="width: 15%;"></td>
         </tr>
     </thead>
+    <?php 
+        $path = 'assets/assets/img/kemenag_logo.png';
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+    ?>
     <tbody>
         <tr>
-            <td><img src="<?= base_url('assets/')?>assets/img/kemenag_logo.png" alt=""></td>
+            <td><img src="<?= $base64 ?>" alt=""></td>
             <td class="center-text">
                 <p><b>KEMENTRIAN AGAMA</b></p>
                 <p><b>KANTOR KEMENTRIAN AGAMA KABUPATEN TEGAL</b></p>
