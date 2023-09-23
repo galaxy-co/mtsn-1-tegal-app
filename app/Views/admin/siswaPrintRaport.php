@@ -3,7 +3,7 @@
     <div class="content">
         <div class="page-inner">  
             <div class="page-header">
-                <h4 class="page-title">Kenaikan</h4>
+                <h4 class="page-title">Cetak Raport</h4>
                 <?php if(session()->getFlashdata('success')) : ?>
                             <button type="button" class="btn btn-success" id="alertSuccess" style="display: none;"> Success</button>
                             <script>
@@ -36,7 +36,7 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Kenaikan</a>
+                        <a href="#">Cetak Raport</a>
                     </li>
                     <li class="separator">
                         <i class="flaticon-right-arrow"></i>
@@ -76,15 +76,21 @@
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <?php $i = 0; ?>
-                                    <?php foreach($siswa as $k) : ?>
-                                        <tr>
-                                            <td><?= $k['nism'] ?></td>
-                                            <td><?= $k['nama_siswa'] ?></td>
-                                            <td><a href="<?= base_url('admin/raportp5/cetakRaport/') . $k['id_siswa']?>" class="btn btn-success btn-sm"><i class="fas fa-print"></i>   Cetak</a></td>
-                                        </tr>
-                                    <?php endforeach ?>
-                                </tbody>
+                                <?php $i = 0; ?>
+                                <?php foreach ($siswa as $k) : ?>
+                                    <tr>
+                                        <td><?= $k['nism'] ?></td>
+                                        <td><?= $k['nama_siswa'] ?></td>
+                                        <td>
+                                            <?php if (in_array($k['id_siswa'], $listSiswa)) : ?>
+                                                Belum Mengisi Nilai
+                                            <?php else : ?>
+                                                <a href="<?= base_url('admin/raportp5/cetakRaport/') . $k['id_siswa'] ?>" target="__blank" class="btn btn-success btn-sm"><i class="fas fa-print"></i> Cetak</a>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach ?>
+                            </tbody>
                             </table>
                         </div>
                     </div>

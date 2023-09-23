@@ -153,13 +153,13 @@ class SiswaController extends BaseController
         echo view('admin/template_admin/footer');
     }
     public function update($id){
-        $nism = $this->request->getPost('nism');
-        $existingSiswa = $this->siswaModel->where('nism', $nism)->first();
-        if($existingSiswa){
-            session()->setFlashdata('warning', 'NISM sudah terdaftar');
+        // $nism = $this->request->getPost('nism');
+        // $existingSiswa = $this->siswaModel->where('nism', $nism)->first();
+        // if($existingSiswa){
+        //     session()->setFlashdata('warning', 'NISM sudah terdaftar');
 
-            return redirect()->to('/admin/siswa');
-        }
+        //     return redirect()->to('/admin/siswa');
+        // }
         $data = $this->request->getPost();
         $this->siswaModel->update($id, $data);
         session()->setFlashdata('success', 'Update Siswa');

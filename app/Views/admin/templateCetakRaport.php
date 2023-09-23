@@ -112,10 +112,15 @@
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+        $path2 = 'assets/assets/img/logo.png';
+        $type2 = pathinfo($path2, PATHINFO_EXTENSION);
+        $data2 = file_get_contents($path2);
+        $base642 = 'data:image/' . $type2 . ';base64,' . base64_encode($data2);
     ?>
     <tbody>
         <tr>
-            <td><img src="<?= $base64 ?>" alt=""></td>
+            <td><img src="<?= $base64 ?>" alt="" width="90px" height="80px"></td>
             <td class="center-text">
                 <p><b>KEMENTRIAN AGAMA</b></p>
                 <p><b>KANTOR KEMENTRIAN AGAMA KABUPATEN TEGAL</b></p>
@@ -123,7 +128,7 @@
                 <p style="font-size: x-small;">Jl. Ponpes Babakan-Lebaksiu Tegal</p>
                 <!-- Horizontal line -->
             </td>
-            <td><img src="" alt=""></td>
+            <td><img src="<?= $base642 ?>" alt="" width="80px" height="80px"></td>
         </tr>
         <tr>
             <td class="horizontal-line"></td>
@@ -228,7 +233,7 @@
                 <td colspan="4" style="background-color:#ADABAB;" class="bordered-td">Catatan Untuk Orang Tua</td>
             </tr>
             <tr>
-                <td colspan="4" style="background-color:#FAF5F5; padding-bottom: 20px;" class="bordered-td">Ananda menunjukkan pribadi yang <?= $modus['arti']?> dalam <?= $desc['capaian_desc'] ?>dengan perwujudan sebagai seorang yang memiliki sikap <?= $modus['nilai_rahmatan_lil_alamin']?> yang senantiasa perlu dibimbing dan dikembangkan untuk kesuksesannya di masa depan</td>
+                <td colspan="4" style="background-color:#FAF5F5; padding-bottom: 20px;" class="bordered-td">Ananda menunjukkan pribadi yang <?= $modus['arti']?> dalam <?= $desc['capaian_desc'] ?> dengan perwujudan sebagai seorang yang memiliki sikap <?= $modus['nilai_rahmatan_lil_alamin']?> yang senantiasa perlu dibimbing dan dikembangkan untuk kesuksesannya di masa depan</td>
             </tr>
             
         </tbody>
@@ -254,8 +259,8 @@
         <thead>
             <tr>
                 <td style="width: 40%;"></td>
-                <td style="width: 20%;"></td>
-                <td style="width: 40%;"></td>
+                <td style="width: 30%;"></td>
+                <td style="width: 30%;"></td>
             </tr>
         </thead>
         <tbody>

@@ -10,7 +10,7 @@
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
 									<span class="user-level"><?= $name ?></span>
-									<span class="caret"></span>
+									<!-- <span class="caret"></span> -->
 								</span>
 							</a>
 							<div class="clearfix"></div>
@@ -35,6 +35,13 @@
 							<a href="<?= base_url('/siswa/nilaiSemester')?>">
 								<i class="fas fa-edit"></i>
 								<p>Nilai Semester</p>
+								<!-- <span class="caret"></span> -->
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="<?= base_url('/siswa/nilai')?>">
+								<i class="fas fa-list-ol"></i>
+								<p>Absen & Catatan</p>
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>
