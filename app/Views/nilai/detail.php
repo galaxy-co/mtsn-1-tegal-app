@@ -121,7 +121,7 @@
                     <div class="card-header">
                         <div class="card-title">Nilai</div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <table class='table-responsive table-bordered table-sm w-full'>
                             <thead>
                                 <tr>
@@ -158,12 +158,19 @@
                                                 <?php if($sis['id_nilai'] == $nilai_d['id_nilai']) : ?>
                                                     <td class='p-0' class='data-nilai'>
                                                         <input type="text" 
+                                                            style="min-width:50px;"
                                                             class='form-control td-input td-input-<?= $sis['id_siswa'] ?>' 
                                                             data-idsiswa="<?= $sis['id_siswa']?>"
                                                             data-nilaidetailid = "<?= $nilai_d['nilai_detail_id'] ?>" 
                                                             data-inputkd="input-kd-<?= $nilai_d['kd_name'] ?>" 
                                                             data-rfnilaidetailid='<?= $nilai_d['rf_nilai_detail_id']?>'
                                                             value="<?= $nilai_d['nilai'] ?>"
+                                                            <?php if($nilai_d['rf_nilai_detail_id'] == 4 || $nilai_d['rf_nilai_detail_id'] == 10):?>
+                                                                disabled
+                                                                id="nilai-akhir-<?= preg_replace('/\s+/', '_', $nilai_d['kd_name'])?>-<?= $sis['id_siswa'] ?>"
+                                                            <?php else : ?>
+                                                                data-nilaiakhirid="nilai-akhir-<?= preg_replace('/\s+/', '_', $nilai_d['kd_name'])?>-<?= $sis['id_siswa'] ?>"
+                                                            <?php endif ?>
                                                             >
                                                     </td>
                                                 <?php endif ?>
@@ -198,6 +205,27 @@
         return response;
     }
 
+    async function countNilaiAkhir(id){
+        const td =$(`.td-input[data-nilaiakhirid="${id}"]`);
+        console.log(id);
+        let totalNilai =0 ;
+        let devideCounter =0;
+        for (let index = 0; index < td.length; index++) {
+            const element = td[index];
+            let valueEl = element.value;
+            console.log('MASUK',typeof(valueEl))
+            if(valueEl !== ''){
+                devideCounter ++;
+                totalNilai = Number(totalNilai) + Number(valueEl)
+            }
+        }
+
+        return totalNilai / devideCounter
+
+        
+        // $('#'+id).val(totalNilai/devideCounter);
+    }
+
     $('.kd-name-input').on('change',async function(e){
         let data={
             nilai_detail_ids : e.target.dataset.nilaidetailids,
@@ -208,15 +236,27 @@
         console.log("KD NAME CHANGED",changeKDName);
     });
 
+
     $('.td-input').on('change',async function(e){
         // console.log(e)
         // return false;
         data ={
             nilai_detail_id : e.target.dataset.nilaidetailid,
-            nilai : e.target.value
+            nilai : e.target.value ? e.target.value : null
         }
-        let updateNilai = await  postData("<?= base_url('admin/nilai/storekdname')?>",data);
+        let updateNilai = await  postData("<?= base_url('admin/nilai/storenilai')?>",data);
+        let nilaiakhirid = e.target.dataset.nilaiakhirid
         console.log('UPDATE NILAI',updateNilai);
+        // NILAI AKHIR
+        let na=await countNilaiAkhir(nilaiakhirid);
+        $(`#${nilaiakhirid}`).val(na);
+        
+        dataNilaiAkhir ={
+            nilai_detail_id : $(`#${nilaiakhirid}`).attr('data-nilaidetailid'),
+            nilai : na ? na : null
+        }
+        let updateNilaiAkhir = await  postData("<?= base_url('admin/nilai/storenilai')?>",dataNilaiAkhir);
+        console.log('UPDATE NILAI',updateNilaiAkhir);
     })
 
     $('.btn-delete').click(async function(){
