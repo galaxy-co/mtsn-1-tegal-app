@@ -115,7 +115,7 @@
     ?>
     <tbody>
         <tr>
-            <td><img src="public_path(localhost:8080/assets/assets/img/logo.jpg)" alt=""></td>
+            <td><img src="<?= $base64 ?>" alt=""></td>
             <td class="center-text">
                 <p><b>KEMENTRIAN AGAMA</b></p>
                 <p><b>KANTOR KEMENTRIAN AGAMA KABUPATEN TEGAL</b></p>
