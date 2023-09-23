@@ -109,7 +109,7 @@
     </thead>
     <tbody>
         <tr>
-            <td><img src="<?= base_url('assets/')?>assets/img/kemenag_logo.png" alt=""></td>
+            <td><img src="public_path(localhost:8080/assets/assets/img/logo.jpg)" alt=""></td>
             <td class="center-text">
                 <p><b>KEMENTRIAN AGAMA</b></p>
                 <p><b>KANTOR KEMENTRIAN AGAMA KABUPATEN TEGAL</b></p>
@@ -207,50 +207,22 @@
                 <td style="background-color:#ADABAB;" class="bordered-td"></td>
                 <td style="background-color:#ADABAB;" class="bordered-td"></td>
             </tr>
-            <?php
-            $no = 0;
-            $groupedData = [];
-
-            foreach ($nilaip5 as $n) {
-                $id_nilai = $n['id_nilai'];
-                
-                if (!isset($groupedData[$id_nilai])) {
-                    $groupedData[$id_nilai] = [];
-                }
-
-                $groupedData[$id_nilai][] = $n;
-            }
-
-            foreach ($groupedData as $id_nilai => $group) {
-                $nilaiPrinted = false; // Variabel untuk melacak apakah nilai sudah dicetak kedua kali
-
-                ?>
+            
+            <?php $no=0; foreach($nilaip5 as $n) : ?>
                 <tr>
-                    <td style="background-color:#FAF5F5;" class="bordered-td"><?= ++$no; ?></td>
-                    <?php foreach ($group as $index => $n) : ?>
-                        <td style="background-color:#FAF5F5;" class="bordered-td"><?= $n['desc']; ?></td> <!-- Cetak desc dua kali -->
-                        <td style="background-color:#FAF5F5;" class="bordered-td">
-                            <?php 
-                            if ($index === 0 || !$nilaiPrinted) {
-                                echo $n['nilai'];
-                                if ($index === 0) {
-                                    $nilaiPrinted = true; // Setel ke true jika nilai pertama kali dicetak
-                                }
-                            }
-                            ?>
-                        </td>
-                    <?php endforeach ?>
+                    <td style="background-color:#FAF5F5;" class="bordered-td"><?= ++$no?></td>
+                    <td style="background-color:#FAF5F5;" class="bordered-td"><?= $n['dimensi']?></td>
+                    <td style="background-color:#FAF5F5;" class="bordered-td" id="nilai_sering"><?= $n['nilai']?></td>
+                    <td style="background-color:#FAF5F5;" class="bordered-td">Ananda <?= $n['arti']?> dalam <?=$n['desc']?></td>
                 </tr>
-                <?php
-            }
-            ?>
 
+            <?php endforeach ?>   
 
             <tr>
                 <td colspan="4" style="background-color:#ADABAB;" class="bordered-td">Catatan Untuk Orang Tua</td>
             </tr>
             <tr>
-                <td colspan="4" style="background-color:#FAF5F5; padding-bottom: 20px;" class="bordered-td"></td>
+                <td colspan="4" style="background-color:#FAF5F5; padding-bottom: 20px;" class="bordered-td">Ananda menunjukkan pribadi yang <?= $modus['arti']?> dalam <?= $desc['capaian_desc'] ?>dengan perwujudan sebagai seorang yang memiliki sikap <?= $modus['nilai_rahmatan_lil_alamin']?> yang senantiasa perlu dibimbing dan dikembangkan untuk kesuksesannya di masa depan</td>
             </tr>
             
         </tbody>
