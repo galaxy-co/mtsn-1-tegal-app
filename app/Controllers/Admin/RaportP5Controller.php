@@ -12,6 +12,7 @@ use App\Models\Admin\RFNilaiP5Model;
 use App\Models\Admin\GuruModel;
 
 use \Dompdf\Dompdf;
+use \Dompdf\Options;
 use PharIo\Manifest\Application;
 
 class RaportP5Controller extends BaseController
@@ -69,13 +70,52 @@ class RaportP5Controller extends BaseController
                         ->join('projects', 'projects.id_project=project_dimensi.id_project')
                         ->join('rf_nilai_p5_options', 'rf_nilai_p5_options.id_nilaip5_option = nilaip5.nilai')
                         ->join('capaian_p5', 'capaian_p5.id_capaian=project_dimensi.kode_capaian_fase')
-                        ->join('dimensi_p5', 'dimensi_p5.kode_dimensi=capaian_p5.kode_capaian')
-                        ->join('element_p5', 'element_p5.kode_element=dimensi_p5.kode_dimensi')
+                        ->join('dimensi_p5', 'dimensi_p5.id_dimensi=project_dimensi.id_dimensi')
                         ->where('nilaip5.id_siswa', $idSiswa)
-                        ->findAll();  
-                        
-                        
+                        ->findAll();
+        
+        $nilai = [];
+
+        foreach ($data['nilaip5'] as $row) {
+            $nilai[] = $row['id_nilaip5_option'];
+        }
+        
+        $nilai_count = array_count_values($nilai);
+        
+        arsort($nilai_count);
+        
+        $modus_values = [];
+        $max_count = reset($nilai_count);
+        
+        foreach ($nilai_count as $value => $count) {
+            if ($count == $max_count) {
+                $modus_values[] = $value;
+            } else {
+                break;
+            }
+        }
+        
+        $modus = max($modus_values);
+        
+        $data['modus'] = $this->nilaiP5Model
+                    ->join('project_dimensi', 'project_dimensi.id_project_dimensi=nilaip5.id_project_dimensi')
+                    ->join('capaian_p5', 'capaian_p5.id_capaian=project_dimensi.kode_capaian_fase')
+                    ->join('rf_nilai_p5_options', 'rf_nilai_p5_options.id_nilaip5_option=nilaip5.nilai')
+                    ->where('nilaip5.nilai', $modus)
+                    ->first();
+        $data['desc'] = $this->nilaiP5Model
+                    ->join('project_dimensi', 'project_dimensi.id_project_dimensi=nilaip5.id_project_dimensi')
+                    ->join('capaian_p5', 'capaian_p5.id_capaian=project_dimensi.kode_capaian_fase')
+                    ->join('rf_nilai_p5_options', 'rf_nilai_p5_options.id_nilaip5_option=nilaip5.nilai')
+                    ->where('nilaip5.nilai', $modus)
+                    ->select(
+                        'capaian_p5.desc as capaian_desc'
+                    )
+                    ->first();
         $html = view('admin/templateCetakRaport', $data);
+        $options = new Options();
+        $options->setIsRemoteEnabled(true);
+        $dompdf = new Dompdf($options);
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
