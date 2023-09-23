@@ -43,7 +43,15 @@ class RaportP5Controller extends BaseController
     }
     public function dataSiswa($id_kelas)
     {
+        $data['listSiswa'] = [];
         $data['siswa'] = $this->siswaModel->where('kelas', $id_kelas)->findAll();
+        foreach ($data['siswa'] as $s) {
+            $idSiswa = $s['id_siswa'];
+            $cekData = $this->nilaiP5Model->where('id_siswa', $idSiswa)->findAll();
+            if (!$cekData) {
+                array_push($data['listSiswa'], $idSiswa);
+            }
+        }
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
         echo view('admin/siswaPrintRaport', $data);
@@ -120,17 +128,14 @@ class RaportP5Controller extends BaseController
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
         
-        // Menyimpan output PDF ke variabel
         $this->response->setContentType('application/pdf');
         $output = $dompdf->output();
         
-        // Mengatur header HTTP untuk menampilkan PDF di browser
         header('Content-Type: application/pdf');
-        header('Content-Disposition: inline; filename="raport.pdf"'); // Menampilkan inline di browser
+        header('Content-Disposition: inline; filename="raport.pdf"'); 
         header('Content-Transfer-Encoding: binary');
         header('Content-Length: ' . strlen($output));
-        
-        // Menampilkan output PDF
+   
         echo $output;
     }
 

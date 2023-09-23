@@ -49,16 +49,16 @@
                                     <div class="col-md-6 col-lg-4">
                                         <div class="form-group">
                                             <label for="defaultSelect">Jenis Kelamin</label>
-                                            <select class="form-control form-control" id="kurikulum" name="kurikulum">
-                                                <option value="1">L</option>
-                                                <option value="2">P</option>
+                                            <select class="form-control form-control" id="jenis_kelamin" name="jenis_kelamin">
+                                                <option value="L">L</option>
+                                                <option value="P">P</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-lg-4">
                                         <div class="form-group">
                                             <label for="defaultSelect">Kelas</label>
-                                            <select class="form-control form-control" id="id_guru" name="id_guru">
+                                            <select class="form-control form-control" id="kelas" name="kelas">
                                                 <?php foreach($kelas as $g) : ?>
                                                 <option value="<?= $g['id_kelas']?>"><?= $g['tingkat'] ?><?= $g['nama_kelas'] ?></option>
                                                 <?php endforeach ?>

@@ -33,7 +33,9 @@ class PASController extends BaseController
     public function index()
     {
         
-        $data['nilai_pas'] = $this->pasModel
+        $cekPas = $this->pasModel->findAll();
+        if(count($cekPas)>0){
+            $data['nilai_pas'] = $this->pasModel
             ->join('kelas','kelas.id_kelas = nilai_pas.id_kelas')
             ->join('mapel','mapel.id_mapel = nilai_pas.id_mapel')
             ->join('guru','guru.id_guru = nilai_pas.id_guru')
@@ -42,6 +44,10 @@ class PASController extends BaseController
             ->groupBy('nilai_pas.id_kelas')
             ->groupBy('nilai_pas.id_mapel')
             ->findAll();
+        }else{
+            $data['nilai_pas'] = [];
+        }
+        
         $data['kelas'] = $this->kelasModel->findAll();
         $data['guru'] = $this->guruModel->findAll();
         $data['mapel'] = $this->mapelModel->findAll();
@@ -53,17 +59,12 @@ class PASController extends BaseController
     public function detail(){
         $dataInput = $this->request->getVar();
         $data['input'] = $dataInput;
-        // $siswa = $this->siswaModel
-        //     ->join('nilai_pas','siswa.id_siswa = nilai_pas.id_siswa','left')
-        //     ->join('mapel','mapel.id_mapel = nilai_pas.id_mapel','left')
-        //     ->join('kelas','kelas.id_kelas = nilai_pas.id_kelas','left')
-        //     ->where('kelas.id_kelas',$dataInput['id_kelas'])
-        //     ->findAll();
         
-        
+        // $cekSiswa = $this->pasModel->where
             $kelas = $this->kelasModel->where('id_kelas', $dataInput['id_kelas'])->first();
             $kurikulum = $kelas['kurikulum'];
             $siswa = $this->siswaModel->where('kelas', $dataInput['id_kelas'])->findAll();
+         
             // var_dump($siswa); die;
             $data['kelas'] = $this->kelasModel->where('id_kelas', $dataInput['id_kelas'])->first();
             $data['guru'] = $this->guruModel->where('id_guru', $dataInput['id_guru'])->first();

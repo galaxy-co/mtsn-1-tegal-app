@@ -36,14 +36,20 @@ class NilaiSemesterController extends BaseController
 
         $guru = $this->guruModel->where('id_guru', $idGuru)->first();
         $data['wali_kelas'] = $guru['nama_guru'];
+        $cekNilaiPas = $this->pasModel->where('id_siswa', $siswaId)->findAll();
 
-        $data['nilai_pas'] = $this->pasModel
+        if(count($cekNilaiPas) > 0){
+            $data['nilai_pas'] = $this->pasModel
             ->join('siswa', 'siswa.id_siswa=nilai_pas.id_siswa')
             ->join('kelas', 'kelas.id_kelas=nilai_pas.id_kelas')
             ->join('mapel', 'mapel.id_mapel=nilai_pas.id_mapel')
             ->join('guru', 'guru.id_guru=nilai_pas.id_guru')
             ->where('nilai_pas.id_siswa', $siswaId)
             ->findAll();
+        }else{
+            $data['nilai_pas'] = [];
+        }
+        
 
             $groupedData = [];
 

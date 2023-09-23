@@ -112,10 +112,15 @@
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+        $path2 = 'assets/assets/img/logo.png';
+        $type2 = pathinfo($path2, PATHINFO_EXTENSION);
+        $data2 = file_get_contents($path2);
+        $base642 = 'data:image/' . $type2 . ';base64,' . base64_encode($data2);
     ?>
     <tbody>
         <tr>
-            <td><img src="<?= $base64 ?>" alt=""></td>
+            <td><img src="<?= $base64 ?>" alt="" width="90px" height="80px"></td>
             <td class="center-text">
                 <p><b>KEMENTRIAN AGAMA</b></p>
                 <p><b>KANTOR KEMENTRIAN AGAMA KABUPATEN TEGAL</b></p>
@@ -123,7 +128,7 @@
                 <p style="font-size: x-small;">Jl. Ponpes Babakan-Lebaksiu Tegal</p>
                 <!-- Horizontal line -->
             </td>
-            <td><img src="" alt=""></td>
+            <td><img src="<?= $base642 ?>" alt="" width="80px" height="80px"></td>
         </tr>
         <tr>
             <td class="horizontal-line"></td>
