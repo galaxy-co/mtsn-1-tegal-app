@@ -14,7 +14,7 @@ class DimensiModel extends Model
     protected $returnType           = 'array';
     protected $useSoftDelete        = false;
 
-    protected $allowedFields        = ['kode_dimensi','dimensi','id_kelas'];
+    protected $allowedFields        = ['kode_dimensi','dimensi','id_kelas','semester','tahun_ajaran'];
     // protected $DBGroup          = 'default';
     // protected $table            = 'gurus';
     // protected $primaryKey       = 'id';

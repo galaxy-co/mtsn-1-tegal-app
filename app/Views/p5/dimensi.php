@@ -30,6 +30,8 @@
                   </div>
                   <form action="<?= base_url('admin/p5/store/dimensi?tingkat='.$tingkat)?>" method="post">
                     <input type="hidden" name="id_dimensi">
+                    <input type="hidden" name="semester" value="<?= $setting['semester']?>">
+                    <input type="hidden" name="tahun_ajaran" value="<?= $setting['tahun_ajaran']?>">
                     <div class="card-body">
                       <div class="form-group">
                         <label for="dimensi">KODE DIMENSI</label>

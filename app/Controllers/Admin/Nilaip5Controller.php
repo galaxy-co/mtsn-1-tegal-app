@@ -10,6 +10,7 @@ use App\Models\Admin\CapaianModel;
 use App\Models\Admin\RFNilaiP5Model;
 use App\Models\Admin\PenilaianP5Model;
 use App\Models\Admin\SiswaModel;
+use App\Models\Admin\SettingsModel;
 
 use App\Controllers\BaseController;
 
@@ -18,6 +19,7 @@ use CodeIgniter\API\ResponseTrait;
 class Nilaip5Controller extends BaseController
 {
     protected $kelasModel;
+    protected $setting;
     use ResponseTrait;
     public function __construct()
     {
@@ -30,6 +32,9 @@ class Nilaip5Controller extends BaseController
         $this->ProjectDimensiModel = new ProjectDimensiModel();
         $this->PenilaianP5Model = new PenilaianP5Model();
         $this->SiswaModel = new SiswaModel();
+        $this->SettingsModel = new SettingsModel();
+
+        $this->setting = $this->SettingsModel->find()[0];
     }
 
     private function getData($key = '',$param = null){
@@ -39,7 +44,12 @@ class Nilaip5Controller extends BaseController
                 return [
                     'tingkat' => $this->request->getVar('tingkat'),
                     'kelas' => $this->kelasModel->where('kurikulum',2)->findAll(),
-                    'dimensi' => $this->DimensiModel->where('id_kelas',$this->request->getVar('tingkat'))->findAll(),
+                    'dimensi' => $this->DimensiModel
+                        ->where('id_kelas',$this->request->getVar('tingkat'))
+                        ->where('semester',$this->setting['semester'])
+                        ->where('tahun_ajaran',$this->setting['tahun_ajaran'])
+                        ->findAll(),
+                    'setting' => $this->setting
                 ];
                 break;
                 case 'elemen':
@@ -51,25 +61,40 @@ class Nilaip5Controller extends BaseController
                             '
                             )
                             ->join('element_p5 AS element_p5_child','element_p5_child.id_element = element_p5.id_parent_element','left')
-                            ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi AND dimensi_p5.id_kelas='.$this->request->getVar('tingkat'),'left')
+                            ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi AND dimensi_p5.id_kelas='.$this->request->getVar('tingkat').' and dimensi_p5.semester='.$this->setting['semester'],'left')
+                            ->where('dimensi_p5.tahun_ajaran',$this->setting['tahun_ajaran'])
                             ->findAll(),
                         'capaian' => $this->CapaianModel
                             ->select('capaian_p5.kode_capaian,capaian_p5.nilai_rahmatan_lil_alamin,capaian_p5.sub_nilai,capaian_p5.id_capaian,capaian_p5.desc,capaian_p5.id_parent_element, 
                             element_p5.desc as element_desc,
                             dimensi_p5.id_dimensi')
                             ->join('element_p5','element_p5.id_element = capaian_p5.id_parent_element','left')
-                            ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi AND dimensi_p5.id_kelas='.$this->request->getVar('tingkat'),'left')
+                            ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi AND dimensi_p5.id_kelas='.$this->request->getVar('tingkat').' and dimensi_p5.semester='.$this->setting['semester'],'left')
+                            ->where('dimensi_p5.tahun_ajaran',$this->setting['tahun_ajaran'])
                             ->findAll(),
-                        'dimensi' => $this->DimensiModel->findAll()
+                        'dimensi' => $this->DimensiModel
+                            ->where('id_kelas',$this->request->getVar('tingkat'))
+                            ->where('semester',$this->setting['semester'])
+                            ->where('tahun_ajaran',$this->setting['tahun_ajaran'])
+                            ->findAll(),
                     ];
                     break;
             case 'proyek':
                     return [
-                        'dimensi' => $this->DimensiModel->findAll(),
-                        'proyek' => $this->ProyekModel->where('tingkat',$this->request->getVar('tingkat'))->findAll(),
+                        'dimensi' => $this->DimensiModel
+                            ->where('id_kelas',$this->request->getVar('tingkat'))
+                            ->where('semester',$this->setting['semester'])
+                            ->where('tahun_ajaran',$this->setting['tahun_ajaran'])
+                            ->findAll(),
+                        'proyek' => $this->ProyekModel
+                            ->where('tingkat',$this->request->getVar('tingkat'))
+                            ->where('semester',$this->setting['semester'])
+                            ->where('tahun_ajaran',$this->setting['tahun_ajaran'])
+                            ->findAll(),
                         'capaian' => $this->CapaianModel
                             ->join('element_p5','element_p5.id_element = capaian_p5.id_parent_element','left')
-                            ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi AND dimensi_p5.id_kelas='.$this->request->getVar('tingkat'),'left')
+                            ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi AND dimensi_p5.id_kelas='.$this->request->getVar('tingkat').' and dimensi_p5.semester='.$this->setting['semester'],'left')
+                            ->where('dimensi_p5.tahun_ajaran',$this->setting['tahun_ajaran'])
                             ->findAll(),
                         'project_dimensi' =>$this->ProjectDimensiModel
                             ->select('
@@ -78,7 +103,10 @@ class Nilaip5Controller extends BaseController
                                 project_dimensi.id_project_dimensi,project_dimensi.id_project')
                             ->join('dimensi_p5','dimensi_p5.id_dimensi = project_dimensi.id_dimensi AND dimensi_p5.id_kelas='.$this->request->getVar('tingkat'),'left')
                             ->join('capaian_p5','capaian_p5.id_capaian = project_dimensi.kode_capaian_fase','left')
-                            ->findAll()
+                            ->where('dimensi_p5.tahun_ajaran',$this->setting['tahun_ajaran'])
+                            ->where('dimensi_p5.semester',$this->setting['semester'])
+                            ->findAll(),
+                        'setting' => $this->setting
                     ];
                 break;
             case 'nilai':
@@ -89,7 +117,11 @@ class Nilaip5Controller extends BaseController
                 break;
             case 'penilaian':
                 return [
-                    'proyek' =>$this->ProyekModel->where('tingkat',$this->request->getVar('tingkat'))->findAll()
+                    'proyek' =>$this->ProyekModel
+                        ->where('tingkat',$this->request->getVar('tingkat'))
+                        ->where('semester',$this->setting['semester'])
+                        ->where('tahun_ajaran',$this->setting['tahun_ajaran'])
+                        ->findAll()
                 ];
                 break;
             case 'cek_deskripsi':
@@ -121,7 +153,11 @@ class Nilaip5Controller extends BaseController
                             ->orderBy('dimensi_p5.id_dimensi','ASC')
                             ->orderBy('project_dimensi.id_project','ASC')
                             ->findAll(),
-                    'header_project' => $this->ProyekModel->where('tingkat',$this->request->getVar('tingkat'))->findAll(),
+                    'header_project' => $this->ProyekModel
+                        ->where('tingkat',$this->request->getVar('tingkat'))
+                        ->where('semester',$this->setting['semester'])
+                        ->where('tahun_ajaran',$this->setting['tahun_ajaran'])
+                        ->findAll(),
                     'predikat' =>$this->RFNilaiP5Model->findAll()
                 ];
                 break;
@@ -167,7 +203,11 @@ class Nilaip5Controller extends BaseController
                 ->select('nilaip5.*,rf_nilai_p5_options.desc')
                 ->join('rf_nilai_p5_options','rf_nilai_p5_options.id_nilaip5_option = nilaip5.nilai','left')
                 ->findAll(),
-            'proyek' =>$this->ProyekModel->where('tingkat',$this->request->getVar('tingkat'))->findAll(),
+            'proyek' =>$this->ProyekModel
+                ->where('tingkat',$this->request->getVar('tingkat'))
+                ->where('semester',$this->setting['semester'])
+                ->where('tahun_ajaran',$this->setting['tahun_ajaran'])
+                ->findAll(),
             'proyek_detail'=>$this->ProyekModel->find($id),
             'project_dimensi' =>$this->ProjectDimensiModel
                     ->select('
@@ -180,7 +220,7 @@ class Nilaip5Controller extends BaseController
                     ->findAll(),
             'siswa'=> $this->SiswaModel->where('kelas',$id_kelas)->findAll(),
             'kelas' => $this->kelasModel->where('tingkat', $this->request->getVar('tingkat'))->findAll(),
-            'nilai' => $this->RFNilaiP5Model->findAll()
+            'nilai' => $this->RFNilaiP5Model->findAll(),
         ];
         $data['tingkat'] = $this->request->getVar('tingkat');
         $data['id_kelas'] = $id_kelas;
@@ -236,7 +276,8 @@ class Nilaip5Controller extends BaseController
 
     public function store_nilai(){
         $dataPost = $this->request->getVar();
-
+        $dataPost->semester = $this->setting['semester'];
+        $dataPost->tahun_ajaran = $this->setting['tahun_ajaran'];
         $save = $this->PenilaianP5Model->save($dataPost);
         $id= $this->request->getVar('id_nilai') ? $this->request->getVar('id_nilai') : $this->PenilaianP5Model->getInsertID();
         $response = [

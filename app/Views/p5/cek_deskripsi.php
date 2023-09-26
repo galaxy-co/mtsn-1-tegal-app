@@ -31,7 +31,7 @@
                                 <?php $temp ='' ?>
                                 <?php foreach($header_dimensi as $hd): ?>
                                     <?php if($hd['dimensi'] !== $temp) : ?>
-                                    <th colspan='6'><?= $hd['dimensi'] ?></th>
+                                    <th colspan='<?php echo count($header_project)+3 ?>'><?= $hd['dimensi'] ?></th>
                                     <?php $temp=$hd['dimensi'];endif ?>
                                 <?php endforeach ?>
                                 <th rowspan='4'>MODUS GAB</th>

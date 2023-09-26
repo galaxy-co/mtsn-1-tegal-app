@@ -14,7 +14,7 @@ class ProyekModel extends Model
     protected $returnType           = 'array';
     protected $useSoftDelete        = false;
 
-    protected $allowedFields        = ['name','theme','tingkat'];
+    protected $allowedFields        = ['name','theme','tingkat','semester','tahun_ajaran'];
     // protected $DBGroup          = 'default';
     // protected $table            = 'gurus';
     // protected $primaryKey       = 'id';

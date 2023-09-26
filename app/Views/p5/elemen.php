@@ -225,7 +225,7 @@
                     <select name="dimensi" id="" class='form-control'>
                       <option value=""></option>
                       <?php foreach($dimensi as $dimen) : ?>
-                        <option value="<?php echo $dimen['id_dimensi']?>"> <?= $dimen['kode_dimensi'].' - '.$dimen['dimensi']?></option>
+                        <option value="<?php echo $dimen['id_dimensi']?>" data-kodedimensi="<?= $dimen['kode_dimensi'] ?>"> <?= $dimen['kode_dimensi'].' - '.$dimen['dimensi']?></option>
                       <?php endforeach ?>
                     </select>
                   </div>
@@ -367,6 +367,8 @@
   $('.action-sub-element').click(function(){
     showInputSubElemen(true)
   })
+
+ 
 
   // $('select[name=id_parent_element]').on('change',function(e){
   //   showInputSubElemen(e.target.value)

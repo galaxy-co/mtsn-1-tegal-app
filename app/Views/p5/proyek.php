@@ -31,6 +31,8 @@
                   <form action="<?= base_url('admin/p5/store/proyek?tingkat='.$tingkat)?>" method="post">
                     <input type="hidden" name="id_project">
                     <input type="hidden" name="tingkat" value="<?php echo $tingkat ?>">
+                    <input type="hidden" name="semester" value="<?= $setting['semester']?>">
+                    <input type="hidden" name="tahun_ajaran" value="<?= $setting['tahun_ajaran']?>">
                     <div class="card-body">
                       <div class="form-group">
                         <label for="name">JUDUL PROYEK</label>
@@ -74,7 +76,7 @@
                                 >
                                 <i class="icon-note"></i> Edit
                               </button>  
-                              <a href="<?= base_url('admin/p5/delete/proyek/') . $proy['id_project']?>.?tingkat=<?= $tingkat ?>" class="btn btn-danger btn-xs"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
+                              <a href="<?= base_url('admin/p5/delete/proyek/') . $proy['id_project']?>?tingkat=<?= $tingkat ?>" class="btn btn-danger btn-xs"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
                             </div>
                           </div>
 
