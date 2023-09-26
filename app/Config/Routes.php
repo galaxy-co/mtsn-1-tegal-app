@@ -22,6 +22,15 @@ $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
         $routes->post('/edit','Admin\UserController::index');
         $routes->get('/delete/1','Admin\UserController::index/$1');
     });
+
+    // Settings
+    $routes->group('settings',static function ($routes){
+        $routes->get('/', 'Admin\SettingsController::index');
+        $routes->post('add','Admin\SettingsController::add');
+        $routes->get('edit/(:num)','Admin\SettingsController::edit/$1');
+        $routes->post('update/(:num)', 'Admin\SettingsController::update/$1');
+    });
+
     // Siswa
     $routes->group('siswa',static function ($routes){
         $routes->get('/', 'Admin\SiswaController::index');
@@ -31,6 +40,7 @@ $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
         $routes->get('edit/(:num)', 'Admin\SiswaController::edit/$1');
         $routes->post('update/(:num)', 'Admin\SiswaController::update/$1');
     });
+
 
     // Mapel
     $routes->group('mapel',static function ($routes){

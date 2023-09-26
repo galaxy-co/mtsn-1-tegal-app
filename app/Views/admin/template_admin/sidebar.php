@@ -25,6 +25,12 @@
 								<p>Dashboard</p>
 							</a>
 						</li>
+						<li class="nav-item">
+							<a href="<?= base_url('/admin/settings')?>" aria-expanded="false">
+								<i class="fa fa-cogs"></i>
+								<p>Settings</p>
+							</a>
+						</li>
 						
 						<li class="nav-item">
 							<a href="<?= base_url('/admin/guru')?>">
