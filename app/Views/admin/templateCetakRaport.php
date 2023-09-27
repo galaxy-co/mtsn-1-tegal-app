@@ -173,7 +173,7 @@
                 <td></td>
                 <td style="font-size:x-small;">Fase</td>
                 <td style="font-size:x-small;">:</td>
-                <td style="font-size:x-small;">D</td>
+                <td style="font-size:x-small;"></td>
             </tr>
             <tr>
                 <td style="font-size:x-small;">NISM</td>
@@ -187,11 +187,11 @@
             <tr>
                 <td style="font-size:x-small;">Semester</td>
                 <td style="font-size:x-small;">:</td>
-                <td style="font-size:x-small;"><?= $nilai[0]['semester']?></td>
+                <td style="font-size:x-small;"><?= $setting['semester']?></td>
                 <td></td>
                 <td style="font-size:x-small;">Tahun Ajaran</td>
                 <td style="font-size:x-small;">:</td>
-                <td style="font-size:x-small;"><?= $nilai[0]['tahun_ajaran']?></td>
+                <td style="font-size:x-small;"><?= $setting['tahun_ajaran']?></td>
             </tr>
         </tbody>
     </table>
@@ -267,7 +267,7 @@
             <tr>
                 <td>Mengetahui :</td>
                 <td></td>
-                <td>Lebaksiu,</td>
+                <td>Lebaksiu, <?= $setting['tanggal_cetak_raport']?></td>
             </tr>
             <tr>
                 <td>Kepala Madrasah</td>
@@ -280,7 +280,7 @@
                 <td style="padding-bottom: 40px;"></td>
             </tr>
             <tr>
-                <td>Drs. H. Azki Sleng, M.Pd</td>
+                <td><?= $setting['nama_kepsek']?></td>
                 <td></td>
                 <td><?= $guru['nama_guru']?></td>
             </tr>

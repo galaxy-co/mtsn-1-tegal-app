@@ -4,10 +4,11 @@
             <div class="row">
 
                 <div class="col-md-12">
+                <?php foreach($groupedData as $sesesterTahun => $nilaiPas) : list($semster, $tahunAjaran) = explode('-', $sesesterTahun);?>
                     <div class="card">
                         <div class="card-header">
-                            <div class="d-flex align-items-center">
-                                <h4 class="card-title">Nilai Harian</h4>
+                            <div class="d-flex justify-content-center">
+                                <h4 class="card-title">Nilai Harian Semester <?php if($semster == 1){echo 'Ganjil';}else{echo 'Genap';}?> Tahun Ajaran  <?=$tahunAjaran?></h4>
                                 
                             </div>
 
@@ -70,6 +71,7 @@
                         </div>
                     </div>
                 </div>
+                <?php endforeach ?>
             </div>
         </div>
     </div>

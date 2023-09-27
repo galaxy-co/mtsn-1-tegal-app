@@ -3,7 +3,7 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">     
-                <h4 class="page-title">Daftar Absensi</h4>
+                <h4 class="page-title">Nilai P5</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#">
@@ -14,7 +14,7 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Daftar Absensi</a>
+                        <a href="#">Nilai P5</a>
                     </li>
                     <li class="separator">
                         <i class="flaticon-right-arrow"></i>
@@ -29,7 +29,7 @@
                 <?php foreach($groupedData as $sesesterTahun => $nilaiPas) : list($semster, $tahunAjaran) = explode('-', $sesesterTahun);?>
                 <div class="card">
                         <div class="card-header">
-                            <div class="card-title d-flex justify-content-center">Daftar Absensi Semester <?php if($semster == 1){echo 'Ganjil';}else{echo 'Genap';}?> Tahun Ajaran  <?=$tahunAjaran?></div>
+                            <div class="card-title d-flex justify-content-center">Daftar Nilai P5 Semester <?php if($semster == 1){echo 'Ganjil';}else{echo 'Genap';}?> Tahun Ajaran  <?=$tahunAjaran?></div>
                         </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -37,23 +37,17 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Tahun Ajaran</th>
-                                                <th>Semester</th>
-                                                <th>Izin</th>
-                                                <th>Sakit</th>
-                                                <th>Alfa</th>
-                                                <th>Catatan</th>
+                                                <th>DIMENSI P5 PPRA</th>
+                                                <th>NILAI</th>
+                                                <th>DESKRIPSI CAPAIAN</th>
                                             </tr>
                                         </thead>
-                                        <?php $no = 0; foreach ($absen as $a) : ?>
+                                        <?php $no = 0; foreach ($nilaip5 as $n) : ?>
                                             <tr>
                                                 <td><?= ++$no ?></td>
-                                                <td><?= $a['tahun_ajaran']?></td>
-                                                <td><?= $a['semester']?></td>
-                                                <td><?= $a['izin']?></td>
-                                                <td><?= $a['sakit']?></td>
-                                                <td><?= $a['alpa']?></td>
-                                                <td><?= $a['catatan']?></td>
+                                                <td><?= $n['dimensi']?></td>
+                                                <td><?= $n['nilai']?></td>
+                                                <td>Ananda <?= $n['arti']?> dalam <?=$n['desc']?></td>
                                             </tr>
                                         <?php endforeach ?>
                                         <tbody>

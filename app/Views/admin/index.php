@@ -8,7 +8,7 @@
 						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 							<div>
 								<h2 class="text-white pb-2 fw-bold">Dashboard</h2>
-								<h5 class="text-white op-7 mb-2">Aplikasi Management Nilai MTs N 1 Tegal</h5>
+								<h5 class="text-white op-7 mb-2">Aplikasi Management Nilai MTs N 1 Tegal v.1.1</h5>
 							</div>
 							<div class="ml-md-auto py-2 py-md-0">
 								<img src="<?=base_url('assets/')?>assets/img/logo.png" alt="" height="70px" width="70px">
@@ -43,20 +43,16 @@
 						<div class="col-md-6">
 							<div class="card full-height">
 								<div class="card-body">
-									<div class="card-title">Statistic</div>
-									<div class="card-category"></div>
-									<div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
-										<div class="px-2 pb-2 pb-md-0 text-center">
-											<h1><?= $jumlahGuru ?></h1>
-											<h6 class="fw-bold mt-3 mb-0">Jumlah Guru</h6>
-										</div>
-										<div class="px-2 pb-2 pb-md-0 text-center">
-											<h1><?= $jumlahKelas ?></h1>
-											<h6 class="fw-bold mt-3 mb-0">Jumlah Kelas</h6>
-										</div>
-										<div class="px-2 pb-2 pb-md-0 text-center">
-											<h1><?= $jumlahMapel ?></h1>
-											<h6 class="fw-bold mt-3 mb-0">Jumlah Mapel</h6>
+									<div class="card-title">Settings</div>
+									<div class="card-category">
+										<div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+											<?php if($settings) : ?>
+												
+												<h1>Tahun Ajaran <?= $settings['tahun_ajaran']?></h1>
+												<h1>Semester <?= $settings['semester']?></h1>
+											<?php else :?>
+												<h1>Anda Belum Melakukan Setting</h1>
+											<?php endif ?>
 										</div>
 									</div>
 								</div>
@@ -67,13 +63,13 @@
 						<div class="col-md-6">
 							<div class="card full-height">
 								<div class="card-header">
-									<div class="card-title">Langkah Penggunaan Aplikasi</div>
+									<div class="card-title">Langkah Penggunaan Aplikasi Sebelum Isi Nilai</div>
 								</div>
 								<div class="card-body">
 									<ol class="activity-feed">
 										<li class="feed-item feed-item-success">
 											<time class="date" datetime="9-25">1</time>
-											<span class="text">Input Kelas Terlebih Dahulu</span>
+											<span class="text">Lakukan Setting Untuk Kepala Sekolah, Semester, Tahun Ajaran, dan Tanggal Cetak Raport di Menu Settings</span>
 										</li>
 										<li class="feed-item feed-item-success">
 											<time class="date" datetime="9-25">2</time>
@@ -81,7 +77,15 @@
 										</li>
 										<li class="feed-item feed-item-success">
 											<time class="date" datetime="9-25">3</time>
+											<span class="text">Input Data Kelas</span>
+										</li>
+										<li class="feed-item feed-item-success">
+											<time class="date" datetime="9-25">4</time>
 											<span class="text">Input Data Mapel</span>
+										</li>
+										<li class="feed-item feed-item-success">
+											<time class="date" datetime="9-25">5</time>
+											<span class="text">Input Data Siswa</span>
 										</li>
 										
 									</ol>
@@ -92,86 +96,26 @@
 							<div class="card full-height">
 								<div class="card-header">
 									<div class="card-head-row">
-										<div class="card-title">Support Tickets</div>
-										<div class="card-tools">
-											<ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist">
-												<li class="nav-item">
-													<a class="nav-link" id="pills-today" data-toggle="pill" href="#pills-today" role="tab" aria-selected="true">Today</a>
-												</li>
-												<li class="nav-item">
-													<a class="nav-link active" id="pills-week" data-toggle="pill" href="#pills-week" role="tab" aria-selected="false">Week</a>
-												</li>
-												<li class="nav-item">
-													<a class="nav-link" id="pills-month" data-toggle="pill" href="#pills-month" role="tab" aria-selected="false">Month</a>
-												</li>
-											</ul>
-										</div>
+										<div class="card-title">Untuk Jadi Perhatian</div>
 									</div>
 								</div>
 								<div class="card-body">
 									<div class="d-flex">
-										<div class="avatar avatar-online">
-											<span class="avatar-title rounded-circle border border-white bg-info">J</span>
-										</div>
 										<div class="flex-1 ml-3 pt-1">
-											<h6 class="text-uppercase fw-bold mb-1">Joko Subianto <span class="text-warning pl-3">pending</span></h6>
-											<span class="text-muted">I am facing some trouble with my viewport. When i start my</span>
-										</div>
-										<div class="float-right pt-1">
-											<small class="text-muted">8:40 PM</small>
+											<h6 class="text-uppercase fw-bold mb-1"><span class="text-warning pl-3">MASUKAN NILAI ANGKA DENGAN BILANGAN BULAT (ex: 80 / 85 / 76)</span></h6>
 										</div>
 									</div>
-									<div class="separator-dashed"></div>
 									<div class="d-flex">
-										<div class="avatar avatar-offline">
-											<span class="avatar-title rounded-circle border border-white bg-secondary">P</span>
-										</div>
 										<div class="flex-1 ml-3 pt-1">
-											<h6 class="text-uppercase fw-bold mb-1">Prabowo Widodo <span class="text-success pl-3">open</span></h6>
-											<span class="text-muted">I have some query regarding the license issue.</span>
-										</div>
-										<div class="float-right pt-1">
-											<small class="text-muted">1 Day Ago</small>
+											<h6 class="text-uppercase fw-bold mb-1"><span class="text-warning pl-3">JANGAN HAPUS KELAS JIKA TIDAK INGIN NILAI SISWA HILANG</span></h6>
 										</div>
 									</div>
-									<div class="separator-dashed"></div>
 									<div class="d-flex">
-										<div class="avatar avatar-away">
-											<span class="avatar-title rounded-circle border border-white bg-danger">L</span>
-										</div>
 										<div class="flex-1 ml-3 pt-1">
-											<h6 class="text-uppercase fw-bold mb-1">Lee Chong Wei <span class="text-muted pl-3">closed</span></h6>
-											<span class="text-muted">Is there any update plan for RTL version near future?</span>
-										</div>
-										<div class="float-right pt-1">
-											<small class="text-muted">2 Days Ago</small>
+											<h6 class="text-uppercase fw-bold mb-1"><span class="text-warning pl-3">SISWA LOGIN DENGAN USERNAME DAN PASSWORD NISM</span></h6>
 										</div>
 									</div>
-									<div class="separator-dashed"></div>
-									<div class="d-flex">
-										<div class="avatar avatar-offline">
-											<span class="avatar-title rounded-circle border border-white bg-secondary">P</span>
-										</div>
-										<div class="flex-1 ml-3 pt-1">
-											<h6 class="text-uppercase fw-bold mb-1">Peter Parker <span class="text-success pl-3">open</span></h6>
-											<span class="text-muted">I have some query regarding the license issue.</span>
-										</div>
-										<div class="float-right pt-1">
-											<small class="text-muted">2 Day Ago</small>
-										</div>
-									</div>
-									<div class="separator-dashed"></div>
-									<div class="d-flex">
-										<div class="avatar avatar-away">
-											<span class="avatar-title rounded-circle border border-white bg-danger">L</span>
-										</div>
-										<div class="flex-1 ml-3 pt-1">
-											<h6 class="text-uppercase fw-bold mb-1">Logan Paul <span class="text-muted pl-3">closed</span></h6>
-											<span class="text-muted">Is there any update plan for RTL version near future?</span>
-										</div>
-										<div class="float-right pt-1">
-											<small class="text-muted">2 Days Ago</small>
-										</div>
+									
 									</div>
 								</div>
 							</div>

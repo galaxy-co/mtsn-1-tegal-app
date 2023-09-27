@@ -46,7 +46,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="<?= base_url('/siswa/nilaiP5')?>">
+							<a href="<?= base_url('/siswa/siswap5')?>">
 								<i class="fas fa-edit"></i>
 								<p>Nilai P5</p>
 								<!-- <span class="caret"></span> -->

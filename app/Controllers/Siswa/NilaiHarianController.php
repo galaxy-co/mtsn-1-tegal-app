@@ -89,9 +89,18 @@ class NilaiHarianController extends BaseController
             }
         }
     } else {
-        $data['nilai'] = []; // Inisialisasi $data['nilai'] sebagai array kosong jika tidak ada data.
+        $data['nilai'] = []; 
     }
 
+    $groupedData = [];
+    foreach ($data['nilai'] as $s) {
+        $semesterTahun = $s['semester'] . '-' . $s['tahun_ajaran'];
+        if (!isset($groupedData[$semesterTahun])) {
+            $groupedData[$semesterTahun] = [];
+        }
+        $groupedData[$semesterTahun][] = $s;
+    }
+    $data['groupedData'] = $groupedData;
     // dd($data);
 
     echo view('admin/template_admin/header');

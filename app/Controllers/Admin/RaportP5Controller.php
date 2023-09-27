@@ -10,6 +10,7 @@ use App\Models\Admin\ProyekModel;
 use App\Models\Admin\ProjectDimensiModel;
 use App\Models\Admin\RFNilaiP5Model;
 use App\Models\Admin\GuruModel;
+use App\Models\Admin\SettingsModel;
 
 use \Dompdf\Dompdf;
 use \Dompdf\Options;
@@ -23,6 +24,7 @@ class RaportP5Controller extends BaseController
     protected $nilaiP5Model;
     protected $rfnilaip5model;
     protected $guruModel;
+    protected $settingModel;
     public function __construct()
     {
         $this->nilaiP5Model = new PenilaianP5Model();
@@ -31,7 +33,7 @@ class RaportP5Controller extends BaseController
         $this->capaianModel = new CapaianModel();
         $this->rfnilaip5model = new RFNilaiP5Model();
         $this->guruModel = new GuruModel();
-        
+        $this->settingModel = new SettingsModel();
     }
     public function index()
     {
@@ -69,6 +71,7 @@ class RaportP5Controller extends BaseController
         $kelas = $this->kelasModel->where('id_kelas', $idkelas)->first();
         $idGuru = $kelas['id_guru'];
         $data['guru'] = $this->guruModel->where('id_guru', $idGuru)->first();
+        $data['setting'] = $this->settingModel->first();
         
         $data['nilai'] = $this->nilaiP5Model->where('id_siswa', $idSiswa)->findAll();
         $data['rfnilai'] = $this->rfnilaip5model->findAll();

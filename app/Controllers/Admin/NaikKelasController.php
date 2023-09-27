@@ -34,6 +34,8 @@ class NaikKelasController extends BaseController
             $kelas = $this->kelasModel->where('id_kelas', $id_kelas)->first();
             $tingkat = $kelas['tingkat'] + 1;
             $tingkatKelas = $this->kelasModel->where('tingkat', $tingkat)->findAll();
+            $data['tocheck'] = $kelas['tingkat'];
+            $data['lulus'] = 0;
             
             $data['tingkatan'] = $tingkatKelas;
             if(!empty($data['siswa'])){
@@ -46,10 +48,7 @@ class NaikKelasController extends BaseController
             
         }else{
            $data['tingkatan'] = '';
-        }
-       
-        
-        
+        }        
        
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');

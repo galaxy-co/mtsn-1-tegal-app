@@ -20,7 +20,7 @@ class SiswaController extends BaseController
     }
     public function index()
     {
-        $siswa = $this->siswaModel->findAll();
+        $siswa = $this->siswaModel->where('kelas !=', 0)->findAll();
         $data['siswa_kelas'] = [];
         foreach ($siswa as $row) {
             $kelas = $this->kelasModel->where('id_kelas', $row['kelas'])->first();

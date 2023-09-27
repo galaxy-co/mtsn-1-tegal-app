@@ -28,7 +28,16 @@ class AbsenSiswaController extends BaseController
 
         $data['absen'] = $this->absenModel->where('id_siswa', $siswaId)->findAll();
 
+        $groupedData = [];
 
+                        foreach ($data['absen'] as $s) {
+                            $semesterTahun = $s['semester'] . '-' . $s['tahun_ajaran'];
+                            if (!isset($groupedData[$semesterTahun])) {
+                                $groupedData[$semesterTahun] = [];
+                            }
+                            $groupedData[$semesterTahun][] = $s;
+                        }
+                    $data['groupedData'] = $groupedData;
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar_siswa', $data);
         echo view('siswa/absenSiswa', $data);
