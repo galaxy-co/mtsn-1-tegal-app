@@ -79,6 +79,9 @@ class UsersSeeder extends Seeder
            
         ];
         print_r($data);
-        $this->db->table('users')->insert($data);
+        foreach($data as $dt){
+            $this->db->table('users')->insert($dt);
+        }
+        // $this->db->table('users')->insert($data);
     }
 }
