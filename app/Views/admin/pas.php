@@ -93,52 +93,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-lg-4">
-                                        <div class="form-group">
-                                            <label for="defaultSelect">Guru</label>
-                                            <select class="form-control form-control" id="semester" name="semester">
-                                                    <option value="1">Ganjil</option>
-                                                    <option value="2">Genap</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-lg-4">
-                                        <div class="form-group">
-                                            <label for="defaultSelect">Tahun Ajaran</label>
-                                            <select class="form-control form-control" id="tahun_ajaran" name="tahun_ajaran">
-                                                <option value="2023/2024">2023/2024</option>
-                                                <option value="2024/2025">2024/2025</option>
-                                                <option value="2025/2026">2025/2026</option>
-                                                <option value="2026/2027">2026/2027</option>
-                                                <option value="2027/2028">2027/2028</option>
-                                                <option value="2028/2029">2028/2029</option>
-                                                <option value="2029/2030">2029/2030</option>
-                                                <option value="2030/2031">2030/2031</option>
-                                                <option value="2031/2032">2031/2032</option>
-                                                <option value="2032/2033">2032/2033</option>
-                                                <option value="2033/2034">2033/2034</option>
-                                                <option value="2034/2035">2034/2035</option>
-                                                <option value="2035/2036">2035/2036</option>
-                                                <option value="2036/2037">2036/2037</option>
-                                                <option value="2037/2038">2037/2038</option>
-                                                <option value="2038/2039">2038/2039</option>
-                                                <option value="2039/2040">2039/2040</option>
-                                                <option value="2040/2041">2040/2041</option>
-                                                <option value="2041/2042">2041/2042</option>
-                                                <option value="2042/2043">2042/2043</option>
-                                                <option value="2043/2044">2043/2044</option>
-                                                <option value="2044/2045">2044/2045</option>
-                                                <option value="2045/2046">2045/2046</option>
-                                                <option value="2046/2047">2046/2047</option>
-                                                <option value="2047/2048">2047/2048</option>
-                                                <option value="2048/2049">2048/2049</option>
-                                                <option value="2049/2050">2049/2050</option>
-                                                <option value="2050/2051">2050/2051</option>
-                                                <option value="2051/2052">2051/2052</option>
-                                                <option value="2052/2053">2052/2053</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                   
                                 </div>
                                 
                             </div>

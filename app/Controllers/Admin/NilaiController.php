@@ -49,6 +49,7 @@ class NilaiController extends BaseController
     }
 
     private function saveNilai($id_nilai=null,$data){
+        dd($data);
         
         $saveNilai = $this->NilaiModel->save($data);
         return $id_nilai ? $id_nilai : $this->NilaiModel->getInsertID();

@@ -39,7 +39,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="<?= base_url('/siswa/nilai')?>">
+							<a href="<?= base_url('/siswa/absenSiswa')?>">
 								<i class="fas fa-list-ol"></i>
 								<p>Absen & Catatan</p>
 								<!-- <span class="caret"></span> -->

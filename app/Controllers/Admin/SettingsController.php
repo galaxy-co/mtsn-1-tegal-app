@@ -48,7 +48,18 @@ class SettingsController extends BaseController
     }
     public function update($id)
     {
-        $data = $this->request->getPost();
+
+        $kepsek = $this->request->getPost('nama_kepsek');
+        $semester = $this->request->getPost('semester');
+        $tglCetak = $this->request->getPost('tanggal_cetak_raport');
+        $ta = $this->request->getPost('tahun_ajaran1') . '/' . $this->request->getPost('tahun_ajaran2');;
+
+        $data = [
+            'nama_kepsek' => $kepsek,
+            'semester' => $semester,
+            'tahun_ajaran' => $ta,
+            'tanggal_cetak_raport' => $tglCetak
+        ];
         $this->settingModel->update($id, $data);
 
         session()->setFlashdata('success', 'Berhasil Update Settings');

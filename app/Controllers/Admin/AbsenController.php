@@ -5,17 +5,20 @@ use App\Models\Admin\AbsenModel;
 use App\Models\Admin\KelasModel;
 use App\Models\Admin\SiswaModel;
 use App\Controllers\BaseController;
+use App\Models\Admin\SettingsModel;
 
 class AbsenController extends BaseController
 {
     protected $absenModel;
     protected $kelasModel;
     protected $siswaModel;
+    protected $settingsModel;
     public function __construct()
     {
         $this->absenModel = new AbsenModel();
         $this->kelasModel = new KelasModel();
         $this->siswaModel = new SiswaModel();
+        $this->settingsModel = new SettingsModel();
     }
 
     public function index()
@@ -57,10 +60,25 @@ class AbsenController extends BaseController
         $siswa = $this->request->getPost('id_siswa');
         $kelas = $this->siswaModel->where('id_siswa', $siswa)->first();
         $idKelas = $kelas['kelas'];
-        $data = $this->request->getPost();;
+        $izin = $this->request->getPost('izin');
+        $sakit = $this->request->getPost('sakit');
+        $alpa = $this->request->getPost('alpa');
+        $catatan = $this->request->getPost('catatan');
+
+        $setting = $this->settingsModel->first();
+        $semester = $setting['semester'];
+        $ta = $setting['tahun_ajaran'];
+        $data = [
+            'id_siswa' => $siswa,
+            'izin' => $izin,
+            'sakit'=> $sakit,
+            'alpa' => $alpa,
+            'catatan' => $catatan,
+            'semester' => $semester,
+            'tahun_ajaran' => $ta
+        ];
 
         $this->absenModel->save($data);
-             
         session()->setFlashdata('success', 'Input Absen');
 
         return redirect()->to('/admin/absen/dataSiswa/' . $idKelas);

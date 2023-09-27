@@ -54,7 +54,7 @@
                                     });
                                 </script>
                             <?php endif ?>
-                            <form action="<?= base_url('admin/settings/update') . $settings['id_settings'] ?>" method="POST">
+                            <form action="<?= base_url('admin/settings/update/') . $settings['id_settings'] ?>" method="POST">
                                 <div class="card-body">
                                 <input type="hidden" name="id_settings" value="<?= $settings['id_settings']?>">
                                     <div class="row">
@@ -94,7 +94,7 @@
                                         </div>
                                     </div>
                                     <div class="card-action">
-                                            <button class="btn btn-success" type="submit">EDIT</button>		
+                                            <button class="btn btn-success" type="submit">SIMPAN</button>		
                                         </div>
                                 </div>
                             </form>
