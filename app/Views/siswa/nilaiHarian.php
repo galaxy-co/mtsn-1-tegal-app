@@ -30,7 +30,9 @@
                                                         class='form-control text-center kd-name-input' 
                                                         data-nilaidetailids="<?php echo implode(",",$head['nilai_detail_ids']) ?>" 
                                                         id="input-kd-<?= $head['kd_name'] ?>" 
-                                                        value='<?= $head['kd_name'] ?>'>
+                                                        value='<?= $head['kd_name'] ?>'
+                                                        disabled
+                                                        >
                                                 </th>
                                         
                                             <?php endforeach; ?>

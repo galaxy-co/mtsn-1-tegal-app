@@ -66,9 +66,33 @@ class NilaiHarianController extends BaseController
             ->groupBy('nilai.id_kelas')
             ->groupBy('nilai.id_mapel')
             ->findAll();
+
+        foreach($data['nilai_detail'] as $nilai_detail){
+            $cek = 0;
+            $index = 0;
+            for ($i=0; $i < count($data['header']) ; $i++) { 
+                $z=$data['header'][$i];
+                if($nilai_detail['kd_name'] == $z['kd_name']){
+                    $cek ++;
+                    $index = $i;
+                    break;
+                }
+            } 
+            
+            if(!$cek){
+                array_push($data['header'],[
+                    "kd_name" => $nilai_detail['kd_name'],
+                    "nilai_detail_ids" => [$nilai_detail['nilai_detail_id']]
+                ]);
+            }else{
+                array_push($data['header'][$index]['nilai_detail_ids'],$nilai_detail['nilai_detail_id']);
+            }
+        }
     } else {
         $data['nilai'] = []; // Inisialisasi $data['nilai'] sebagai array kosong jika tidak ada data.
     }
+
+    // dd($data);
 
     echo view('admin/template_admin/header');
     echo view('admin/template_admin/sidebar_siswa', $data);
