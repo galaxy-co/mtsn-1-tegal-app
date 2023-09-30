@@ -7,14 +7,23 @@
 							<img src="<?=base_url('assets/')?>assets/img/logo.png" alt="..." class="avatar-img rounded-circle">
 						</div>
 						<div class="info">
+							<?php if($role_id == 3 ) :?>
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+								<span>
+									<span class="user-level">Guru</span>
+									
+								</span>
+							</a>
+							<div class="clearfix"></div>
+							<?php else : ?>
+								<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
 									<span class="user-level">Administrator</span>
 									
 								</span>
 							</a>
 							<div class="clearfix"></div>
-
+							<?php endif ?>
 							
 						</div>
 					</div>

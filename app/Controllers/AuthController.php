@@ -45,8 +45,8 @@ class AuthController extends BaseController
                     return redirect()->to('/admin');
                 }else if($data['role_id'] == 2){
                     return redirect()->to('/siswa');
-                }else{
-                    return redirect()->to('/kamad');
+                }else if($data['role_id'] == 3){
+                    return redirect()->to('/guru');
                 }
                 
             

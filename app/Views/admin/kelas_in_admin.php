@@ -152,6 +152,7 @@
                                             <td><?=$kurikulum?></td>
                                             <td><?= $k['nama_guru']?></td>
                                             <td>
+                                                <a href="<?= base_url('admin/kelas/setMapel/') . $k['id_kelas']?>" class="btn btn-info btn-sm" style="text-decoration:none"><i class="fa fa-cogs"></i> Seting Mapel</a>
                                                 <a href="<?= base_url('admin/kelas/edit/') . $k['id_kelas']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Edit</a>  
                                                 <a href="<?= base_url('admin/kelas/delete/') . $k['id_kelas']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a></td>
                                         </tr>

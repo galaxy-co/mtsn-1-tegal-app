@@ -3,15 +3,20 @@
 namespace App\Controllers\Admin;
 use App\Models\Admin\KelasModel;
 use App\Models\Admin\GuruModel;
-
+use App\Models\Admin\MapelModel;
+use App\Models\Admin\RfMapelModel;
 use App\Controllers\BaseController;
 
 class KelasController extends BaseController
 {
     protected $guruModel;
     protected $kelasModel;
+    protected $mapelModel;
+    protected $rfmapelModel;
     public function __construct()
     {
+        $this->rfmapelModel = new RfMapelModel();
+        $this->mapelModel = new MapelModel();
         $this->guruModel = new GuruModel();
         $this->kelasModel = new KelasModel();
     }
@@ -73,5 +78,39 @@ class KelasController extends BaseController
         session()->setFlashdata('success', 'Update Kelas');
 
         return redirect()->to('/admin/kelas');
+    }
+    public function setMapel($id)
+    {
+        $data['guru'] = $this->guruModel->findAll();
+        $data['mapel'] = $this->mapelModel->findAll();
+        $data['kelas'] = $this->kelasModel->find($id);
+        $data['rfmapel'] = $this->rfmapelModel
+                    ->join('mapel', 'mapel.id_mapel=rfmapel.id_mapel')
+                    ->join('guru', 'guru.id_guru=rfmapel.id_guru')
+                    ->where('id_kelas', $id)->findAll();
+        echo view('admin/template_admin/header');
+        echo view('admin/template_admin/sidebar');
+        echo view('admin/setMapel', $data);
+        echo view('admin/template_admin/footer');
+    }
+    public function addrfMapel()
+    {
+        $data = $this->request->getPost();
+        $idKelas = $this->request->getPost('id_kelas');
+        $this->rfmapelModel->save($data);
+
+        session()->setFlashdata('success', 'Sukses Input Mapel');
+        return redirect()->to('/admin/kelas/setMapel/' . $idKelas);
+    }
+    public function deleteRfMapel($id)
+    {
+        $data = $this->rfmapelModel->where('id_rfmapel', $id)->first();
+        $kelas = $data['id_kelas'];
+        $id = intval($id);
+        $this->rfmapelModel->delete($id);
+
+        session()->setFlashdata('success', 'Sukses Hapus Data');
+
+        return redirect()->to('/admin/kelas/setMapel/' . $kelas);
     }
 }

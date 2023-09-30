@@ -3,14 +3,17 @@
 namespace App\Controllers\Admin;
 use App\Models\Admin\GuruModel;
 use App\Controllers\BaseController;
+use App\Models\Admin\UserModel;
 
 
 class GuruController extends BaseController
 {
     protected $guruModel;
+    protected $userModel;
     public function __construct()
     {
         $this->guruModel = new GuruModel();
+        $this->userModel = new UserModel();
     }
     public function index()
     {
@@ -36,12 +39,25 @@ class GuruController extends BaseController
                 if($g == 0){
                     continue;
                 }else{
+                    $existingSiswa = $this->guruModel->where('nuptk', $value[1])->first();
+                    if ($existingSiswa) {
+  
+                        session()->setFlashdata('warning', 'Ada data NIP yang sudah terdaftar');
+                        return redirect()->to('/admin/guru');
+                    }
                     $data = [
                         'nama_guru' => $value[1],
                         'nuptk' => $value[2]
                     ];
+                    $dataToUsers = [
+                        'username' => $value[2],
+                        'name' => $value[1],
+                        'password' => password_hash($value[2], PASSWORD_DEFAULT),
+                        'role_id' => 3
+                    ];
                 }
                 $this->guruModel->save($data);
+                $this->userModel->save($dataToUsers);
             }
            
             session()->setFlashdata('success', 'Berhasil Upload Guru');
@@ -53,18 +69,44 @@ class GuruController extends BaseController
     }
     public function deleteGuru($id){
         $id = intval($id);
-        $this->guruModel->delete($id);
+        $guru = $this->guruModel->where('id_guru', $id)->first();
+        
+        $nip = $guru['nuptk'];
+        $user = $this->userModel->where('username', $nip)->first();
+        
+        $userId = $user['user_id'];
 
+        
+        $this->userModel->delete($userId);
+        $this->guruModel->delete($id);
         session()->setFlashdata('success', 'Sukses Hapus Data');
 
         return redirect()->to('/admin/guru');
     }
     public function addGuru(){
         $data = $this->request->getPost();
-        $this->guruModel->save($data);
+        $nip = $this->request->getPost('nuptk');
+        $exiting = $this->guruModel->where('nuptk', $nip)->first();
+        if($exiting){
+            session()->setFlashdata('warning', 'data NIP sudah terdaftar');
+            return redirect()->to('/admin/guru');
+        }else{
+            $password = $this->request->getPost('nuptk');
+            $dataToUser = [
+                'username' => $this->request->getPost('nuptk'),
+                'name' => $this->request->getPost('nama_guru'),
+                'password' => password_hash($password, PASSWORD_DEFAULT),
+                'role_id' => 3
+            ];
+    
+    
+            $this->userModel->save($dataToUser);
+            $this->guruModel->save($data);
+            session()->setFlashdata('success', 'Sukses Tambah Guru');
+            return redirect()->to('/admin/guru');
+        }
 
-        session()->setFlashdata('success', 'Sukses Tambah Guru');
-        return redirect()->to('/admin/guru');
+       
     }
 
     public function edit($id){

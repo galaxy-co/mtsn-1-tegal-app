@@ -59,6 +59,9 @@ $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
         $routes->get('delete/(:num)', 'Admin\KelasController::deleteKelas/$1');
         $routes->get('edit/(:num)', 'Admin\KelasController::editKelas/$1');
         $routes->post('update/(:num)', 'Admin\KelasController::update/$1');
+        $routes->get('setMapel/(:num)', 'Admin\KelasController::setMapel/$1');
+        $routes->post('addrfMapel', 'Admin\KelasController::addrfMapel');
+        $routes->get('deleteRfMapel/(:num)', 'Admin\KelasController::deleteRfMapel/$1');
     });
 
     // Guru
@@ -155,5 +158,25 @@ $routes->group('siswa', ['filter'=> 'authGuard:2'],static function ($routes) {
 
 });
 
+$routes->group('guru', ['filter'=> 'authGuard:3'],static function ($routes) {
+    $routes->get('/', 'Admin\AdminController::index');
+    $routes->group('nilai',static function ($routes){
+        $routes->get('/', 'Admin\NilaiController::index');
+        $routes->get('detail', 'Admin\NilaiController::detail');
+        $routes->post('storenilai', 'Admin\NilaiController::store_nilai');
+        $routes->post('storekdname', 'Admin\NilaiController::store_kd_name');
+        $routes->post('delete', 'Admin\NilaiController::delete');
+        $routes->get('edit/(:num)', 'Admin\NilaiController::edit/$1');
+        $routes->post('upload', 'Admin\NilaiController::uploadGuru');
+    });
 
+    $routes->group('pas',static function ($routes){
+        $routes->get('/', 'Admin\PASController::index');
+        $routes->get('detail', 'Admin\PASController::detail');
+        $routes->post('store', 'Admin\PASController::store');
+        $routes->get('edit/(:num)', 'Admin\PASController::edit/$1');
+        $routes->post('update', 'Admin\PASController::update');
+    });
+
+});
 
