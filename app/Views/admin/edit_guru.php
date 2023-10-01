@@ -43,8 +43,8 @@
                                             <input type="text" class="form-control form-control" value="<?= $guru['nama_guru']?>" id="nama_guru" name="nama_guru" placeholder="Nama Guru..." required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="largeInput">NUPTK</label>
-                                            <input type="text" class="form-control form-control" value="<?= $guru['nuptk']?>" id="nuptk" name="nuptk" placeholder="NUPTK..." required>
+                                            <label for="largeInput">NIP</label>
+                                            <input type="text" class="form-control form-control" value="<?= $guru['nuptk']?>" id="nuptk" name="nuptk" placeholder="NIP..." required>
                                         </div>
                                     </div>
                                 </div>    
