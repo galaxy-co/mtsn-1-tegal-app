@@ -11,9 +11,12 @@ use App\Models\Admin\TypeTestModel;
 use App\Controllers\BaseController;
 use App\Models\Admin\SettingsModel;
 use App\Database\Migrations\Mapel;
+use App\Models\Admin\UserModel;
+use App\Models\Admin\RfMapelModel;
 
 class PASController extends BaseController
 {
+    protected $rfMapelModel;
     protected $nilaiModel;
     protected $kelasModel;
     protected $guruModel;
@@ -22,8 +25,11 @@ class PASController extends BaseController
     protected $pasModel;
     protected $typeTestModel;
     protected $settingsModel;
+    protected $userModel;
 
     public function __construct(){
+        $this->rfMapelModel = new RfMapelModel();
+        $this->userModel = new UserModel();
         $this->nilaiModel = new NilaiModel();
         $this->kelasModel = new KelasModel();
         $this->guruModel = new GuruModel();
@@ -35,30 +41,62 @@ class PASController extends BaseController
     }
     public function index()
     {
-        
-        $cekPas = $this->pasModel->findAll();
-        if(count($cekPas)>0){
-            $data['nilai_pas'] = $this->pasModel
-            ->join('kelas','kelas.id_kelas = nilai_pas.id_kelas')
-            ->join('mapel','mapel.id_mapel = nilai_pas.id_mapel')
-            ->join('guru','guru.id_guru = nilai_pas.id_guru')
-            ->groupBy('nilai_pas.tahun_ajaran')
-            ->groupBy('nilai_pas.semester')
-            ->groupBy('nilai_pas.id_kelas')
-            ->groupBy('nilai_pas.id_mapel')
-            ->findAll();
+        $session = session();
+        $data['role_id'] = $session->get('role_id');
+        $nuptk = $session->get('username');
+        $Guru = $this->guruModel->where('nuptk', $nuptk)->first();
+        $idGuru = $Guru['id_guru'];
+
+        if($data['role_id'] == 1){
+            $data['kelas'] = $this->kelasModel->findAll();
         }else{
-            $data['nilai_pas'] = [];
+            $rfResults = $this->rfMapelModel->where('id_guru', $idGuru)->findAll();
+            $idKelasArray = [];
+
+            foreach ($rfResults as $result) {
+                $idKelas = $result['id_kelas'];
+                $idKelasArray[] = $idKelas;
+            }
+            
+            $data['kelas'] = $this->kelasModel->whereIn('id_kelas', $idKelasArray)->findAll();
         }
-        
-        $data['kelas'] = $this->kelasModel->findAll();
-        $data['guru'] = $this->guruModel->findAll();
-        $data['mapel'] = $this->mapelModel->findAll();
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
-        echo view('admin/pas', $data);
+        echo view('admin/indexPas', $data);
         echo view('admin/template_admin/footer');
     }
+
+    // public function index()
+    // {
+    //     $session = session();
+    //     $data['role_id'] = $session->get('role_id');
+    //     $nuptk = $session->get('username');
+    //     $Guru = $this->guruModel->where('nuptk', $nuptk)->first();
+    //     $idGuru = $Guru['id_guru'];
+    //     $cekPas = $this->pasModel->findAll();
+    //     if(count($cekPas)>0){
+    //         $data['nilai_pas'] = $this->pasModel
+    //         ->join('kelas','kelas.id_kelas = nilai_pas.id_kelas')
+    //         ->join('mapel','mapel.id_mapel = nilai_pas.id_mapel')
+    //         ->join('guru','guru.id_guru = nilai_pas.id_guru')
+    //         ->where('guru.id_guru', $idGuru)
+    //         ->groupBy('nilai_pas.tahun_ajaran')
+    //         ->groupBy('nilai_pas.semester')
+    //         ->groupBy('nilai_pas.id_kelas')
+    //         ->groupBy('nilai_pas.id_mapel')
+    //         ->findAll();
+    //     }else{
+    //         $data['nilai_pas'] = [];
+    //     }
+        
+    //     $data['kelas'] = $this->kelasModel->findAll();
+    //     $data['guru'] = $this->guruModel->findAll();
+    //     $data['mapel'] = $this->mapelModel->findAll();
+    //     echo view('admin/template_admin/header');
+    //     echo view('admin/template_admin/sidebar');
+    //     echo view('admin/pas', $data);
+    //     echo view('admin/template_admin/footer');
+    // }
     public function detail(){
         $dataInput = $this->request->getVar();
         $data['input'] = $dataInput;

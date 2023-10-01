@@ -1,4 +1,6 @@
 <!-- Sidebar -->
+<?php $session = session();
+    $role_id = $session->get('role_id');?>
 <div class="sidebar sidebar-style-2">			
 			<div class="sidebar-wrapper scrollbar scrollbar-inner">
 				<div class="sidebar-content">
@@ -34,6 +36,7 @@
 								<p>Dashboard</p>
 							</a>
 						</li>
+						<?php if($role_id == 1 ) :?>
 						<li class="nav-item">
 							<a href="<?= base_url('/admin/settings')?>" aria-expanded="false">
 								<i class="fa fa-cogs"></i>
@@ -70,6 +73,24 @@
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>
+						<?php endif ?>
+						<?php if($role_id == 3 ) :?>
+						<li class="nav-item">
+							<a href="<?= base_url('/guru/nilai')?>">
+								<i class="fas fa-list-ol"></i>
+								<p>Nilai</p>
+								<!-- <span class="caret"></span> -->
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="<?= base_url('/guru/pas')?>">
+								<i class="fas fa-list-ol"></i>
+								<p>Nilai PAS</p>
+								<!-- <span class="caret"></span> -->
+							</a>
+						</li>
+						<?php endif ?>
+						<?php if($role_id == 1 ) :?>
 						<li class="nav-item">
 							<a href="<?= base_url('/admin/nilai')?>">
 								<i class="fas fa-list-ol"></i>
@@ -80,7 +101,7 @@
 						<li class="nav-item">
 							<a href="<?= base_url('/admin/pas')?>">
 								<i class="fas fa-list-ol"></i>
-								<p>Semester</p>
+								<p>Nilai PAS</p>
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>
@@ -112,6 +133,7 @@
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>
+						<?php endif ?>
 						<!-- <li class="nav-item">
 							<a href="<?= base_url('/admin/user')?>">
 								<i class="icon-home"></i>

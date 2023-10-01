@@ -62,14 +62,6 @@
                                             <label for="largeInput">Nama Mapel</label>
                                             <input type="text" class="form-control form-control" id="nam_mapel" name="nama_mapel" placeholder="Mata Pelajaran..." required>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="largeInput">Tingkat Kelas</label>
-                                            <select name="tingkal_kelas" class='form-control' id="tingkal_kelas">
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                            </select>
-                                        </div>
                                     </div>
                                     <div class="col-md-6 col-lg-4">
                                         <div class="form-group">

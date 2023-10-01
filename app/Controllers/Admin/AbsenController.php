@@ -6,6 +6,7 @@ use App\Models\Admin\KelasModel;
 use App\Models\Admin\SiswaModel;
 use App\Controllers\BaseController;
 use App\Models\Admin\SettingsModel;
+use App\Models\Admin\UserModel;
 
 class AbsenController extends BaseController
 {
@@ -13,8 +14,10 @@ class AbsenController extends BaseController
     protected $kelasModel;
     protected $siswaModel;
     protected $settingsModel;
+    protected $userModel;
     public function __construct()
     {
+        $this->userModel = new UserModel();
         $this->absenModel = new AbsenModel();
         $this->kelasModel = new KelasModel();
         $this->siswaModel = new SiswaModel();
@@ -23,15 +26,18 @@ class AbsenController extends BaseController
 
     public function index()
     {
+        $session = session();
+        $data['role_id'] = $session->get('role_id');
         $data['kelas'] = $this->kelasModel->findAll();
         echo view('admin/template_admin/header');
-        echo view('admin/template_admin/sidebar');
+        echo view('admin/template_admin/sidebar', $data);
         echo view('admin/absen', $data);
         echo view('admin/template_admin/footer');
     }
     public function dataSiswa($id_kelas)
     {
-        
+        $session = session();
+        $data['role_id'] = $session->get('role_id');
         $data['siswa'] = $this->siswaModel->where('kelas', $id_kelas)->findAll();
         if(!empty($data['siswa'])){
             $id_siswa = array();
@@ -44,12 +50,14 @@ class AbsenController extends BaseController
         }
         
         echo view('admin/template_admin/header');
-        echo view('admin/template_admin/sidebar');
+        echo view('admin/template_admin/sidebar', $data);
         echo view('admin/dataSiswa', $data);
         echo view('admin/template_admin/footer');
     }
     public function addAbsen($id_siswa)
     {
+        $session = session();
+        $data['role_id'] = $session->get('role_id');
         $data['id_siswa'] = $id_siswa;
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
