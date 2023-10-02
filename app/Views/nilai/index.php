@@ -60,8 +60,9 @@
                                     <div class="col-md-4 col-lg-4">
                                         <div class="form-group">
                                             <label for="defaultSelect">Kelas</label>
-                                            <select class="form-control form-control" id="id_kelas" name="id_kelas">
-                                               <?php foreach($kelas as $ke) : ?>
+                                            <select class="form-control form-control" id="id_kelas" name="id_kelas" require>
+                                                <option value=""> --Kelas-- </option>
+                                                <?php foreach($kelas as $ke) : ?>
                                                     <option value="<?= $ke['id_kelas']; ?>">
                                                         <?= $ke['tingkat'] .''. $ke['nama_kelas'] ?>
                                                     </option>
@@ -72,9 +73,10 @@
                                     <div class="col-md-4 col-lg-4">
                                         <div class="form-group">
                                             <label for="defaultSelect">Mapel</label>
-                                            <select class="form-control form-control" id="id_mapel" name="id_mapel">
+                                            <select class="form-control form-control" id="id_mapel" name="id_mapel" require>
+                                                <option value=""> - Mapel - </option>
                                                <?php foreach($mapel as $ke) : ?>
-                                                    <option value="<?= $ke['id_mapel']; ?>">
+                                                    <option value="<?= $ke['id_mapel']; ?>" class='opt-mapel d-none' id='opt-mapel-<?= $ke['id_mapel']?>'>
                                                         <?= $ke['nama_mapel'] ?>
                                                     </option>
                                                <?php endforeach ?>
@@ -84,8 +86,9 @@
                                     <div class="col-md-4 col-lg-4">
                                         <div class="form-group">
                                             <label for="defaultSelect">Guru</label>
-                                            <select class="form-control form-control" id="id_guru" name="id_guru">
-                                               <?php foreach($guru as $ke) : ?>
+                                            <select class="form-control form-control" id="id_guru" name="id_guru" readonly>
+                                                <option value=""> - Guru - </option>
+                                                <?php foreach($guru as $ke) : ?>
                                                     <option value="<?= $ke['id_guru']; ?>">
                                                         <?= $ke['nama_guru'] ?>
                                                     </option>
@@ -196,3 +199,33 @@
     </div>
   </div>
 </div>
+
+<script src="<?= base_url('assets/')?>assets/js/core/jquery.3.2.1.min.js"></script>
+<script>
+    $('#id_kelas').on('change',async function(e){
+        $('#id_mapel').val(null).change()
+        $('#id_guru').val(null).change()
+        let idKelas = e.target.value;
+        let getRF = await fetch(`<?= base_url('admin/nilai/rfmapel/') ?>${idKelas}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        });
+        let response = await getRF.json()
+        console.log('RES',response)
+        $('.opt-mapel').addClass('d-none')
+        response?.data?.map(res =>{
+            $(`#opt-mapel-${res.id_mapel}`).removeClass('d-none');
+            $(`#opt-mapel-${res.id_mapel}`).attr('data-idguru',res.id_guru);
+        })
+    });
+
+    $('#id_mapel').on('change',function(e){
+        let idMapel = e.target.value
+        let idGuru = $(`#opt-mapel-${idMapel}`).attr('data-idguru');
+        console.log(idGuru)
+        $('#id_guru').val(idGuru).change()
+    })
+</script>

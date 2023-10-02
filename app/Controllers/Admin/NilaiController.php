@@ -8,6 +8,7 @@ use App\Models\Admin\MapelModel;
 use App\Models\Admin\SiswaModel;
 use App\Models\Admin\NilaiDetailModel;
 use App\Models\Admin\RFNilaiDetailModel;
+use App\Models\Admin\RfMapelModel;
 use CodeIgniter\API\ResponseTrait;
 
 use App\Controllers\BaseController;
@@ -26,6 +27,7 @@ class NilaiController extends BaseController
         $this->SiswaModel = new SiswaModel();
         $this->RFNilaiDetailModel = new RFNilaiDetailModel();
         $this->NilaiDetailModel = new NilaiDetailModel();
+        $this->RfMapelModel = new RfMapelModel();
     }
 
     public function index()
@@ -48,6 +50,14 @@ class NilaiController extends BaseController
         echo view('admin/template_admin/footer');
     }
 
+    public function rfmapel($id){
+        $response=[
+            'status'=> 'OKE',
+            'data' => $this->RfMapelModel->where('id_kelas',$id)->findAll()
+        ];
+        return $this->respond($response,200); 
+    }
+
     private function saveNilai($id_nilai=null,$data){
         // dd($data);
         
@@ -64,6 +74,7 @@ class NilaiController extends BaseController
     public function generateNilai($input,$data){
         $inputAsObject = (object)$input;
         $counter = $data['rf_nilai_detail'][0]['kurikulum_id'] == 1 ? 9 : 6;
+        $kdPrefix = $data['rf_nilai_detail'][0]['kurikulum_id'] == 1 ? 'KD' : 'BAB';
         
         foreach($data['siswa'] as $siswa){
             $inputAsObject->id_siswa = $siswa['id_siswa'];
@@ -74,7 +85,7 @@ class NilaiController extends BaseController
                         "rf_nilai_detail_id" =>$rf['rf_nilai_detail_id'],
                         
                         "notes"=>"sample notes",
-                        "kd_name" => "KD ".$i,
+                        "kd_name" => $kdPrefix." ".$i,
                         "id_nilai" => $nilai_id
                     ];
                     $nilai_detail_id = $this->saveNilaiDetail(null,$dataSaveNilaiDetail); 

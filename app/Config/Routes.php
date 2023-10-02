@@ -77,6 +77,7 @@ $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
     // Nilai
     $routes->group('nilai',static function ($routes){
         $routes->get('/', 'Admin\NilaiController::index');
+        $routes->get('rfmapel/(:num)', 'Admin\NilaiController::rfmapel/$1');
         $routes->get('detail', 'Admin\NilaiController::detail');
         $routes->post('storenilai', 'Admin\NilaiController::store_nilai');
         $routes->post('storekdname', 'Admin\NilaiController::store_kd_name');
