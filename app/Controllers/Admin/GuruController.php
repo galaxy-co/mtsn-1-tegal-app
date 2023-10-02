@@ -73,11 +73,11 @@ class GuruController extends BaseController
         
         $nip = $guru['nuptk'];
         $user = $this->userModel->where('username', $nip)->first();
-        
-        $userId = $user['user_id'];
-
-        
-        $this->userModel->delete($userId);
+        // $user->delete();
+        if($user){
+            $userId = $user['user_id'];
+            $this->userModel->delete($userId);
+        }
         $this->guruModel->delete($id);
         session()->setFlashdata('success', 'Sukses Hapus Data');
 
