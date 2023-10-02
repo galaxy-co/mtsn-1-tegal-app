@@ -14,7 +14,7 @@ class SiswaModel extends Model
     protected $returnType           = 'array';
     protected $useSoftDelete        = false;
 
-    protected $allowedFields        = ['nism', 'nama_siswa', 'jenis_kelamin', 'kelas'];
+    protected $allowedFields        = ['nism', 'nama_siswa', 'jenis_kelamin', 'kelas','nisn'];
     // protected $DBGroup          = 'default';
     // protected $table            = 'siswas';
     // protected $primaryKey       = 'id';

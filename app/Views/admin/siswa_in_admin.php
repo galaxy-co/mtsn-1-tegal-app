@@ -71,6 +71,10 @@
 										
                                     </div>
 									<div class="col-md-6 col-lg-4">
+                                        <div class="form-group">
+											<label for="largeInput">NISN</label>
+											<input type="text" class="form-control form-control" id="nisn" name="nisn" placeholder="NISN..." required>
+										</div>
 										<div class="form-group">
 											<label for="defaultSelect">Jenis Kelamin</label>
 											<select class="form-control form-control" id="jenis_kelamin" name="jenis_kelamin">
@@ -78,6 +82,8 @@
 												<option value="P">Perempuan</option>
 											</select>
 										</div>
+									</div>
+									<div class="col-md-6 col-lg-4">
 										<div class="form-group">
 											<label for="defaultSelect">Kelas</label>
 											<select class="form-control form-control" id="kelas" name="kelas">
@@ -129,6 +135,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>NISM</th>
+                                            <th>NISN</th>
                                             <th>Nama Siswa</th>
                                             <th>Jenis Kelamin</th>
 											<th>Kelas</th>
@@ -138,7 +145,7 @@
                                     <tfoot>
                                         <tr>
 											<th>No</th>
-                                            <th>NISM</th>
+                                            <th>NISN</th>
                                             <th>Nama Siswa</th>
 											<th>Jenis Kelamin</th>
                                             <th>Action</th>
@@ -150,6 +157,7 @@
                                         <tr>
                                             <td><?= ++$i ?></td>
                                             <td><?= $k['nism'] ?></td>
+                                            <td><?= $k['nisn'] ?></td>
                                             <td><?= $k['nama_siswa'] ?></td>
 											<td><?= $k['jenis_kelamin'] ?></td>
 											<td><?= $k['tingkat'] ?> <?= $k['nama_kelas'] ?></td>

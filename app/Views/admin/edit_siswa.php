@@ -37,8 +37,16 @@
                                 <input type="hidden" name="id_kelas" value="<?= $siswa['id_siswa']?>">
                                 <div class="row">
                                     <div class="col-md-6 col-lg-4">
+                                        <div class="form-group">
                                             <label for="largeInput">NISM</label>
                                             <input type="text" class="form-control form-control" id="nism" name="nism" placeholder="<?= $siswa['nism']?>" value="<?= $siswa['nism']?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="form-group">
+                                            <label for="largeInput">NISN</label>
+                                            <input type="text" class="form-control form-control" id="nisn" name="nisn" placeholder="NISN..." value="<?= $siswa['nisn']?>">
+                                        </div>
                                     </div>
                                     <div class="col-md-6 col-lg-4">
                                         <div class="form-group">
@@ -65,6 +73,7 @@
                                             </select>
                                         </div>
                                     </div>
+                            </div>
                             <div class="card-action">
                                 <button class="btn btn-success" type="submit">Simpan</button><a href="/admin/siswa" class="btn btn-danger">Cancel</a>		
                             </div>
