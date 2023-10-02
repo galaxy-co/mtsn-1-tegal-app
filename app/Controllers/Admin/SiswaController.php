@@ -121,13 +121,14 @@ class SiswaController extends BaseController
                     }
                     $data = [
                         'nism' => $value[1],
-                        'nama_siswa' => $value[2],
-                        'jenis_kelamin' => $value[3],
-                        'kelas' => $value[4]
+                        'nisn' => $value[2],
+                        'nama_siswa' => $value[3],
+                        'jenis_kelamin' => $value[4],
+                        'kelas' => $value[5]
                     ];
                     $dataToUsers = [
                         'username' => $value[1],
-                        'name' => $value[2],
+                        'name' => $value[3],
                         'password' => password_hash($value[1], PASSWORD_DEFAULT),
                         'role_id' => 2
                     ];
