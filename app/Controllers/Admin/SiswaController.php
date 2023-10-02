@@ -21,20 +21,23 @@ class SiswaController extends BaseController
     public function index()
     {
         $siswa = $this->siswaModel->where('kelas !=', 0)->findAll();
-        $data['siswa_kelas'] = [];
-        foreach ($siswa as $row) {
-            $kelas = $this->kelasModel->where('id_kelas', $row['kelas'])->first();
-            // var_dump($kelas); die;
-            $data['siswa_kelas'][] = [
-                'nama_siswa' => $row['nama_siswa'],
-                'nama_kelas' => $kelas['nama_kelas'],
-                'nism' => $row['nism'],
-                'jenis_kelamin' => $row['jenis_kelamin'],
-                'id_siswa' => $row['id_siswa'],
-                'tingkat' => $kelas['tingkat']
+        // $data['siswa_kelas'] = [];
+        $data['siswa_kelas'] = $this->siswaModel
+            ->join('kelas', 'kelas.id_kelas = siswa.kelas','left')
+            ->findAll();
+        // foreach ($siswa as $row) {
+        //     $kelas = $this->kelasModel->where('id_kelas', $row['kelas'])->first();
+        //     // var_dump($kelas); die;
+        //     $data['siswa_kelas'][] = [
+        //         'nama_siswa' => $row['nama_siswa'],
+        //         'nama_kelas' => $kelas['nama_kelas'],
+        //         'nism' => $row['nism'],
+        //         'jenis_kelamin' => $row['jenis_kelamin'],
+        //         'id_siswa' => $row['id_siswa'],
+        //         'tingkat' => $kelas['tingkat']
                 
-            ];
-        }
+        //     ];
+        // }
         $data['kelas'] = $this->kelasModel->findAll();
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
