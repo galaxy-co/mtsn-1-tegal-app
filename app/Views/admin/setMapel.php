@@ -143,10 +143,10 @@
                                             <td>
                                                 <button 
                                                     class='btn btn-info btn-sm btn-edit-set-mapel'
-                                                    data-idguru = <?= $k['id_guru']; ?>
-                                                    data-idmapel = <?= $k['id_mapel']; ?>
-                                                    data-kkm = <?= $k['kkm']; ?>
-                                                    data-idrfmapel = <?= $k['id_rfmapel']; ?>
+                                                    data-idguru = '<?= $k['id_guru']; ?>'
+                                                    data-idmapel = '<?= $k['id_mapel']; ?>'
+                                                    data-kkm = '<?= $k['kkm']; ?>'
+                                                    data-idrfmapel = '<?= $k['id_rfmapel']; ?>'
                                                     >
                                                     Edit
                                                 </button>     
