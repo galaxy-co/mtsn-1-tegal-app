@@ -14,7 +14,7 @@ class RfMapelModel extends Model
     protected $returnType           = 'array';
     protected $useSoftDelete        = false;
 
-    protected $allowedFields        = ['id_kelas','id_guru', 'id_mapel'];
+    protected $allowedFields        = ['id_kelas','id_guru', 'id_mapel','kkm'];
     // protected $DBGroup          = 'default';
     // protected $table            = 'rfmapels';
     // protected $primaryKey       = 'id';

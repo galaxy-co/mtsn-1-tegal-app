@@ -63,23 +63,23 @@
                                             <input type="text" class="form-control form-control" id="nam_mapel" name="nama_mapel" placeholder="Mata Pelajaran..." required>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-lg-4">
+                                    <!-- <div class="col-md-6 col-lg-4">
                                         <div class="form-group">
                                             <label for="largeInput">KKM</label>
                                             <input type="text" class="form-control form-control" id="nam_mapel" name="kkm" placeholder="KKM..." required>
                                         </div>
-                                    </div>
+                                    </div> -->
+                                </div>
+                            </div>
                             <div class="card-action">
                                 <button class="btn btn-success" type="submit">TAMBAH</button>		
-                            </div>
-                            
-                        </div>
-                    </form>
+                            </div> 
+                        </form>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+ 
 <!-- Tabel -->
     <div class="content">
         <div class="page-inner">
@@ -97,17 +97,17 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Mapel</th>
-                                            <th>Tingkat</th>
-                                            <th>KKM</th>
+                                            <!-- <th>Tingkat</th>
+                                            <th>KKM</th> -->
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                        <th>No</th>
+                                            <th>No</th>
                                             <th>Nama Mapel</th>
-                                            <th>Tingkat</th>
-                                            <th>KKM</th>
+                                            <!-- <th>Tingkat</th>
+                                            <th>KKM</th> -->
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
@@ -117,8 +117,7 @@
                                         <tr>
                                             <td><?= ++$i ?></td>
                                             <td><?= $k['nama_mapel'] ?></td>
-                                            <td><?= $k['tingkal_kelas'] ?></td>
-                                            <td><?= $k['kkm'] ?></td>
+                                           
                                             
                                             <td>
                                                 <a href="<?= base_url('admin/mapel/edit/') . $k['id_mapel']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Edit</a>  

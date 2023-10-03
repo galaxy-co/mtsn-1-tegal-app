@@ -40,22 +40,12 @@
                                             <label for="largeInput">NAMA MAPEL</label>
                                             <input type="text" class="form-control form-control" id="nama_mapel" name="nama_mapel" placeholder="<?= $mapel['nama_mapel']?>" value="<?= $mapel['nama_mapel']?>">
                                     </div>
-                                    <div class="col-md-6 col-lg-4">
-                                        <div class="form-group">
-                                            <label for="largeInput">TINGKAT KELAS</label>
-                                            <input type="text" class="form-control form-control" id="tingkal_kelas" name="tingkal_kelas" placeholder="<?= $mapel['tingkal_kelas']?>" value="<?= $mapel['tingkal_kelas']?>">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                            <label for="largeInput">KKM</label>
-                                            <input type="text" class="form-control form-control" id="kkm" name="kkm" placeholder="<?= $mapel['kkm']?>" value="<?= $mapel['kkm']?>">
-                                        </div>
-                                    </div>
-                            <div class="card-action">
-                                <button class="btn btn-success" type="submit">Simpan</button><a href="/admin/siswa" class="btn btn-danger">Cancel</a>		
+                                </div>
                             </div>
-                            
+                            <div class="card-action">
+                                <button class="btn btn-success mg-r-2" type="submit">Simpan</button>
+                                <a href="/admin/siswa" class="btn btn-danger">Cancel</a>		
+                            </div>
                         </div>
                     </form>
                 </div>

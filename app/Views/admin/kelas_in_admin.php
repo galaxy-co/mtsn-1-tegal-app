@@ -67,13 +67,12 @@
                                                 <option>9</option>
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-4">
                                         <div class="form-group">
                                             <label for="largeInput">Bagian / Nama</label>
                                             <input type="text" class="form-control form-control" id="nama_kelas" name="nama_kelas" placeholder="Contoh.. A/B/C">
                                         </div>
                                     </div>
+                                    
                                     <div class="col-md-6 col-lg-4">
                                         <div class="form-group">
                                             <label for="defaultSelect">Kurikulum</label>
@@ -82,8 +81,6 @@
                                                 <option value="2">Kurmer</option>
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-4">
                                         <div class="form-group">
                                             <label for="defaultSelect">Wali Kelas</label>
                                             <select class="form-control form-control" id="id_guru" name="id_guru">
@@ -93,6 +90,9 @@
                                             </select>
                                         </div>
                                     </div>
+                                   
+                                </div>
+                            </div>
                             <div class="card-action">
                                 <button class="btn btn-success" type="submit">TAMBAH</button>		
                             </div>
@@ -102,8 +102,8 @@
                 </div>
             </div>
         </div>
-    </div>
-    </div>
+   
+   
 <!-- Tabel -->
     <div class="content">
         <div class="page-inner">

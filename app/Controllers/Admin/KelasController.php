@@ -85,9 +85,12 @@ class KelasController extends BaseController
         $data['mapel'] = $this->mapelModel->findAll();
         $data['kelas'] = $this->kelasModel->find($id);
         $data['rfmapel'] = $this->rfmapelModel
-                    ->join('mapel', 'mapel.id_mapel=rfmapel.id_mapel')
-                    ->join('guru', 'guru.id_guru=rfmapel.id_guru')
-                    ->where('id_kelas', $id)->findAll();
+            ->select('mapel.nama_mapel,mapel.id_mapel,
+            rfmapel.kkm,rfmapel.id_rfmapel,
+            guru.nama_guru,guru.id_guru')
+            ->join('mapel', 'mapel.id_mapel=rfmapel.id_mapel')
+            ->join('guru', 'guru.id_guru=rfmapel.id_guru')
+            ->where('id_kelas', $id)->findAll();
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
         echo view('admin/setMapel', $data);
@@ -96,6 +99,7 @@ class KelasController extends BaseController
     public function addrfMapel()
     {
         $data = $this->request->getPost();
+    
         $idKelas = $this->request->getPost('id_kelas');
         $this->rfmapelModel->save($data);
 
