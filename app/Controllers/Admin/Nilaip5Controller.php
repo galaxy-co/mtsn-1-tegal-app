@@ -92,6 +92,11 @@ class Nilaip5Controller extends BaseController
                             ->where('tahun_ajaran',$this->setting['tahun_ajaran'])
                             ->findAll(),
                         'capaian' => $this->CapaianModel
+                            ->select('dimensi_p5.id_dimensi,
+                                capaian_p5.desc,
+                                capaian_p5.id_capaian,
+                                capaian_p5.kode_capaian
+                            ')
                             ->join('element_p5','element_p5.id_element = capaian_p5.id_parent_element','left')
                             ->join('dimensi_p5','dimensi_p5.id_dimensi = element_p5.dimensi AND dimensi_p5.id_kelas='.$this->request->getVar('tingkat').' and dimensi_p5.semester='.$this->setting['semester'],'left')
                             ->where('dimensi_p5.tahun_ajaran',$this->setting['tahun_ajaran'])
