@@ -301,7 +301,14 @@
                   <option value="null"></option>
                   <?php foreach($elemen as $el): ?>
                     <?php if($el['id_parent_element']): ?>
-                      <option data-kodeelement='<?php echo $el['kode_element'] ?>' value="<?= $el['id_element']?>"><?php echo $el['kode_element'].' '. $el['desc'] ?></option>
+                      <option 
+                        data-kodeelement='<?php echo $el['kode_element'] ?>' 
+                        data-nilairla='<?php echo $el['nilai_rahmatan_lil_alamin'] ?>' 
+                        data-subnilai='<?php echo $el['sub_nilai'] ?>' 
+                        value="<?= $el['id_element']?>"
+                        >
+                        <?php echo $el['kode_element'].' '. $el['desc'] ?>
+                      </option>
                     <?php endif ?>
                   <?php endforeach ?>
                 </select>
@@ -315,11 +322,11 @@
               
               <div class="form-group">
                 <label for="dimensi">Nilai Rahmatan Lil Alamin</label>
-                <input type="text" name="nilai_rahmatan_lil_alamin" class='form-control'>
+                <input type="text" name="nilai_rahmatan_lil_alamin" class='form-control' readonly>
               </div>
               <div class="form-group">
                 <label for="dimensi">Sub Nilai</label>
-                <input type="text" name="sub_nilai" class='form-control'>
+                <input type="text" name="sub_nilai" class='form-control' readonly>
               </div>
 
             </div>
@@ -359,6 +366,8 @@
   $('#parent-element-capaian').on('change',function(e){
     
     $('input[name=kode_capaian]').val($(this).find(':selected').attr('data-kodeelement'))
+    $('input[name=nilai_rahmatan_lil_alamin]').val($(this).find(':selected').attr('data-nilairla'))
+    $('input[name=sub_nilai]').val($(this).find(':selected').attr('data-subnilai'))
   })
 
   $('.action-element').click(function(){
