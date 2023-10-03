@@ -66,8 +66,8 @@
                         <input type="hidden" name="tingkat" value="<?= $tingkat ?>">
                         <div class="input-group mb-3">
                           <select name="id_kelas" id="" class='form-control'>
+                            <option value="">-- Kelas --</option>
                             <?php foreach($kelas as $kel) :?>
-                              <option value="">Hello, Select me first!</option>
                               <option value="<?= $kel['id_kelas']?>" <?php if($kel['id_kelas'] == $id_kelas ) :?> selected <?php endif ?>><?= $kel['tingkat'] .$kel['nama_kelas']?></option>
                             <?php endforeach?>
                           </select>
@@ -133,10 +133,8 @@
                                         value="<?= $nilaiSelected ?>" 
                                         data-id_nilai="<?= $id_nilai ?>"
                                         >
-                                        
+                                          <option value=""> -- Nilai -- </option>
                                         <?php foreach($nilai as $ni) :?>
-                                          <!-- nilai desc value must be from nilai desc instead from dimensi desc, but, in showcase project(xls app), the desc is from dimensi -->
-                                          
                                           <option 
                                             value="<?php echo $ni['id_nilaip5_option']?>" 
                                             class='opt-nilai' 
