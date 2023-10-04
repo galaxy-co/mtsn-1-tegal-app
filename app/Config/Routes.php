@@ -10,6 +10,8 @@ $routes->get('/','AuthController::login');
 $routes->get('/signin','AuthController::login');
 $routes->post('/signin','AuthController::loginPost');
 
+$routes->get('temporary','Admin\GuruController::tempfunc');
+
 $routes->get('/logout','LogoutController::index');
 
 $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
