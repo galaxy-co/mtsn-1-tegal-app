@@ -86,6 +86,9 @@ class SiswaController extends BaseController
         $file = $this->request->getFile('upload_guru');
         $extention = $file->getClientExtension();
         $kelas = $this->kelasModel->findAll();
+
+        $dataArraySiswa=[];
+        $dataArrayUser=[];
         if($extention == 'xls' || $extention == 'xlsx'){
             if($extention == 'xls'){
                 $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
@@ -108,16 +111,22 @@ class SiswaController extends BaseController
                     }
                     $kelasId = null;
                     $kelasValue = $value[5];
+                    $cek = 0;
                     foreach ($kelas as $k) {
-                        $kelasNama = $k['tingkat'].$k['nama_kelas'];
+                        $kelasNama = $k['tingkat']." ".$k['nama_kelas'];
                         
                         if (strtolower($kelasNama) == strtolower($kelasValue)) {
                             
                             $kelasId = $k['id_kelas']; 
                             $value[5] = $kelasId;
+                            $cek++;
                             break; 
                             
                         }
+                    }
+                    if($cek == 0){
+                        session()->setFlashdata('warning', "Kelas $kelasValue belum terdaftar! Silahkan input Kelas terlebih dahulu!");
+                        return redirect()->to('/admin/siswa');
                     }
                     $data = [
                         'nism' => $value[1],
@@ -132,11 +141,16 @@ class SiswaController extends BaseController
                         'password' => password_hash($value[1], PASSWORD_DEFAULT),
                         'role_id' => 2
                     ];
+
+                    array_push($dataArraySiswa,$data);
+                    array_push($dataArrayUser,$dataToUsers);
                     
                 }
-                $this->siswaModel->save($data);
-                $this->userModel->save($dataToUsers);
             }
+
+            // dd($dataArraySiswa,$dataArrayUser);
+            $this->siswaModel->insertBatch($dataArraySiswa);
+            $this->userModel->insertBatch($dataArrayUser);
            
             session()->setFlashdata('success', 'Berhasil Upload Siswa');
             return redirect()->to('/admin/siswa');
