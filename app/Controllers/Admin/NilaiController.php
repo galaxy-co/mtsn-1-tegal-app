@@ -51,7 +51,7 @@ class NilaiController extends BaseController
             // $guruData =;
             $queryNilai->where('nilai.id_guru',$this->GuruModel->where('nuptk',$username)->first()['id_guru']);
             
-            $queryKelas->join('rfmapel','rfmapel.id_kelas = kelas.id_kelas','RIGHT')->where('rfmapel.id_guru',$this->GuruModel->where('nuptk',$username)->first()['id_guru']);
+            $queryKelas->join('rfmapel','rfmapel.id_kelas = kelas.id_kelas','LEFT')->where('rfmapel.id_guru',$this->GuruModel->where('nuptk',$username)->first()['id_guru'])->groupBy('kelas.id_kelas');
             $queryMapel->join('rfmapel','rfmapel.id_mapel = mapel.id_mapel','RIGHT')->where('rfmapel.id_guru',$this->GuruModel->where('nuptk',$username)->first()['id_guru']);
             $queryGuru->where('guru.nuptk',$username);
             
@@ -65,7 +65,7 @@ class NilaiController extends BaseController
         $data['guru'] = $queryGuru->findAll();
         $data['mapel'] = $queryMapel->findAll();
 
-        
+        // dd($data);
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
         echo view('nilai/index', $data);
