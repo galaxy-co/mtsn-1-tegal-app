@@ -52,14 +52,24 @@ class PASController extends BaseController
             $Guru = $this->guruModel->where('nuptk', $nuptk)->first();
             $idGuru = $Guru['id_guru'];
             $rfResults = $this->rfMapelModel->where('id_guru', $idGuru)->findAll();
-            $idKelasArray = [];
+            if(!empty($rfResults)){
+                $idKelasArray = [];
 
             foreach ($rfResults as $result) {
                 $idKelas = $result['id_kelas'];
                 $idKelasArray[] = $idKelas;
             }
             
-            $data['kelas'] = $this->kelasModel->whereIn('id_kelas', $idKelasArray)->findAll();
+            $dataKelas = $this->kelasModel->whereIn('id_kelas', $idKelasArray)->findAll();
+            }
+            
+            
+            
+        }
+        if(!empty($dataKelas)){
+            $data['kelas'] = $dataKelas;
+        }else{
+            $data['kelas'] = [];
         }
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
@@ -189,12 +199,27 @@ class PASController extends BaseController
         $idMapel = $this->request->getPost('id_mapel');
         $role = $this->request->getPost('role_id');
 
+
         $setting = $this->settingsModel->first();
         $semester = $setting['semester'];
         $ta = $setting['tahun_ajaran'];
 
         $array_idSiswa = $this->request->getPost('id_siswa');
         $array_nilai = $this->request->getPost('nilai');
+        $existingData = $this->pasModel->where('id_kelas', $idKelas)
+                                    ->where('semester', $semester)
+                                    ->where('tahun_ajaran', $ta)
+                                    ->where('id_mapel', $idMapel)
+                                    ->findAll();
+        if($existingData){
+            if($role == 1){
+                session()->setFlashdata('warning', 'Data Sudah Tersedia!');
+                return redirect()->to('/admin/pas');
+            }else{
+                session()->setFlashdata('warning', 'Data Sudah Tersedia!');
+                return redirect()->to('/guru/pas');
+            }
+        }
 
         foreach ($array_idSiswa as $key => $id_siswa) {
             $data = [

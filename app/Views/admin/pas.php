@@ -119,7 +119,15 @@
                                                 <td><?= $n['semester'] ?></td>
                                                 <td><?= $n['tahun_ajaran'] ?></td>
                                                 <td><?= $n['nama_mapel'] ?></td>
-                                                <td><a href="" class="btn btn-sm btn-primary"><i class="icon-note"></i>Detail</a></td>
+                                                
+                                                <td>
+                                                <?php if($role_id == 1) : ?>
+                                                    <a href="<?= base_url('admin/pas/edit/') . $n['id_nilai_pas']?>" class="btn btn-sm btn-primary"><i class="icon-note"></i>Detail</a>
+                                                    <?php else : ?>
+                                                        <a href="<?= base_url('guru/pas/edit/') . $n['id_nilai_pas']?>" class="btn btn-sm btn-primary"><i class="icon-note"></i>Detail</a>
+                                                        <?php endif ?>
+                                                </td>
+                                                
                                             </tr>
                                         <?php endforeach ?>
                                     </tbody>
