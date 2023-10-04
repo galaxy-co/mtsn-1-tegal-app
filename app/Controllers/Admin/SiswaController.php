@@ -107,14 +107,14 @@ class SiswaController extends BaseController
                         return redirect()->to('/admin/siswa');
                     }
                     $kelasId = null;
-                    $kelasValue = $value[4];
+                    $kelasValue = $value[5];
                     foreach ($kelas as $k) {
                         $kelasNama = $k['tingkat'].$k['nama_kelas'];
                         
                         if (strtolower($kelasNama) == strtolower($kelasValue)) {
                             
                             $kelasId = $k['id_kelas']; 
-                            $value[4] = $kelasId;
+                            $value[5] = $kelasId;
                             break; 
                             
                         }

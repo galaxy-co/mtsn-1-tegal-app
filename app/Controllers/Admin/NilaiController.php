@@ -35,17 +35,33 @@ class NilaiController extends BaseController
 
     public function index()
     {
-        $data['nilai'] = $this->NilaiModel
+        $role=session('role_id'); // 3 guru
+        $username = session('username');
+        
+        $queryNilai = $this->NilaiModel
             ->join('kelas','kelas.id_kelas = nilai.id_kelas')
             ->join('mapel','mapel.id_mapel = nilai.id_mapel')
-            ->join('guru','guru.id_guru = nilai.id_guru')
+            ->join('guru','guru.id_guru = nilai.id_guru');
+        $queryMapel = $this->MapelModel;
+        $queryGuru = $this->GuruModel;
+        $queryKelas = $this->KelasModel;
+        $data['guru'] = $this->GuruModel->findAll();
+        if($role == 3){
+            // $guruData =;
+            // dd($guruData);
+            $queryNilai->where('nilai.id_guru',$this->GuruModel->where('nuptk',$username)->first()['id_guru']);
+
+            $queryGuru->where('guru.nuptk',$username);
+            
+        }
+        $data['nilai'] = $queryNilai
             ->groupBy('nilai.id_kelas')
             ->groupBy('nilai.id_mapel')
             ->findAll();
         
-        $data['kelas'] = $this->KelasModel->findAll();
-        $data['guru'] = $this->GuruModel->findAll();
-        $data['mapel'] = $this->MapelModel->findAll();
+        $data['kelas'] = $queryKelas->findAll();
+        $data['guru'] = $queryGuru->findAll();
+        $data['mapel'] = $queryMapel->findAll();
         
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
