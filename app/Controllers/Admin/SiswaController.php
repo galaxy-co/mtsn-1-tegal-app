@@ -115,7 +115,7 @@ class SiswaController extends BaseController
                     foreach ($kelas as $k) {
                         $kelasNama = $k['tingkat']." ".$k['nama_kelas'];
                         
-                        if (strtolower($kelasNama) == strtolower($kelasValue)) {
+                        if (strtolower(preg_replace('/\s+/', '', $kelasNama)) == strtolower(preg_replace('/\s+/', '', $kelasValue))) {
                             
                             $kelasId = $k['id_kelas']; 
                             $value[5] = $kelasId;
