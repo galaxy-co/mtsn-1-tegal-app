@@ -67,9 +67,10 @@
                                     <input type="text" class="form-control" value="<?= $mapel['kkm']?>" disabled>
                                 </div>
                                 <div class="col-md-4 col-lg-4">
-                                    <label for="">Guru Pengampu</label>
-                                    <input type="text" class="form-control" value="<?= $guru['nama_guru']?>" disabled>
+                                    <label for="">Kelas</label>
+                                    <input type="text" class="form-control" value="<?= $mapel['tingkat'] . ' ' . $mapel['nama_kelas'] ?>" disabled>
                                 </div>
+                               
                             </div>
 
                       </div>
@@ -86,10 +87,15 @@
                         <div class="card-header">
                             <div class="card-title">Nilai Semester</div>
                         </div>
+                        <?php if($role_id == 1) : ?>
                         <form action="<?= base_url('admin/pas/store')?>" method="POST">
-                        <input type="hidden" name="id_kelas" value="<?= $kelas['id_kelas']?>">
-                        <input type="hidden" name="id_mapel" value="<?= $mapel['id_mapel']?>">
-                        <input type="hidden" name="id_guru" value="<?= $guru['id_guru']?>">
+                        <?php else : ?>
+                            <form action="<?= base_url('guru/pas/store')?>" method="POST">
+                            <?php endif ?>  
+                                <input type="hidden" value="<?= $mapel['id_rfmapel']?>" name="id_mapel">
+                                <input type="hidden" value="<?= $mapel['id_guru']?>" name="id_guru">
+                                <input type="hidden" value="<?= $mapel['id_kelas']?>" name="id_kelas">
+                                <input type="hidden" value="<?= $role_id ?>" name="role_id">
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered">

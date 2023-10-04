@@ -82,9 +82,9 @@
                                             
                                             <td>
                                                 <?php if($role_id == 1) : ?>
-                                                    <a href="<?= base_url('admin/pas/pas/') . $k['id_kelas']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Masuk</a>  
+                                                    <a href="<?= base_url('admin/pas/pasnilai/') . $k['id_kelas']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Masuk</a>  
                                                 <?php else  : ?>
-                                                    <a href="<?= base_url('guru/pas/pas/') . $k['id_kelas']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Masuk</a>  
+                                                    <a href="<?= base_url('guru/pas/pasnilai/') . $k['id_kelas']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Masuk</a>  
                                                 <?php endif ?>
                                         </tr>
                                         
