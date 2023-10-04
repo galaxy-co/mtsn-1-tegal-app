@@ -74,21 +74,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <!-- <?php if($role_id == 1) : ?> -->
-                                    <!-- <div class="col-md-4 col-lg-4">
-                                        <div class="form-group">
-                                            <label for="defaultSelect">Guru</label>
-                                            <select class="form-control form-control" id="id_guru" name="id_guru">
-                                               <?php foreach($guru as $ke) : ?>
-                                                    <option value="<?= $ke['id_guru']; ?>">
-                                                        <?= $ke['nama_guru'] ?>
-                                                    </option>
-                                               <?php endforeach ?>
-                                            </select>
-                                        </div>
-                                    </div> -->
-                                    <!-- <?php endif ?> -->
-                                   
                                 </div>
                                 
                             </div>

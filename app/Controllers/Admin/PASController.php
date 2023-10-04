@@ -105,7 +105,19 @@ class PASController extends BaseController
        
         $data['id_kelas'] = $idkelas;
         if($data['role_id'] == 1){
-            // $data['kelas'] = $this->kelasModel->findAll();
+            $mapel = $this->rfMapelModel
+                                        ->join('mapel', 'mapel.id_mapel=rfmapel.id_mapel')
+                                        ->where('id_kelas', $idkelas)->findAll();
+                                        $data['mapel'] = $mapel;
+            $nilai = $this->pasModel
+            ->join('rfmapel', 'rfmapel.id_rfmapel = nilai_pas.id_mapel')
+            ->join('mapel', 'mapel.id_mapel = rfmapel.id_mapel')
+            ->where('nilai_pas.id_kelas', $idkelas)
+            ->groupBy('nilai_pas.tahun_ajaran')
+            ->groupBy('nilai_pas.semester')
+            ->groupBy('nilai_pas.id_kelas')
+            ->groupBy('nilai_pas.id_mapel')
+            ->findAll();
         }else{
             $nuptk = $session->get('username');
             $Guru = $this->guruModel->where('nuptk', $nuptk)->first();
@@ -114,24 +126,26 @@ class PASController extends BaseController
                                         ->join('mapel', 'mapel.id_mapel=rfmapel.id_mapel')
                                         ->where('id_kelas', $idkelas)
                                         ->where('id_guru', $idGuru)->findAll();
+
             $nilai = $this->pasModel
-                            ->join('rfmapel', 'rfmapel.id_rfmapel = nilai_pas.id_mapel')
-                            ->join('mapel', 'mapel.id_mapel = rfmapel.id_mapel')
-                            ->where('nilai_pas.id_guru', $idGuru)
-                            ->where('nilai_pas.id_kelas', $idkelas)
-                            ->groupBy('nilai_pas.tahun_ajaran')
-                            ->groupBy('nilai_pas.semester')
-                            ->groupBy('nilai_pas.id_kelas')
-                            ->groupBy('nilai_pas.id_mapel')
-                            ->findAll();
-            if(!empty($nilai)){
-                $data['nilaipas'] = $nilai;
-            }else{
-                $data['nilaipas'] = [];
-            }
+            ->join('rfmapel', 'rfmapel.id_rfmapel = nilai_pas.id_mapel')
+            ->join('mapel', 'mapel.id_mapel = rfmapel.id_mapel')
+            ->where('nilai_pas.id_guru', $idGuru)
+            ->where('nilai_pas.id_kelas', $idkelas)
+            ->groupBy('nilai_pas.tahun_ajaran')
+            ->groupBy('nilai_pas.semester')
+            ->groupBy('nilai_pas.id_kelas')
+            ->groupBy('nilai_pas.id_mapel')
+            ->findAll();
                         
         }
         
+            
+            if(!empty($nilai)){
+            $data['nilaipas'] = $nilai;
+            }else{
+            $data['nilaipas'] = [];
+            }
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
         echo view('admin/pas', $data);
