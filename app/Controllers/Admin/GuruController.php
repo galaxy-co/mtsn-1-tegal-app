@@ -127,18 +127,5 @@ class GuruController extends BaseController
         return redirect()->to('/admin/guru');
     }
 
-    public function tempfunc(){
-        $guru=$this->guruModel->findAll();
-        
-        foreach ($guru as $gur) {
-            $dataToUsers = [
-                'username' => $gur['nuptk'],
-                'name' => $gur['nama_guru'],
-                'password' => password_hash($gur['nuptk'], PASSWORD_DEFAULT),
-                'role_id' => 3
-            ];
-            $this->userModel->save($dataToUsers);
-        }
-        
-    }
+
 }
