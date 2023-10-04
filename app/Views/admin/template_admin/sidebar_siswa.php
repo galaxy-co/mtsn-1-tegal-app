@@ -1,4 +1,4 @@
-<!-- Sidebar -->
+	<!-- Sidebar -->
 <div class="sidebar sidebar-style-2">			
 			<div class="sidebar-wrapper scrollbar scrollbar-inner">
 				<div class="sidebar-content">
@@ -45,6 +45,7 @@
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>
+						<?php if($kurikulum == 2) : ?>
 						<li class="nav-item">
 							<a href="<?= base_url('/siswa/siswap5')?>">
 								<i class="fas fa-edit"></i>
@@ -52,6 +53,7 @@
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>
+						<?php endif ?>
 						<!-- <li class="nav-item">
 							<a href="<?= base_url('/siswa/raport')?>">
 								<i class="icon-layers"></i>

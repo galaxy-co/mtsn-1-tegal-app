@@ -23,6 +23,7 @@ class SiswaController extends BaseController
         $siswa = $this->siswaModel->where('nism', $nism)->first();
         $idKelas = $siswa['kelas'];
         $kelas = $this->kelasModel->where('id_kelas', $idKelas)->first();
+        $data['kurikulum'] = $kelas['kurikulum'];
         $data['kelas'] = $kelas['tingkat'] . " " . $kelas['nama_kelas'];
         $data['name'] = $name;
         echo view('admin/template_admin/header');

@@ -32,6 +32,7 @@ class NilaiSemesterController extends BaseController
         $kelasId = $siswa['kelas'];
 
         $kelas = $this->kelasModel->where('id_kelas', $kelasId)->first();
+        $data['kurikulum'] = $kelas['kurikulum'];
         $idGuru = $kelas['id_guru'];
 
         $guru = $this->guruModel->where('id_guru', $idGuru)->first();

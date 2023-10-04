@@ -39,6 +39,7 @@ class NilaiHarianController extends BaseController
     $kelasId = $siswa['kelas'];
     $kelas = $this->kelasModel->where('id_kelas', $kelasId)->first();
     $kurikulum = $kelas['kurikulum'];
+    $data['kurikulum'] = $kurikulum;
     $data['rf_nilai_detail'] = $this->rfNilaiDetailModel->where('kurikulum_id', $kurikulum)->orderBy('rf_nilai_detail_id')->findAll();
     $nilai = $this->nilaiModel->where('id_siswa', $siswaId)->find();
     $idNilai = [];

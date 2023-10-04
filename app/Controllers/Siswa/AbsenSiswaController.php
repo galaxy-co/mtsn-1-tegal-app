@@ -11,10 +11,12 @@ class AbsenSiswaController extends BaseController
 {
     protected $absenModel;
     protected $siswaModel;
+    protected $kelasModel;
     public function __construct()
     {
         $this->absenModel = new AbsenModel();
         $this->siswaModel = new SiswaModel();
+        $this->kelasModel = new KelasModel();
     }
     public function index()
     {
@@ -25,7 +27,8 @@ class AbsenSiswaController extends BaseController
         $siswa = $this->siswaModel->where('nism', $nism)->first();
         $siswaId = $siswa['id_siswa'];
         $kelasId = $siswa['kelas'];
-
+        $kelas = $this->kelasModel->where('id_kelas', $kelasId)->first();
+        $data['kurikulum'] = $kelas['kurikulum'];
         $data['absen'] = $this->absenModel->where('id_siswa', $siswaId)->findAll();
 
         $groupedData = [];
