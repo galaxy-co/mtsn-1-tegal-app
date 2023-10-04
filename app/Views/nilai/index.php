@@ -142,19 +142,21 @@
                                                 <td><?= $n['nama_mapel'];?></td>
                                                 <td><?= $n['nama_guru'];?></td>
                                                 <td >
-                                                    <form action="<?= base_url('admin/nilai/detail') ?>" method="GET" class="col-6">
-                                                        <input type="hidden" name="id_kelas" value="<?= $n['id_kelas']?>">
-                                                        <input type="hidden" name="id_mapel" value="<?= $n['id_mapel']?>">
-                                                        <input type="hidden" name="id_guru" value="<?= $n['id_guru']?>">
-                                                        <button type="submit"  class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Detail</a>  
-                                                        <!-- <button type="button" class="btn btn-danger btn-sm col-6"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</button> -->
-                                                    </form>
-                                                    <form action="<?= base_url('admin/nilai/export')?>" method="post">
-                                                        <input type="hidden" name="id_kelas" value="<?= $nilai['id_kelas']?>">
-                                                        <input type="hidden" name="id_guru" value="<?= $nilai['id_guru']?>">
-                                                        <input type="hidden" name="id_mapel" value="<?= $nilai['id_mapel']?>">
-                                                        <button type='submit' class="btn btn-export btn-info mr-2">Export</button>
-                                                    </form>
+                                                    <div class="flex">
+                                                        <form action="<?= base_url('admin/nilai/detail') ?>" method="GET">
+                                                            <input type="hidden" name="id_kelas" value="<?= $n['id_kelas']?>">
+                                                            <input type="hidden" name="id_mapel" value="<?= $n['id_mapel']?>">
+                                                            <input type="hidden" name="id_guru" value="<?= $n['id_guru']?>">
+                                                            <button type="submit"  class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Detail</a>  
+                                                            <!-- <button type="button" class="btn btn-danger btn-sm col-6"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</button> -->
+                                                        </form>
+                                                        <form action="<?= base_url('admin/nilai/export')?>" method="post">
+                                                            <input type="hidden" name="id_kelas" value="<?= $n['id_kelas']?>">
+                                                            <input type="hidden" name="id_guru" value="<?= $n['id_guru']?>">
+                                                            <input type="hidden" name="id_mapel" value="<?= $n['id_mapel']?>">
+                                                            <button type='submit' class="btn btn-sm btn-info ml-2"><i class="fas fa-download"></i> Export</button>
+                                                        </form>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         <?php endforeach ?>
