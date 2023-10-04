@@ -98,9 +98,51 @@ class PASController extends BaseController
     //     echo view('admin/pas', $data);
     //     echo view('admin/template_admin/footer');
     // }
+    public function pasnilai($idkelas)
+    {
+        $session = session();
+        $data['role_id'] = $session->get('role_id');
+       
+        $data['id_kelas'] = $idkelas;
+        if($data['role_id'] == 1){
+            // $data['kelas'] = $this->kelasModel->findAll();
+        }else{
+            $nuptk = $session->get('username');
+            $Guru = $this->guruModel->where('nuptk', $nuptk)->first();
+            $idGuru = $Guru['id_guru'];
+            $data['mapel'] = $this->rfMapelModel
+                                        ->join('mapel', 'mapel.id_mapel=rfmapel.id_mapel')
+                                        ->where('id_kelas', $idkelas)
+                                        ->where('id_guru', $idGuru)->findAll();
+            $nilai = $this->pasModel
+                            ->join('rfmapel', 'rfmapel.id_rfmapel = nilai_pas.id_mapel')
+                            ->join('mapel', 'mapel.id_mapel = rfmapel.id_mapel')
+                            ->where('nilai_pas.id_guru', $idGuru)
+                            ->where('nilai_pas.id_kelas', $idkelas)
+                            ->groupBy('nilai_pas.tahun_ajaran')
+                            ->groupBy('nilai_pas.semester')
+                            ->groupBy('nilai_pas.id_kelas')
+                            ->groupBy('nilai_pas.id_mapel')
+                            ->findAll();
+            if(!empty($nilai)){
+                $data['nilaipas'] = $nilai;
+            }else{
+                $data['nilaipas'] = [];
+            }
+                        
+        }
+        
+        echo view('admin/template_admin/header');
+        echo view('admin/template_admin/sidebar');
+        echo view('admin/pas', $data);
+        echo view('admin/template_admin/footer');
+    }
     public function detail(){
+        $session = session();
+        $data['role_id'] = $session->get('role_id');
         $dataInput = $this->request->getVar();
         $data['input'] = $dataInput;
+
         
         // $cekSiswa = $this->pasModel->where
             $kelas = $this->kelasModel->where('id_kelas', $dataInput['id_kelas'])->first();
@@ -108,11 +150,17 @@ class PASController extends BaseController
             $siswa = $this->siswaModel->where('kelas', $dataInput['id_kelas'])->findAll();
          
             // var_dump($siswa); die;
-            $data['kelas'] = $this->kelasModel->where('id_kelas', $dataInput['id_kelas'])->first();
-            $data['guru'] = $this->guruModel->where('id_guru', $dataInput['id_guru'])->first();
-            $data['mapel'] = $this->mapelModel->where('id_mapel', $dataInput['id_mapel'])->first();
+            // $data['kelas'] = $this->kelasModel->where('id_kelas', $dataInput['id_kelas'])->first();
+            // $data['guru'] = $this->guruModel->where('id_guru', $dataInput['id_guru'])->first();
+            // $data['mapel'] = $this->mapelModel->where('id_mapel', $dataInput['id_mapel'])->first();
             $data['siswa'] = $siswa;
-
+            $data['mapel'] = $this->rfMapelModel
+                                ->join('mapel', 'mapel.id_mapel=rfmapel.id_mapel')
+                                ->join('kelas', 'kelas.id_kelas=rfmapel.id_kelas')
+                                ->join('guru', 'guru.id_guru = rfmapel.id_guru')
+                                ->where('rfmapel.id_kelas', $dataInput['id_kelas'])
+                                ->where('rfmapel.id_mapel', $dataInput['id_mapel'] )
+                                ->first();
             echo view('admin/template_admin/header');
             echo view('admin/template_admin/sidebar');
             echo view('admin/detail_pas', $data);
@@ -121,9 +169,11 @@ class PASController extends BaseController
     public function store()
     {
         
+
         $idGuru = $this->request->getPost('id_guru');
         $idKelas = $this->request->getPost('id_kelas');
         $idMapel = $this->request->getPost('id_mapel');
+        $role = $this->request->getPost('role_id');
 
         $setting = $this->settingsModel->first();
         $semester = $setting['semester'];
@@ -148,8 +198,12 @@ class PASController extends BaseController
         }
         
         session()->setFlashdata('success', 'Nilai Berhasil Disimpan');
-
-        return redirect()->to('/admin/pas');
+        if($role == 1){
+            return redirect()->to('/admin/pas');
+        }else{
+            return redirect()->to('/guru/pas');
+        }
+        
         
     }
     public function edit($id){

@@ -54,23 +54,16 @@
                                 });
                             </script>
                         <?php endif ?>
-                        <form action="<?= base_url('admin/pas/detail') ?>" method="GET">
+                        <?php if($role_id == 1) : ?>
+                        <form action="<?= base_url('admin/pas/detail')?>" method="GET">
+                        <?php else : ?>
+                            <form action="<?= base_url('guru/pas/detail') ?>" method="GET">
+                        <?php endif ?>   
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-4 col-lg-4">
                                         <div class="form-group">
-                                            <label for="defaultSelect">Kelas</label>
-                                            <select class="form-control form-control" id="id_kelas" name="id_kelas">
-                                               <?php foreach($kelas as $ke) : ?>
-                                                    <option value="<?= $ke['id_kelas']; ?>">
-                                                        <?= $ke['tingkat'] .''. $ke['nama_kelas'] ?>
-                                                    </option>
-                                               <?php endforeach ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-lg-4">
-                                        <div class="form-group">
+                                            <input type="hidden" name="id_kelas" value="<?= $id_kelas?>">
                                             <label for="defaultSelect">Mapel</label>
                                             <select class="form-control form-control" id="id_mapel" name="id_mapel">
                                                <?php foreach($mapel as $ke) : ?>
@@ -81,7 +74,8 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-lg-4">
+                                    <!-- <?php if($role_id == 1) : ?> -->
+                                    <!-- <div class="col-md-4 col-lg-4">
                                         <div class="form-group">
                                             <label for="defaultSelect">Guru</label>
                                             <select class="form-control form-control" id="id_guru" name="id_guru">
@@ -92,7 +86,8 @@
                                                <?php endforeach ?>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
+                                    <!-- <?php endif ?> -->
                                    
                                 </div>
                                 
@@ -128,24 +123,18 @@
                                             <th>No</th>
                                             <th>Semester</th>
                                             <th>Tahun Ajaran</th>
-                                            <th>Kelas</th>
                                             <th>Mata Pelajaran</th>
-                                            <th>Guru</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $no = 0; foreach($nilai_pas as $n) : ?>
+                                        <?php $no = 0; foreach($nilaipas as $n) : ?>
                                             <tr>
                                                 <td><?= ++$no ?></td>
-                                                <td><?= $n['semester']?></td>
-                                                <td><?= $n['tahun_ajaran']?></td>
-                                                <td><?= $n['tingkat'].''.$n['nama_kelas'];?></td>
-                                                <td><?= $n['nama_mapel'];?></td>
-                                                <td><?= $n['nama_guru'];?></td>
-                                                <td >
-                                                   <a href="<?= base_url('admin/pas/edit/') . $n['id_nilai_pas']?>" class="btn btn-info">Detail</a>
-                                                </td>
+                                                <td><?= $n['semester'] ?></td>
+                                                <td><?= $n['tahun_ajaran'] ?></td>
+                                                <td><?= $n['nama_mapel'] ?></td>
+                                                <td><a href="" class="btn btn-sm btn-primary"><i class="icon-note"></i>Detail</a></td>
                                             </tr>
                                         <?php endforeach ?>
                                     </tbody>
@@ -154,9 +143,7 @@
                                         <th>No</th>
                                         <th>Semester</th>
                                         <th>Tahun Ajaran</th>
-                                        <th>Kelas</th>
                                         <th>Mata Pelajaran</th>
-                                        <th>Guru</th>
                                         <th>Action</th>
                                     </tr>
                                     </tfoot>
