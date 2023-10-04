@@ -43,13 +43,14 @@ class PASController extends BaseController
     {
         $session = session();
         $data['role_id'] = $session->get('role_id');
-        $nuptk = $session->get('username');
-        $Guru = $this->guruModel->where('nuptk', $nuptk)->first();
-        $idGuru = $Guru['id_guru'];
+       
 
         if($data['role_id'] == 1){
             $data['kelas'] = $this->kelasModel->findAll();
         }else{
+            $nuptk = $session->get('username');
+            $Guru = $this->guruModel->where('nuptk', $nuptk)->first();
+            $idGuru = $Guru['id_guru'];
             $rfResults = $this->rfMapelModel->where('id_guru', $idGuru)->findAll();
             $idKelasArray = [];
 
