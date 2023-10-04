@@ -172,7 +172,9 @@ $routes->group('guru', ['filter'=> 'authGuard:3'],static function ($routes) {
         $routes->post('delete', 'Admin\NilaiController::delete');
         $routes->get('edit/(:num)', 'Admin\NilaiController::edit/$1');
         $routes->post('upload', 'Admin\NilaiController::uploadGuru');
-         $routes->get('pasnilai/(:num)', 'Admin\PASController::pasnilai/$1');
+        $routes->get('pasnilai/(:num)', 'Admin\PASController::pasnilai/$1');
+        $routes->get('rfmapel/(:num)', 'Admin\NilaiController::rfmapel/$1');
+        $routes->post('export','Admin\NilaiController::export');
     });
 
     $routes->group('pas',static function ($routes){

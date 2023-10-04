@@ -1,4 +1,9 @@
-
+<?php
+    $url = base_url('admin/nilai/');
+    if(session('role_id') == 3){
+        $url = base_url('guru/nilai/');
+    }
+?>
         
 <div class="main-panel">
     <!-- Form -->
@@ -54,7 +59,7 @@
                                 });
                             </script>
                         <?php endif ?>
-                        <form action="<?= base_url('admin/nilai/detail') ?>" method="GET">
+                        <form action="<?= $url.'detail' ?>" method="GET">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-4 col-lg-4">
@@ -87,7 +92,9 @@
                                         <div class="form-group">
                                             <label for="defaultSelect">Guru</label>
                                             <select class="form-control form-control" id="id_guru" name="id_guru" readonly>
-                                                <option value=""> - Guru - </option>
+                                                <?php if(session('role_id') != 3) :?>
+                                                    <option value=""> - Guru - </option>
+                                                <?php endif ?>
                                                 <?php foreach($guru as $ke) : ?>
                                                     <option value="<?= $ke['id_guru']; ?>">
                                                         <?= $ke['nama_guru'] ?>
@@ -143,14 +150,15 @@
                                                 <td><?= $n['nama_guru'];?></td>
                                                 <td >
                                                     <div class="flex">
-                                                        <form action="<?= base_url('admin/nilai/detail') ?>" method="GET">
+                                                        
+                                                        <form action="<?= $url.'detail' ?>" method="GET">
                                                             <input type="hidden" name="id_kelas" value="<?= $n['id_kelas']?>">
                                                             <input type="hidden" name="id_mapel" value="<?= $n['id_mapel']?>">
                                                             <input type="hidden" name="id_guru" value="<?= $n['id_guru']?>">
                                                             <button type="submit"  class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Detail</a>  
                                                             <!-- <button type="button" class="btn btn-danger btn-sm col-6"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</button> -->
                                                         </form>
-                                                        <form action="<?= base_url('admin/nilai/export')?>" method="post">
+                                                        <form action="<?= $url.'export' ?>" method="post">
                                                             <input type="hidden" name="id_kelas" value="<?= $n['id_kelas']?>">
                                                             <input type="hidden" name="id_guru" value="<?= $n['id_guru']?>">
                                                             <input type="hidden" name="id_mapel" value="<?= $n['id_mapel']?>">
@@ -214,7 +222,11 @@
         $('#id_mapel').val(null).change()
         $('#id_guru').val(null).change()
         let idKelas = e.target.value;
-        let getRF = await fetch(`<?= base_url('admin/nilai/rfmapel/') ?>${idKelas}`, {
+        let urlBase = 'admin';
+        if(<?php echo session('role_id')?> == 3){
+            urlBase = 'guru';
+        }
+        let getRF = await fetch(`<?= base_url() ?>${urlBase}/nilai/rfmapel/${idKelas}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

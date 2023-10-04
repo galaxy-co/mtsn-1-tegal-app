@@ -37,6 +37,7 @@ class NilaiController extends BaseController
     {
         $role=session('role_id'); // 3 guru
         $username = session('username');
+
         
         $queryNilai = $this->NilaiModel
             ->join('kelas','kelas.id_kelas = nilai.id_kelas')
@@ -45,12 +46,13 @@ class NilaiController extends BaseController
         $queryMapel = $this->MapelModel;
         $queryGuru = $this->GuruModel;
         $queryKelas = $this->KelasModel;
-        $data['guru'] = $this->GuruModel->findAll();
+      
         if($role == 3){
             // $guruData =;
-            // dd($guruData);
             $queryNilai->where('nilai.id_guru',$this->GuruModel->where('nuptk',$username)->first()['id_guru']);
-
+            
+            $queryKelas->join('rfmapel','rfmapel.id_kelas = kelas.id_kelas','RIGHT')->where('rfmapel.id_guru',$this->GuruModel->where('nuptk',$username)->first()['id_guru']);
+            $queryMapel->join('rfmapel','rfmapel.id_mapel = mapel.id_mapel','RIGHT')->where('rfmapel.id_guru',$this->GuruModel->where('nuptk',$username)->first()['id_guru']);
             $queryGuru->where('guru.nuptk',$username);
             
         }
@@ -62,6 +64,7 @@ class NilaiController extends BaseController
         $data['kelas'] = $queryKelas->findAll();
         $data['guru'] = $queryGuru->findAll();
         $data['mapel'] = $queryMapel->findAll();
+
         
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
@@ -216,16 +219,18 @@ class NilaiController extends BaseController
         // var_dump($id);
         // die;
         $req = $this->request->getPost();
-        
         // $this->NilaiModel->delete();
-        $this->NilaiModel
-            ->where('id_kelas',$req['id_kelas'])
-            ->where('id_mapel',$req['id_mapel'])
-            ->where('id_guru',$req['id_guru'])
-            ->delete();
-
+        $data=$this->NilaiModel
+        ->where('id_kelas',$req['id_kelas'])
+        ->where('id_mapel',$req['id_mapel'])
+        ->where('id_guru',$req['id_guru'])
+        ->delete();
+        // dd($data);
+        
         session()->setFlashdata('success', 'Sukses Hapus Data');
-
+        if(session('role_id')==3){
+            return redirect()->to('/guru/nilai');
+        }
         return redirect()->to('/admin/nilai');
     }
 
@@ -240,6 +245,7 @@ class NilaiController extends BaseController
     public function export(){
         $fileName = 'nilai-harian.xlsx';  
         $request = $this->request->getPost();
+    
         $idRfByKurikulum = 4;
         $kelas = $this->KelasModel->find($request['id_kelas']);
         if($kelas['kurikulum'] == 2){

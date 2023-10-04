@@ -1,3 +1,9 @@
+<?php
+    $url = base_url('admin/nilai/');
+    if(session('role_id') == 3){
+        $url = base_url('guru/nilai/');
+    }
+?>
 <div class="main-panel">
     <!-- Form -->
     <div class="content">
@@ -30,7 +36,8 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="card-title col-10">Nilai Kelas</div>
-                                <form action="<?= base_url('admin/nilai/export')?>" method="post">
+                               
+                                <form action="<?= $url.'export'?>" method="post">
                                     <input type="hidden" name="id_kelas" value="<?= $nilai['id_kelas']?>">
                                     <input type="hidden" name="id_guru" value="<?= $nilai['id_guru']?>">
                                     <input type="hidden" name="id_mapel" value="<?= $nilai['id_mapel']?>">
@@ -62,7 +69,7 @@
                                 });
                             </script>
                         <?php endif ?>
-                        <form action="<?= base_url('admin/nilai/delete') ?>" method="POST" id="form-delete">
+                        <form action="<?= $url.'delete' ?>" method="POST" id="form-delete">
                                 
                             <div class="card-body">
                             <div class="row">
@@ -135,12 +142,15 @@
                                     <?php foreach($header as $head) : ?>
                                         
                                             <th colspan='<?php echo count($rf_nilai_detail) ?>' class='text-center'>
+
                                                 <input 
                                                     type="text" 
                                                     class='form-control text-center kd-name-input' 
                                                     data-nilaidetailids="<?php echo implode(",",$head['nilai_detail_ids']) ?>" 
                                                     id="input-kd-<?= $head['kd_name'] ?>" 
-                                                    value='<?= $head['kd_name'] ?>'>
+                                                    value='<?= $head['kd_name'] ?>'
+                                                    <?php if(session('role_id') == 3) :?> disabled <?php endif ?>
+                                                    >
                                             </th>
                                        
                                     <?php endforeach; ?>
@@ -238,7 +248,7 @@
             kd_name : e.target.value,
         }
         console.log('DATA',data);
-        let changeKDName =await postData("<?= base_url('admin/nilai/storekdname')?>",data);
+        let changeKDName =await postData("<?= $url.'storekdname'?>",data);
         console.log("KD NAME CHANGED",changeKDName);
     });
 
@@ -250,7 +260,7 @@
             nilai_detail_id : e.target.dataset.nilaidetailid,
             nilai : e.target.value ? e.target.value : null
         }
-        let updateNilai = await  postData("<?= base_url('admin/nilai/storenilai')?>",data);
+        let updateNilai = await  postData("<?= $url.'storenilai'?>",data);
         let nilaiakhirid = e.target.dataset.nilaiakhirid
         console.log('UPDATE NILAI',updateNilai);
         // NILAI AKHIR
@@ -261,7 +271,7 @@
             nilai_detail_id : $(`#${nilaiakhirid}`).attr('data-nilaidetailid'),
             nilai : na ? na : null
         }
-        let updateNilaiAkhir = await  postData("<?= base_url('admin/nilai/storenilai')?>",dataNilaiAkhir);
+        let updateNilaiAkhir = await  postData("<?= $url.'storenilai'?>",dataNilaiAkhir);
         console.log('UPDATE NILAI',updateNilaiAkhir);
     })
 
