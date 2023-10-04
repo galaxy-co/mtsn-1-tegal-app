@@ -84,6 +84,7 @@ $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
         $routes->post('delete', 'Admin\NilaiController::delete');
         $routes->get('edit/(:num)', 'Admin\NilaiController::edit/$1');
         $routes->post('upload', 'Admin\NilaiController::uploadGuru');
+        $routes->post('export','Admin\NilaiController::export');
     });
 
     // absen

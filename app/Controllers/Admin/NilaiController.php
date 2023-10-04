@@ -13,6 +13,9 @@ use CodeIgniter\API\ResponseTrait;
 
 use App\Controllers\BaseController;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 
 class NilaiController extends BaseController
 {
@@ -216,5 +219,81 @@ class NilaiController extends BaseController
         echo view('admin/template_admin/sidebar');
         echo view('admin/edit_kelas_in_admin', $data);
         echo view('admin/template_admin/footer');
+    }
+
+    public function export(){
+        $fileName = 'nilai-harian.xlsx';  
+        $request = $this->request->getPost();
+
+        $data = $this->SiswaModel
+            ->select('siswa.nism,siswa.nisn,siswa.nama_siswa,
+            nilai.id_mapel,
+            mapel.nama_mapel,
+            kelas.nama_kelas,kelas.tingkat,
+            nilai_detail.nilai,nilai_detail.kd_name,nilai_detail.rf_nilai_detail_id')
+            ->join('nilai','nilai.id_siswa = siswa.id_siswa')
+            ->join('kelas','kelas.id_kelas = nilai.id_kelas','left')
+            ->join('nilai_detail','nilai_detail.id_nilai = nilai.id_nilai AND nilai_detail.rf_nilai_detail_id = 4')
+            ->join('mapel','mapel.id_mapel = nilai.id_mapel')
+            ->where('kelas',$request['id_kelas'])
+            ->where('nilai.id_mapel',$request['id_mapel'])
+            ->orderBy('nilai_detail.kd_name')
+            ->orderBy('siswa.nama_siswa')
+            ->findAll();
+        // dd($data);
+
+        $spreadsheet = new Spreadsheet();
+        $temp_kd_name = '';
+        $rows = 8;
+        $worksheet1 ;
+        for ($i=0; $i < count($data) ; $i++) { 
+            # code...
+            if($temp_kd_name !== $data[$i]['kd_name']){
+                $worksheet1 = $spreadsheet->createSheet();
+                $worksheet1->setTitle($data[$i]['kd_name']);
+
+                $worksheet1->setCellValue('A1','TEMPLATE NILAI HARIAN');
+                $worksheet1->setCellValue('A2', 'Nama');
+                $worksheet1->setCellValue('B2', $data[$i]['kd_name']);
+                $worksheet1->setCellValue('C2', 'Kelas/Mapel');
+                $worksheet1->setCellValue('D2', $data[$i]['tingkat'].' '.$data[$i]['nama_kelas'].'/'.$data[$i]['nama_mapel']);
+                $worksheet1->setCellValue('A3', 'Materi');
+                $worksheet1->mergeCells("A1:E1");
+                $worksheet1->mergeCells("D2:E2");
+                $worksheet1->mergeCells("B3:E3");
+
+                //  Header
+                $worksheet1->setCellValue('A6', 'No');
+                $worksheet1->setCellValue('B6', 'NIS');
+                $worksheet1->setCellValue('C6', 'NISN');
+                $worksheet1->setCellValue('D6', 'NAMA');
+                $worksheet1->setCellValue('E6', 'NILAI');
+
+                $worksheet1->setCellValue('A7', 1 );
+                $worksheet1->setCellValue('B7',$data[$i]['nism'] );
+                $worksheet1->setCellValue('C7',$data[$i]['nisn'] );
+                $worksheet1->setCellValue('D7',$data[$i]['nama_siswa'] );
+                $worksheet1->setCellValue('E7',$data[$i]['nilai'] );
+                $rows = 8;
+                // data
+            }else{
+                $worksheet1->setCellValue('A'.$rows, $rows-6 );
+                $worksheet1->setCellValue('B'.$rows,$data[$i]['nism'] );
+                $worksheet1->setCellValue('C'.$rows,$data[$i]['nisn'] );
+                $worksheet1->setCellValue('D'.$rows,$data[$i]['nama_siswa'] );
+                $worksheet1->setCellValue('E'.$rows,$data[$i]['nilai'] );
+                $rows++;
+            }
+
+            $temp_kd_name= $data[$i]['kd_name'];
+        }
+        // create worksheet
+
+       
+       
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($fileName);
+        return $this->response->download($fileName,null);
     }
 }

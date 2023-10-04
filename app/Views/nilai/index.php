@@ -149,6 +149,12 @@
                                                         <button type="submit"  class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Detail</a>  
                                                         <!-- <button type="button" class="btn btn-danger btn-sm col-6"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</button> -->
                                                     </form>
+                                                    <form action="<?= base_url('admin/nilai/export')?>" method="post">
+                                                        <input type="hidden" name="id_kelas" value="<?= $nilai['id_kelas']?>">
+                                                        <input type="hidden" name="id_guru" value="<?= $nilai['id_guru']?>">
+                                                        <input type="hidden" name="id_mapel" value="<?= $nilai['id_mapel']?>">
+                                                        <button type='submit' class="btn btn-export btn-info mr-2">Export</button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                         <?php endforeach ?>

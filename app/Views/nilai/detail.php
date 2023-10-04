@@ -29,7 +29,13 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
-                                <div class="card-title col-11">Nilai Kelas</div>
+                                <div class="card-title col-10">Nilai Kelas</div>
+                                <form action="<?= base_url('admin/nilai/export')?>" method="post">
+                                    <input type="hidden" name="id_kelas" value="<?= $nilai['id_kelas']?>">
+                                    <input type="hidden" name="id_guru" value="<?= $nilai['id_guru']?>">
+                                    <input type="hidden" name="id_mapel" value="<?= $nilai['id_mapel']?>">
+                                    <button type='submit' class="btn btn-export btn-info mr-2">Export</button>
+                                </form>
                                 <div class="btn btn-delete btn-danger">Hapus</div>
 
                             </div>
