@@ -224,7 +224,12 @@ class NilaiController extends BaseController
     public function export(){
         $fileName = 'nilai-harian.xlsx';  
         $request = $this->request->getPost();
-
+        $idRfByKurikulum = 4;
+        $kelas = $this->KelasModel->find($request['id_kelas']);
+        if($kelas['kurikulum'] == 2){
+            $idRfByKurikulum = 10;
+        }
+        // dd($kelas);
         $data = $this->SiswaModel
             ->select('siswa.nism,siswa.nisn,siswa.nama_siswa,
             nilai.id_mapel,
@@ -233,7 +238,7 @@ class NilaiController extends BaseController
             nilai_detail.nilai,nilai_detail.kd_name,nilai_detail.rf_nilai_detail_id')
             ->join('nilai','nilai.id_siswa = siswa.id_siswa')
             ->join('kelas','kelas.id_kelas = nilai.id_kelas','left')
-            ->join('nilai_detail','nilai_detail.id_nilai = nilai.id_nilai AND nilai_detail.rf_nilai_detail_id = 4')
+            ->join('nilai_detail','nilai_detail.id_nilai = nilai.id_nilai AND nilai_detail.rf_nilai_detail_id = '.$idRfByKurikulum)
             ->join('mapel','mapel.id_mapel = nilai.id_mapel')
             ->where('kelas',$request['id_kelas'])
             ->where('nilai.id_mapel',$request['id_mapel'])
