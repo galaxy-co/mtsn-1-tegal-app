@@ -40,6 +40,9 @@ class NilaiP5Controller extends BaseController
         $data['name'] = $name;
         $nism = $session->get('username');
         $siswa = $this->siswaModel->where('nism', $nism)->first();
+        $idKelas = $siswa['kelas'];
+        $kelas = $this->kelasModel->where('id_kelas', $idKelas)->first();
+        $data['kurikulum'] = $kelas['kurikulum'];
         $idSiswa = $siswa['id_siswa'];
 
         $data['nilai'] = $this->nilaiP5Model->where('id_siswa', $idSiswa)->findAll();

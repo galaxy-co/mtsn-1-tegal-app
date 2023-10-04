@@ -10,7 +10,7 @@
 					
 				</div>
 				<div class="d-flex justify-content-center mt-5">
-						<h2>Selamat Datang <span><?=$name?></span> Di Aplikasi Management Nilai</h2><br>
+						<h2>Selamat Datang <span><b><?=$name?></b></span> Kelas <span><b><?=$kelas?></b></span> Di Aplikasi Management Nilai</h2><br>
 						
 				</div>
 				<div class="d-flex justify-content-center mt-2">
