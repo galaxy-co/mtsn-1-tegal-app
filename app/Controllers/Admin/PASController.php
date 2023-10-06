@@ -247,6 +247,7 @@ class PASController extends BaseController
     }
     public function edit($id){
         $nilai = $this->pasModel->where('id_nilai_pas', $id)->first();
+
         $kelas = $nilai['id_kelas'];
         $mapel = $nilai['id_mapel'];
         $semester = $nilai['semester'];
@@ -255,13 +256,15 @@ class PASController extends BaseController
         $data['nilai_pas'] = $this->pasModel
                             ->join('kelas', 'kelas.id_kelas = nilai_pas.id_kelas')
                             ->join('siswa', 'siswa.id_siswa = nilai_pas.id_siswa')
-                            ->join('mapel', 'mapel.id_mapel = nilai_pas.id_mapel')
+                            ->join('rfmapel', 'rfmapel.id_rfmapel = nilai_pas.id_mapel')
+                            ->join('mapel', 'mapel.id_mapel = rfmapel.id_mapel')
                             ->join('guru', 'guru.id_guru = nilai_pas.id_guru')
                             ->where('nilai_pas.semester', $semester)
                             ->where('nilai_pas.tahun_ajaran', $ta)
                             ->where('nilai_pas.id_kelas', $kelas)
                             ->where('nilai_pas.id_mapel', $mapel)
                             ->findAll();
+
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
         echo view('admin/edit_pas', $data);

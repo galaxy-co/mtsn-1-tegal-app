@@ -34,7 +34,7 @@
 						<li class="nav-item">
 							<a href="<?= base_url('/siswa/nilaiSemester')?>">
 								<i class="fas fa-edit"></i>
-								<p>Nilai Semester</p>
+								<p>Nilai PAS</p>
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>

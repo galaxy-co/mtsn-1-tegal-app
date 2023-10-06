@@ -43,7 +43,8 @@ class NilaiSemesterController extends BaseController
             $data['nilai_pas'] = $this->pasModel
             ->join('siswa', 'siswa.id_siswa=nilai_pas.id_siswa')
             ->join('kelas', 'kelas.id_kelas=nilai_pas.id_kelas')
-            ->join('mapel', 'mapel.id_mapel=nilai_pas.id_mapel')
+            ->join('rfmapel', 'rfmapel.id_rfmapel = nilai_pas.id_mapel')
+            ->join('mapel', 'mapel.id_mapel = rfmapel.id_mapel')
             ->join('guru', 'guru.id_guru=nilai_pas.id_guru')
             ->where('nilai_pas.id_siswa', $siswaId)
             ->findAll();

@@ -3,7 +3,7 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">     
-                <h4 class="page-title">Nilai Semester</h4>
+                <h4 class="page-title">Nilai PAS</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#">
@@ -14,7 +14,7 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Nilai Semester</a>
+                        <a href="#">Nilai PAS</a>
                     </li>
                     <li class="separator">
                         <i class="flaticon-right-arrow"></i>
@@ -29,7 +29,7 @@
                     <?php foreach($groupedData as $sesesterTahun => $nilaiPas) : list($semster, $tahunAjaran) = explode('-', $sesesterTahun);?>
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title d-flex justify-content-center">Daftar Nilai Semester <?php if($semster == 1){echo 'Ganjil';}else{echo 'Genap';}?> Tahun Ajaran  <?=$tahunAjaran?></div>
+                            <div class="card-title d-flex justify-content-center">Daftar Nilai PAS <?php if($semster == 1){echo 'Ganjil';}else{echo 'Genap';}?> Tahun Ajaran  <?=$tahunAjaran?></div>
                         </div>
                             <div class="card-body">
                                 <div class="table-responsive">
