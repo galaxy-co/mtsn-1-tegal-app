@@ -55,21 +55,21 @@ class PASController extends BaseController
             if(!empty($rfResults)){
                 $idKelasArray = [];
 
-            foreach ($rfResults as $result) {
-                $idKelas = $result['id_kelas'];
-                $idKelasArray[] = $idKelas;
+                foreach ($rfResults as $result) {
+                    $idKelas = $result['id_kelas'];
+                    $idKelasArray[] = $idKelas;
+                }
+                
+                $dataKelas = $this->kelasModel->whereIn('id_kelas', $idKelasArray)->findAll();
             }
             
-            $dataKelas = $this->kelasModel->whereIn('id_kelas', $idKelasArray)->findAll();
+            
+            if(!empty($dataKelas)){
+                $data['kelas'] = $dataKelas;
+            }else{
+                $data['kelas'] = [];
             }
             
-            
-            
-        }
-        if(!empty($dataKelas)){
-            $data['kelas'] = $dataKelas;
-        }else{
-            $data['kelas'] = [];
         }
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
