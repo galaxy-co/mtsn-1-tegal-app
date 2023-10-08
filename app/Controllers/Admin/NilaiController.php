@@ -142,6 +142,7 @@ class NilaiController extends BaseController
             ->join('siswa','siswa.id_siswa = nilai.id_siswa','left')
             ->where('id_kelas',$inputPost['id_kelas'])
             ->where('id_mapel',$inputPost['id_mapel'])
+            ->orderBy('siswa.nama_siswa')
             ->findAll();
 
        

@@ -171,7 +171,10 @@ class PASController extends BaseController
         // $cekSiswa = $this->pasModel->where
             $kelas = $this->kelasModel->where('id_kelas', $dataInput['id_kelas'])->first();
             $kurikulum = $kelas['kurikulum'];
-            $siswa = $this->siswaModel->where('kelas', $dataInput['id_kelas'])->findAll();
+            $siswa = $this->siswaModel
+                ->where('kelas', $dataInput['id_kelas'])
+                ->orderBy('siswa.nama_siswa')
+                ->findAll();
          
             // var_dump($siswa); die;
             // $data['kelas'] = $this->kelasModel->where('id_kelas', $dataInput['id_kelas'])->first();
