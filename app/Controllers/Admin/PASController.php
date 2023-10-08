@@ -266,6 +266,7 @@ class PASController extends BaseController
                             ->where('nilai_pas.tahun_ajaran', $ta)
                             ->where('nilai_pas.id_kelas', $kelas)
                             ->where('nilai_pas.id_mapel', $mapel)
+                            ->orderBy('siswa.nama_siswa')
                             ->findAll();
 
         echo view('admin/template_admin/header');
