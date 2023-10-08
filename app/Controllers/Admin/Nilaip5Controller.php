@@ -223,7 +223,7 @@ class Nilaip5Controller extends BaseController
                     ->join('capaian_p5','capaian_p5.id_capaian = project_dimensi.kode_capaian_fase','left')
                     ->where('project_dimensi.id_project',$id)
                     ->findAll(),
-            'siswa'=> $this->SiswaModel->where('kelas',$id_kelas)->findAll(),
+            'siswa'=> $this->SiswaModel->where('kelas',$id_kelas)->orderBy('siswa.nama_siswa')->findAll(),
             'kelas' => $this->kelasModel->where('tingkat', $this->request->getVar('tingkat'))->findAll(),
             'nilai' => $this->RFNilaiP5Model->findAll(),
         ];
