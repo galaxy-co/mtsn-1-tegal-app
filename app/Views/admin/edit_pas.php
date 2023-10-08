@@ -1,3 +1,9 @@
+<?php
+    $url = base_url('admin/');
+    if(session('role_id') == 3){
+        $url = base_url('guru/');
+    }
+?>
 <div class="main-panel">
     <!-- Form -->
     <div class="content">
@@ -31,7 +37,7 @@
                         <div class="card-header">
                             <div class="card-title">Nilai Semester</div>
                         </div>
-                        <form action="<?= base_url('admin/pas/update')?>" method="POST">
+                        <form action="<?= $url.'/pas/update'?>" method="POST">
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
