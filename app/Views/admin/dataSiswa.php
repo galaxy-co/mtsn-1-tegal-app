@@ -66,6 +66,9 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Siswa</th>
+                                            <th>Alpa</th>
+                                            <th>Izin</th>
+                                            <th>Sakit</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -73,6 +76,9 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Siswa</th>
+                                            <th>Alpa</th>
+                                            <th>Izin</th>
+                                            <th>Sakit</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
@@ -82,23 +88,15 @@
                                         <tr>
                                             <td><?= ++$i ?></td>
                                             <td><?= $k['nama_siswa'] ?></td>
+                                            <td><?= $k['alpa'] ?></td>
+                                            <td><?= $k['izin'] ?></td>
+                                            <td><?= $k['sakit'] ?></td>
                                             
                                             <td>
                                             
-                                                <?php $siswaId = $k['id_siswa'];
-                                                $isSiswaInAbsen = false;
-                                                foreach ($absensi as $absen) {
-                                                    if ($absen['id_siswa'] == $siswaId) {
-                                                        $isSiswaInAbsen = true;
-                                                        break;
-                                                    }
-                                                }
-                                                if ($isSiswaInAbsen) {
-                                                    echo '<a href="' . base_url('admin/absen/edit/') . $absen['id_absen'] . '" class="btn btn-success btn-sm" style="text-decoration:none"><i class="icon-pencil"></i> Edit Absensi</a>';
-                                                } else {
-                                                    echo '<a href=" ' . base_url('admin/absen/addAbsen/') . $k['id_siswa'] . '" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Input Absensi</a>  ';
-                                                }
-                                                ?>
+                                            
+                                                    <a href="<?=   base_url('admin/absen/addAbsen/') . $k['id_siswa']  ?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Input Absensi</a> 
+                                            </td>
                                                 
                                                 
                                             </tr>

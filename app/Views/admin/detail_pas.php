@@ -103,7 +103,7 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Nama Siswa</th>
-                                                <th>Nilasi Semester</th>
+                                                <th>Nilai Semester</th>
                                             </tr>
                                         </thead>
                                         <tbody>

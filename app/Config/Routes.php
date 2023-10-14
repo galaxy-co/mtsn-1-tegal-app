@@ -88,6 +88,19 @@ $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
         $routes->post('export','Admin\NilaiController::export');
     });
 
+    // Nilai
+    $routes->group('nilaiKetrampilan',static function ($routes){
+        $routes->get('/', 'Admin\NilaiController::index');
+        $routes->get('rfmapel/(:num)', 'Admin\NilaiController::rfmapel/$1');
+        $routes->get('detail', 'Admin\NilaiController::detail');
+        $routes->post('storenilai', 'Admin\NilaiController::store_nilai');
+        $routes->post('storekdname', 'Admin\NilaiController::store_kd_name');
+        $routes->post('delete', 'Admin\NilaiController::delete');
+        $routes->get('edit/(:num)', 'Admin\NilaiController::edit/$1');
+        $routes->post('upload', 'Admin\NilaiController::uploadGuru');
+        $routes->post('export','Admin\NilaiController::export');
+    });
+
     // absen
     $routes->group('absen',static function ($routes){
         $routes->get('/', 'Admin\AbsenController::index');
@@ -98,6 +111,7 @@ $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
         $routes->post('upload', 'Admin\GuruController::uploadGuru');
         $routes->get('dataSiswa/(:num)', 'Admin\AbsenController::dataSiswa/$1');
         $routes->get('addAbsen/(:num)', 'Admin\AbsenController::addAbsen/$1');
+        $routes->get('historyAbsen/(:num)', 'Admin\AbsenController::historyAbsen/$1');
     });
 
      // kenaikan

@@ -49,7 +49,7 @@
                                                 <th>KKM</th>
                                                 <th>Guru Pengampu</th>
                                                 <th>Kelas</th>
-                                                <th>Nilasi Semester</th>
+                                                <th>Nilai Semester</th>
                                             </tr>
                                         </thead>
                                         <tbody>

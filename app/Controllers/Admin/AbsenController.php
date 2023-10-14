@@ -38,7 +38,12 @@ class AbsenController extends BaseController
     {
         $session = session();
         $data['role_id'] = $session->get('role_id');
-        $data['siswa'] = $this->siswaModel->where('kelas', $id_kelas)->findAll();
+        $data['siswa'] = $this->siswaModel->select('sum(absen.sakit) as sakit, sum(absen.izin) as izin, sum(absen.alpa) as alpa, siswa.*')
+                        ->join('absen', 'absen.id_siswa=siswa.id_siswa', 'left')
+                        ->join('settings', 'settings.semester=absen.semester AND settings.tahun_ajaran = absen.tahun_ajaran','left')
+                        ->where('kelas', $id_kelas)
+
+                        ->groupBy('siswa.id_siswa')->findAll();
         if(!empty($data['siswa'])){
             $id_siswa = array();
 
@@ -59,6 +64,8 @@ class AbsenController extends BaseController
         $session = session();
         $data['role_id'] = $session->get('role_id');
         $data['id_siswa'] = $id_siswa;
+        $data['absen']=$this->absenModel
+                        ->join('settings', 'settings.semester=absen.semester AND settings.tahun_ajaran = absen.tahun_ajaran')->where('id_siswa',$id_siswa)->findAll();
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
         echo view('admin/addAbsen', $data);
@@ -77,6 +84,7 @@ class AbsenController extends BaseController
         $semester = $setting['semester'];
         $ta = $setting['tahun_ajaran'];
         $data = [
+            'id_absen' => $this->request->getPost('id_absen'),
             'id_siswa' => $siswa,
             'izin' => $izin,
             'sakit'=> $sakit,
@@ -85,6 +93,8 @@ class AbsenController extends BaseController
             'semester' => $semester,
             'tahun_ajaran' => $ta
         ];
+
+        
 
         $this->absenModel->save($data);
         session()->setFlashdata('success', 'Input Absen');
@@ -109,5 +119,17 @@ class AbsenController extends BaseController
         session()->setFlashdata('success', 'Update Absen');
 
         return redirect()->to('/admin/absen/dataSiswa/' . $idKelas);
+    }
+    public function historyAbsen($id){
+        $data['absen']=$this->absenModel->select('sum(absen.sakit) as sakit, sum(absen.izin) as izin, sum(absen.alpa) as alpa,absen.semester, absen.tahun_ajaran')
+        ->join('settings', 'settings.semester=absen.semester AND settings.tahun_ajaran = absen.tahun_ajaran','left')
+        ->where('absen.id_siswa', $id)
+        ->groupBy('absen.semester')
+        ->groupBy('absen.tahun_ajaran')
+        ->findAll();
+        echo view('admin/template_admin/header');
+        echo view('admin/template_admin/sidebar');
+        echo view('admin/history_absen', $data);
+        echo view('admin/template_admin/footer');
     }
 }

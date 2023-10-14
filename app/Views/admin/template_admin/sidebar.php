@@ -78,8 +78,13 @@
 						<li class="nav-item">
 							<a href="<?= base_url('/guru/nilai')?>">
 								<i class="fas fa-list-ol"></i>
-								<p>Nilai</p>
-								<!-- <span class="caret"></span> -->
+								<p>Nilai Pengetahuan</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="<?= base_url('/guru/nilai')?>">
+								<i class="fas fa-list-ol"></i>
+								<p>Nilai Ketrampilan</p>
 							</a>
 						</li>
 						<li class="nav-item">
@@ -94,7 +99,14 @@
 						<li class="nav-item">
 							<a href="<?= base_url('/admin/nilai')?>">
 								<i class="fas fa-list-ol"></i>
-								<p>Nilai</p>
+								<p>Nilai Pengetahuan</p>
+								<!-- <span class="caret"></span> -->
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="<?= base_url('/admin/nilaiKetrampilan')?>">
+								<i class="fas fa-list-ol"></i>
+								<p>Nilai Ketrampilan</p>
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>
