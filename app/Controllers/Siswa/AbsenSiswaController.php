@@ -29,7 +29,8 @@ class AbsenSiswaController extends BaseController
         $kelasId = $siswa['kelas'];
         $kelas = $this->kelasModel->where('id_kelas', $kelasId)->first();
         $data['kurikulum'] = $kelas['kurikulum'];
-        $data['absen'] = $this->absenModel->where('id_siswa', $siswaId)->findAll();
+        $data['absen'] = $this->absenModel->select('sum(absen.sakit) as sakit, sum(absen.izin) as izin, sum(absen.alpa) as alpa, absen.semester, absen.tahun_ajaran, absen.catatan')
+        ->join('settings', 'settings.semester=absen.semester AND settings.tahun_ajaran = absen.tahun_ajaran')->where('id_siswa', $siswaId)->findAll();
 
         $groupedData = [];
 

@@ -27,7 +27,14 @@
 						<li class="nav-item">
 							<a href="<?= base_url('/siswa/nilaiHarian')?>">
 								<i class="fas fa-edit"></i>
-								<p>Nilai Harian</p>
+								<p>Nilai Pengetahuan</p>
+								<!-- <span class="caret"></span> -->
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="<?= base_url('/siswa/nilaiKetrampilan')?>">
+								<i class="fas fa-edit"></i>
+								<p>Nilai Ketrampilan</p>
 								<!-- <span class="caret"></span> -->
 							</a>
 						</li>

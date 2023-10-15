@@ -11,12 +11,16 @@ class RfNilaiKetrampilanSeeder extends Seeder
         $data = [
             [
                 "rf_nilai_detail_desc" => "Kinerja",
+                "kurikulum_id" => 1
             ],[
                 "rf_nilai_detail_desc" => "Project",
+                "kurikulum_id" => 1
             ],[
                 "rf_nilai_detail_desc" => "Portofolio",
+                "kurikulum_id" => 1
             ],[
                 "rf_nilai_detail_desc" => "Nilai Akhir",
+                "kurikulum_id" => 1
             ],
         ];
         foreach($data as $dt){
