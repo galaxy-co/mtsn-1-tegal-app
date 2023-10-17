@@ -181,7 +181,7 @@
                                                             data-inputkd="input-kd-<?= $nilai_d['kd_name'] ?>" 
                                                             data-rfnilaidetailid='<?= $nilai_d['rf_nilai_detail_id']?>'
                                                             value="<?= $nilai_d['nilai'] ?>"
-                                                            <?php if($nilai_d['rf_nilai_detail_id'] == 8 || $nilai_d['rf_nilai_detail_id'] == 10):?>
+                                                            <?php if($nilai_d['rf_nilai_detail_id'] == 4):?>
                                                                 disabled
                                                                 id="nilai-akhir-<?= preg_replace('/\s+/', '_', $nilai_d['kd_name'])?>-<?= $sis['id_siswa'] ?>"
                                                             <?php else : ?>

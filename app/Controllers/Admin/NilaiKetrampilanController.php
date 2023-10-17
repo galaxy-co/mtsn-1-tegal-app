@@ -144,7 +144,7 @@ class NilaiKetrampilanController extends BaseController
             ->where('id_mapel',$inputPost['id_mapel'])
             ->orderBy('siswa.nama_siswa')
             ->findAll();
-            dd($data['nilai_get']);
+            // dd($data['nilai_get']);
        
         $ids_nilai = [];
         foreach($data['nilai_get'] as $nil){
