@@ -1,7 +1,7 @@
 <?php
     $url = base_url('admin/nilaiKetrampilan/');
     if(session('role_id') == 3){
-        $url = base_url('guru/nilai/');
+        $url = base_url('guru/nilaiKetrampilan/');
     }
 ?>
         
@@ -219,6 +219,7 @@
 <script src="<?= base_url('assets/')?>assets/js/core/jquery.3.2.1.min.js"></script>
 <script>
     $('#id_kelas').on('change',async function(e){
+        console.log('kelas change')
         $('#id_mapel').val(null).change()
         $('#id_guru').val(null).change()
         let idKelas = e.target.value;
@@ -226,7 +227,7 @@
         if(<?php echo session('role_id')?> == 3){
             urlBase = 'guru';
         }
-        let getRF = await fetch(`<?= base_url() ?>${urlBase}/nilai/rfmapel/${idKelas}`, {
+        let getRF = await fetch(`<?= base_url() ?>${urlBase}/nilaiKetrampilan/rfmapel/${idKelas}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

@@ -144,8 +144,6 @@ class NilaiController extends BaseController
             ->where('id_mapel',$inputPost['id_mapel'])
             ->orderBy('siswa.nama_siswa')
             ->findAll();
-
-       
         $ids_nilai = [];
         foreach($data['nilai_get'] as $nil){
             array_push($ids_nilai,$nil['id_nilai']);

@@ -63,7 +63,6 @@ class NilaiKetrampilanController extends BaseController
         $data['kelas'] = $queryKelas->findAll();
         $data['guru'] = $queryGuru->findAll();
         $data['mapel'] = $queryMapel->findAll();
-
         // dd($data);
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
@@ -119,15 +118,17 @@ class NilaiKetrampilanController extends BaseController
         
         $inputPost = $this->request->getVar();
         $data['nilaiketrampilan'] = $this->request->getVar();
-        // dd($inputPost);
+        
        
         $data['siswa'] =$this->SiswaModel->where('kelas',$inputPost['id_kelas'])->findAll();
         $kurikulum = $this->KelasModel->select('kurikulum')->where('id_kelas',$inputPost['id_kelas'])->find();
         $data['rf_nilai_detail'] = $this->RFNilaiDetailModel->where('kurikulum_id',$kurikulum[0]['kurikulum'])->orderBy('rf_nilai_detail_id')->findAll();
+        
         $cekData = $this->NilaiModel->where('id_mapel',$inputPost['id_mapel'])
             ->where('id_kelas',$inputPost['id_kelas'])
             ->where('id_guru',$inputPost['id_guru'])
             ->findAll();
+            
         if(!$cekData){
             $this->generateNilai($inputPost,$data);
         }
@@ -143,7 +144,7 @@ class NilaiKetrampilanController extends BaseController
             ->where('id_mapel',$inputPost['id_mapel'])
             ->orderBy('siswa.nama_siswa')
             ->findAll();
-
+            dd($data['nilai_get']);
        
         $ids_nilai = [];
         foreach($data['nilai_get'] as $nil){
@@ -229,9 +230,9 @@ class NilaiKetrampilanController extends BaseController
         
         session()->setFlashdata('success', 'Sukses Hapus Data');
         if(session('role_id')==3){
-            return redirect()->to('/guru/nilai');
+            return redirect()->to('/guru/nilaiKetrampilan');
         }
-        return redirect()->to('/admin/nilai');
+        return redirect()->to('/admin/nilaiKetrampilan');
     }
 
     public function edit($id){

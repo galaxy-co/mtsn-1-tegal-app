@@ -1,7 +1,7 @@
 <?php
-    $url = base_url('admin/nilai/');
+    $url = base_url('admin/nilaiKetrampilan/');
     if(session('role_id') == 3){
-        $url = base_url('guru/nilai/');
+        $url = base_url('guru/nilaiKetrampilan/');
     }
 ?>
 <div class="main-panel">
@@ -181,7 +181,7 @@
                                                             data-inputkd="input-kd-<?= $nilai_d['kd_name'] ?>" 
                                                             data-rfnilaidetailid='<?= $nilai_d['rf_nilai_detail_id']?>'
                                                             value="<?= $nilai_d['nilai'] ?>"
-                                                            <?php if($nilai_d['rf_nilai_detail_id'] == 4 || $nilai_d['rf_nilai_detail_id'] == 10):?>
+                                                            <?php if($nilai_d['rf_nilai_detail_id'] == 8 || $nilai_d['rf_nilai_detail_id'] == 10):?>
                                                                 disabled
                                                                 id="nilai-akhir-<?= preg_replace('/\s+/', '_', $nilai_d['kd_name'])?>-<?= $sis['id_siswa'] ?>"
                                                             <?php else : ?>
@@ -223,11 +223,12 @@
 
     async function countNilaiAkhir(id){
         const td =$(`.td-input[data-nilaiakhirid="${id}"]`);
-        console.log(id);
+        console.log('id',id);
         let totalNilai =0 ;
         let devideCounter =0;
         for (let index = 0; index < td.length; index++) {
             const element = td[index];
+            console.log('element', element);
             let valueEl = element.value;
             console.log('MASUK',typeof(valueEl))
             if(valueEl !== ''){

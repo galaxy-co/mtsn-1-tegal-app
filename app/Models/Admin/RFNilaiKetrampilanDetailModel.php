@@ -14,5 +14,5 @@ class RFNilaiKetrampilanDetailModel extends Model
     protected $returnType           = 'array';
     protected $useSoftDelete        = false;
 
-    protected $allowedFields        = ['rf_nilai_detail_desc'];
+    protected $allowedFields        = ['rf_nilai_detail_desc', 'kurikulum_id'];
 }
