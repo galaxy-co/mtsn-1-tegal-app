@@ -38,9 +38,14 @@ class AbsenController extends BaseController
     {
         $session = session();
         $data['role_id'] = $session->get('role_id');
+        $setting = $this->settingsModel->first();
+        $semester = $setting['semester'];
+        $ta = $setting['tahun_ajaran'];
         $data['siswa'] = $this->siswaModel->select('sum(absen.sakit) as sakit, sum(absen.izin) as izin, sum(absen.alpa) as alpa, siswa.*')
-                        ->join('absen', 'absen.id_siswa=siswa.id_siswa', 'left')
-                        ->join('settings', 'settings.semester=absen.semester AND settings.tahun_ajaran = absen.tahun_ajaran','left')
+                        ->join('absen', "absen.id_siswa=siswa.id_siswa AND absen.semester = '$semester' AND absen.tahun_ajaran = '$ta'", 'left')
+                        ->join('settings', 'settings.semester=absen.semester AND settings.tahun_ajaran = absen.tahun_ajaran ','left')
+                        // ->where('absen.semester', $semester)
+                        // ->where('absen.tahun_ajaran', $ta)
                         ->where('kelas', $id_kelas)
 
                         ->groupBy('siswa.id_siswa')->findAll();
