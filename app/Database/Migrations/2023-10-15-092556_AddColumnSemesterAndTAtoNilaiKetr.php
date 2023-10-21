@@ -19,7 +19,7 @@ class AddColumnSemesterAndTAtoNilaiKetr extends Migration
                 'null'          =>true
             ]
         ];
-        $this->forge->addColumn('nilaiketrampilan', $fields);
+        $this->forge->addColumn('nilaiKetrampilan', $fields);
     }
 
     public function down()
