@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class NilaiKetrampilanModel extends Model
 {
-    protected $table        = 'nilaiketrampilan';
+    protected $table        = 'nilaiKetrampilan';
     protected $primaryKey = 'id_nilai';
 
     protected $useAutoIncrement     = true;
