@@ -9,6 +9,7 @@ use App\Models\Admin\SiswaModel;
 use App\Models\Admin\NilaiDetailModel;
 use App\Models\Admin\RFNilaiDetailModel;
 use App\Models\Admin\RfMapelModel;
+use App\Models\Admin\SettingsModel;
 use CodeIgniter\API\ResponseTrait;
 
 use App\Controllers\BaseController;
@@ -31,6 +32,7 @@ class NilaiController extends BaseController
         $this->RFNilaiDetailModel = new RFNilaiDetailModel();
         $this->NilaiDetailModel = new NilaiDetailModel();
         $this->RfMapelModel = new RfMapelModel();
+        $this->SettingModel = new SettingsModel();
     }
 
     public function index()
@@ -97,9 +99,14 @@ class NilaiController extends BaseController
         $inputAsObject = (object)$input;
         $counter = $data['rf_nilai_detail'][0]['kurikulum_id'] == 1 ? 9 : 6;
         $kdPrefix = $data['rf_nilai_detail'][0]['kurikulum_id'] == 1 ? 'KD' : 'BAB';
+        $settings = $this->SettingModel->first();
+        $semester = $settings['semester'];
+        $ta = $settings['tahun_ajaran'];
         
         foreach($data['siswa'] as $siswa){
             $inputAsObject->id_siswa = $siswa['id_siswa'];
+            $inputAsObject->semester = $semester;
+            $inputAsObject->tahun_ajaran = $ta;
             $nilai_id = $this->saveNilai(null,$inputAsObject);
             for($i=1; $i < $counter ; $i++){
                 foreach($data['rf_nilai_detail'] as $rf){     

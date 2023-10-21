@@ -82,7 +82,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="<?= base_url('/guru/nilai')?>">
+							<a href="<?= base_url('/guru/nilaiKetrampilan')?>">
 								<i class="fas fa-list-ol"></i>
 								<p>Nilai Ketrampilan</p>
 							</a>

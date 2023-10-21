@@ -9,6 +9,7 @@ use App\Models\Admin\SiswaModel;
 use App\Models\Admin\NilaiKetrampilanDetailModel;
 use App\Models\Admin\RFNilaiKetrampilanDetailModel;
 use App\Models\Admin\RfMapelModel;
+use App\Models\Admin\SettingsModel;
 use CodeIgniter\API\ResponseTrait;
 
 use App\Controllers\BaseController;
@@ -30,6 +31,7 @@ class NilaiKetrampilanController extends BaseController
         $this->RFNilaiDetailModel = new RFNilaiKetrampilanDetailModel();
         $this->NilaiDetailModel = new NilaiKetrampilanDetailModel();
         $this->RfMapelModel = new RfMapelModel();
+        $this->SettingModel = new SettingsModel();
     }
 
     public function index()
@@ -95,15 +97,19 @@ class NilaiKetrampilanController extends BaseController
         $inputAsObject = (object)$input;
         $counter = $data['rf_nilai_detail'][0]['kurikulum_id'] == 1 ? 9 : 6;
         $kdPrefix = $data['rf_nilai_detail'][0]['kurikulum_id'] == 1 ? 'KD' : 'BAB';
-        
+        $settings = $this->SettingModel->first();
+        $semester = $settings['semester'];
+        $ta = $settings['tahun_ajaran'];
         foreach($data['siswa'] as $siswa){
             $inputAsObject->id_siswa = $siswa['id_siswa'];
+            $inputAsObject->semester = $semester;
+            $inputAsObject->tahun_ajaran = $ta;
+                        
             $nilai_id = $this->saveNilai(null,$inputAsObject);
             for($i=1; $i < $counter ; $i++){
                 foreach($data['rf_nilai_detail'] as $rf){     
                     $dataSaveNilaiDetail =  [
                         "rf_nilai_detail_id" =>$rf['rf_nilai_detail_id'],
-                        
                         "notes"=>"sample notes",
                         "kd_name" => $kdPrefix." ".$i,
                         "id_nilai" => $nilai_id

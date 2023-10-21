@@ -9,7 +9,7 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">     
-                <h4 class="page-title">Nilai</h4>
+                <h4 class="page-title">Nilai Ketrampilan</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#">
@@ -20,7 +20,7 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Nilai</a>
+                        <a href="#">Nilai Ketrampilan</a>
                     </li>
                     <li class="separator">
                         <i class="flaticon-right-arrow"></i>
@@ -132,7 +132,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">Nilai</div>
+                        <div class="card-title">Nilai Ketrampilan</div>
                     </div>
                     <div class="card-body table-responsive">
                         <table class='table-responsive table-bordered table-sm w-full'>
