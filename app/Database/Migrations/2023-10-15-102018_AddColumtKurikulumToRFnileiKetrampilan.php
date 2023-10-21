@@ -15,7 +15,7 @@ class AddColumtKurikulumToRFnileiKetrampilan extends Migration
                 'null' => true,
             ],
         ];
-        $this->forge->addColumn('rfnilaidetailketrampilan', $fields);
+        $this->forge->addColumn('rfNilaiDetailKetrampilan', $fields);
     }
 
     public function down()
