@@ -68,7 +68,7 @@ class NilaiKetrampilanController extends BaseController
         // dd($data);
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
-        echo view('nilaiketrampilan/index', $data);
+        echo view('nilaiKetrampilan/index', $data);
         echo view('admin/template_admin/footer');
     }
 
@@ -187,7 +187,7 @@ class NilaiKetrampilanController extends BaseController
 
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
-        echo view('nilaiketrampilan/detail', $data);
+        echo view('nilaiKetrampilan/detail', $data);
         echo view('admin/template_admin/footer');
     }
 
