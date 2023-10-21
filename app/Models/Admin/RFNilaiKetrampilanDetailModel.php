@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class RFNilaiKetrampilanDetailModel extends Model
 {
-    protected $table        = 'rfnilaidetailketrampilan';
+    protected $table        = 'rfNilaiDetailKetrampilan';
     protected $primaryKey = 'rf_nilai_detail_id';
 
     protected $useAutoIncrement     = true;
