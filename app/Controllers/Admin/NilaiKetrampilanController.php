@@ -145,7 +145,7 @@ class NilaiKetrampilanController extends BaseController
         $data['mapel'] = $this->MapelModel->findAll();
 
         $data['nilai_get'] = $this->NilaiModel
-            ->join('siswa','siswa.id_siswa = nilaiketrampilan.id_siswa','left')
+            ->join('siswa','siswa.id_siswa = nilaiKetrampilan.id_siswa','left')
             ->where('id_kelas',$inputPost['id_kelas'])
             ->where('id_mapel',$inputPost['id_mapel'])
             ->orderBy('siswa.nama_siswa')
@@ -261,17 +261,17 @@ class NilaiKetrampilanController extends BaseController
         // dd($kelas);
         $data = $this->SiswaModel
             ->select('siswa.nism,siswa.nisn,siswa.nama_siswa,
-            nilaiketrampilan.id_mapel,
+            nilaiKetrampilan.id_mapel,
             mapel.nama_mapel,
             kelas.nama_kelas,kelas.tingkat,
-            nilaiketrampilandetail.nilai,nilaiketrampilandetail.kd_name,nilaiketrampilandetail.rf_nilai_detail_id')
-            ->join('nilaiketrampilan','nilaiketrampilan.id_siswa = siswa.id_siswa')
-            ->join('kelas','kelas.id_kelas = nilaiketrampilan.id_kelas','left')
-            ->join('nilaiketrampilandetail','nilaiketrampilandetail.id_nilai = nilaiketrampilan.id_nilai AND nilaiketrampilandetail.rf_nilai_detail_id = '.$idRfByKurikulum)
-            ->join('mapel','mapel.id_mapel = nilaiketrampilan.id_mapel')
+            nilaiKetrampilanDetail.nilai,nilaiKetrampilanDetail.kd_name,nilaiKetrampilanDetail.rf_nilai_detail_id')
+            ->join('nilaiKetrampilan','nilaiKetrampilan.id_siswa = siswa.id_siswa')
+            ->join('kelas','kelas.id_kelas = nilaiKetrampilan.id_kelas','left')
+            ->join('nilaiKetrampilanDetail','nilaiKetrampilanDetail.id_nilai = nilaiKetrampilan.id_nilai AND nilaiKetrampilanDetail.rf_nilai_detail_id = '.$idRfByKurikulum)
+            ->join('mapel','mapel.id_mapel = nilaiKetrampilan.id_mapel')
             ->where('kelas',$request['id_kelas'])
-            ->where('nilaiketrampilan.id_mapel',$request['id_mapel'])
-            ->orderBy('nilaiketrampilandetail.kd_name')
+            ->where('nilaiKetrampilan.id_mapel',$request['id_mapel'])
+            ->orderBy('nilaiKetrampilanDetail.kd_name')
             ->orderBy('siswa.nama_siswa')
             ->findAll();
         // dd($data);
