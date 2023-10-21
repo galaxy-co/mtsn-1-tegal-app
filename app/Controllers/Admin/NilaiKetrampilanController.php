@@ -41,16 +41,16 @@ class NilaiKetrampilanController extends BaseController
 
         
         $queryNilai = $this->NilaiModel
-            ->join('kelas','kelas.id_kelas = nilaiketrampilan.id_kelas')
-            ->join('mapel','mapel.id_mapel = nilaiketrampilan.id_mapel')
-            ->join('guru','guru.id_guru = nilaiketrampilan.id_guru');
+            ->join('kelas','kelas.id_kelas = nilaiKetrampilan.id_kelas')
+            ->join('mapel','mapel.id_mapel = nilaiKetrampilan.id_mapel')
+            ->join('guru','guru.id_guru = nilaiKetrampilan.id_guru');
         $queryMapel = $this->MapelModel;
         $queryGuru = $this->GuruModel;
         $queryKelas = $this->KelasModel;
       
         if($role == 3){
             // $guruData =;
-            $queryNilai->where('nilaiketrampilan.id_guru',$this->GuruModel->where('nuptk',$username)->first()['id_guru']);
+            $queryNilai->where('nilaiKetrampilan.id_guru',$this->GuruModel->where('nuptk',$username)->first()['id_guru']);
             
             $queryKelas->join('rfmapel','rfmapel.id_kelas = kelas.id_kelas','LEFT')->where('rfmapel.id_guru',$this->GuruModel->where('nuptk',$username)->first()['id_guru'])->groupBy('kelas.id_kelas');
             $queryMapel->join('rfmapel','rfmapel.id_mapel = mapel.id_mapel','RIGHT')->where('rfmapel.id_guru',$this->GuruModel->where('nuptk',$username)->first()['id_guru']);
@@ -58,8 +58,8 @@ class NilaiKetrampilanController extends BaseController
             
         }
         $data['nilaiketrampilan'] = $queryNilai
-            ->groupBy('nilaiketrampilan.id_kelas')
-            ->groupBy('nilaiketrampilan.id_mapel')
+            ->groupBy('nilaiKetrampilan.id_kelas')
+            ->groupBy('nilaiKetrampilan.id_mapel')
             ->findAll();
         
         $data['kelas'] = $queryKelas->findAll();
