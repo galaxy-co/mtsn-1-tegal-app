@@ -14,7 +14,7 @@ class AddColumnNilaiToNilaiKetDetail extends Migration
                 'null' => false,
             ],
         ];
-        $this->forge->addColumn('nilaiketrampilandetail', $fields);
+        $this->forge->addColumn('nilaiKetrampilanDetail', $fields);
     }
 
     public function down()

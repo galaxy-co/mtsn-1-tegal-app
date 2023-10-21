@@ -16,7 +16,7 @@ class AlterNilaiDetailKetrampilan extends Migration
                 'null'=>true
             ],
         ];
-        $this->forge->modifyColumn('nilaiketrampilandetail', $fields);
+        $this->forge->modifyColumn('nilaiKetrampilanDetail', $fields);
     }
 
     public function down()
