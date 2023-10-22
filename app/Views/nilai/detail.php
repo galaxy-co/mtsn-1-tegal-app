@@ -9,7 +9,7 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">     
-                <h4 class="page-title">Nilai</h4>
+                <h4 class="page-title">Nilai Pengetahuan</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#">
@@ -35,7 +35,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
-                                <div class="card-title col-10">Nilai Kelas</div>
+                                <div class="card-title col-10">Nilai Pengetahuan</div>
                                
                                 <form action="<?= $url.'export'?>" method="post">
                                     <input type="hidden" name="id_kelas" value="<?= $nilai['id_kelas']?>">
