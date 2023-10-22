@@ -8,7 +8,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex justify-content-center">
-                                <h4 class="card-title">Nilai Harian Semester <?php if($semster == 1){echo 'Ganjil';}else{echo 'Genap';}?> Tahun Ajaran  <?=$tahunAjaran?></h4>
+                                <h4 class="card-title">Nilai Harian Pengetahuan</h4>
                                 
                             </div>
 
