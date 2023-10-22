@@ -39,11 +39,16 @@ class NilaiKetrampilanController extends BaseController
         $role=session('role_id'); // 3 guru
         $username = session('username');
 
+        $settings = $this->SettingModel->first();
+        $semester = $settings['semester'];
+        $ta = $settings['tahun_ajaran'];
         
         $queryNilai = $this->NilaiModel
             ->join('kelas','kelas.id_kelas = nilaiKetrampilan.id_kelas')
             ->join('mapel','mapel.id_mapel = nilaiKetrampilan.id_mapel')
-            ->join('guru','guru.id_guru = nilaiKetrampilan.id_guru');
+            ->join('guru','guru.id_guru = nilaiKetrampilan.id_guru')
+            ->where('nilaiKetrampilan.semester', $semester)
+            ->where('nilaiKetrampilan.tahun_ajaran', $ta);
         $queryMapel = $this->MapelModel;
         $queryGuru = $this->GuruModel;
         $queryKelas = $this->KelasModel;
@@ -124,7 +129,9 @@ class NilaiKetrampilanController extends BaseController
         
         $inputPost = $this->request->getVar();
         $data['nilaiketrampilan'] = $this->request->getVar();
-        
+        $settings = $this->SettingModel->first();
+        $semester = $settings['semester'];
+        $ta = $settings['tahun_ajaran'];
        
         $data['siswa'] =$this->SiswaModel->where('kelas',$inputPost['id_kelas'])->findAll();
         $kurikulum = $this->KelasModel->select('kurikulum')->where('id_kelas',$inputPost['id_kelas'])->find();
@@ -133,12 +140,15 @@ class NilaiKetrampilanController extends BaseController
         $cekData = $this->NilaiModel->where('id_mapel',$inputPost['id_mapel'])
             ->where('id_kelas',$inputPost['id_kelas'])
             ->where('id_guru',$inputPost['id_guru'])
+            ->where('nilaiKetrampilan.semester', $semester)
+            ->where('nilaiKetrampilan.tahun_ajaran', $ta)
             ->findAll();
             
         if(!$cekData){
             $this->generateNilai($inputPost,$data);
         }
         
+       
         $data['mapel'] =$this->MapelModel->where('tingkal_kelas',$inputPost['id_kelas'])->findAll();
         $data['kelas'] = $this->KelasModel->findAll();
         $data['guru'] = $this->GuruModel->findAll();
@@ -148,6 +158,8 @@ class NilaiKetrampilanController extends BaseController
             ->join('siswa','siswa.id_siswa = nilaiKetrampilan.id_siswa','left')
             ->where('id_kelas',$inputPost['id_kelas'])
             ->where('id_mapel',$inputPost['id_mapel'])
+            ->where('nilaiKetrampilan.semester', $semester)
+            ->where('nilaiKetrampilan.tahun_ajaran', $ta)
             ->orderBy('siswa.nama_siswa')
             ->findAll();
             // dd($data['nilai_get']);

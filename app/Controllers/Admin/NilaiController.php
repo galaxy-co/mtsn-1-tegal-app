@@ -39,12 +39,17 @@ class NilaiController extends BaseController
     {
         $role=session('role_id'); // 3 guru
         $username = session('username');
-
+        $settings = $this->SettingModel->first();
+        $semester = $settings['semester'];
+        $ta = $settings['tahun_ajaran'];
         
         $queryNilai = $this->NilaiModel
             ->join('kelas','kelas.id_kelas = nilai.id_kelas')
             ->join('mapel','mapel.id_mapel = nilai.id_mapel')
-            ->join('guru','guru.id_guru = nilai.id_guru');
+            ->join('guru','guru.id_guru = nilai.id_guru')
+            ->where('nilai.semester', $semester)
+            ->where('nilai.tahun_ajaran', $ta);
+
         $queryMapel = $this->MapelModel;
         $queryGuru = $this->GuruModel;
         $queryKelas = $this->KelasModel;
@@ -84,13 +89,12 @@ class NilaiController extends BaseController
 
     private function saveNilai($id_nilai=null,$data){
         // dd($data);
-        
+
         $saveNilai = $this->NilaiModel->save($data);
         return $id_nilai ? $id_nilai : $this->NilaiModel->getInsertID();
     }
 
     private function saveNilaiDetail($nilai_detail_id=null,$data){
-       
         $this->NilaiDetailModel->save($data);
         return $nilai_detail_id ? $nilai_detail_id : $this->NilaiDetailModel->getInsertID();
     }
@@ -102,17 +106,16 @@ class NilaiController extends BaseController
         $settings = $this->SettingModel->first();
         $semester = $settings['semester'];
         $ta = $settings['tahun_ajaran'];
-        
         foreach($data['siswa'] as $siswa){
             $inputAsObject->id_siswa = $siswa['id_siswa'];
             $inputAsObject->semester = $semester;
             $inputAsObject->tahun_ajaran = $ta;
+                        
             $nilai_id = $this->saveNilai(null,$inputAsObject);
             for($i=1; $i < $counter ; $i++){
                 foreach($data['rf_nilai_detail'] as $rf){     
                     $dataSaveNilaiDetail =  [
                         "rf_nilai_detail_id" =>$rf['rf_nilai_detail_id'],
-                        
                         "notes"=>"sample notes",
                         "kd_name" => $kdPrefix." ".$i,
                         "id_nilai" => $nilai_id
@@ -128,6 +131,9 @@ class NilaiController extends BaseController
         $inputPost = $this->request->getVar();
         $data['nilai'] = $this->request->getVar();
         // dd($inputPost);
+        $settings = $this->SettingModel->first();
+        $semester = $settings['semester'];
+        $ta = $settings['tahun_ajaran'];
        
         $data['siswa'] =$this->SiswaModel->where('kelas',$inputPost['id_kelas'])->findAll();
         $kurikulum = $this->KelasModel->select('kurikulum')->where('id_kelas',$inputPost['id_kelas'])->find();
@@ -135,6 +141,8 @@ class NilaiController extends BaseController
         $cekData = $this->NilaiModel->where('id_mapel',$inputPost['id_mapel'])
             ->where('id_kelas',$inputPost['id_kelas'])
             ->where('id_guru',$inputPost['id_guru'])
+            ->where('nilai.semester',$semester)
+            ->where('nilai.tahun_ajaran', $ta)
             ->findAll();
         if(!$cekData){
             $this->generateNilai($inputPost,$data);
@@ -149,6 +157,8 @@ class NilaiController extends BaseController
             ->join('siswa','siswa.id_siswa = nilai.id_siswa','left')
             ->where('id_kelas',$inputPost['id_kelas'])
             ->where('id_mapel',$inputPost['id_mapel'])
+            ->where('nilai.semester', $semester)
+            ->where('nilai.tahun_ajaran', $ta)
             ->orderBy('siswa.nama_siswa')
             ->findAll();
         $ids_nilai = [];

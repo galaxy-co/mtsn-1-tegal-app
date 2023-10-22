@@ -40,6 +40,10 @@ $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
         $routes->post('upload', 'Admin\SiswaController::upload');
         $routes->get('edit/(:num)', 'Admin\SiswaController::edit/$1');
         $routes->post('update/(:num)', 'Admin\SiswaController::update/$1');
+        $routes->get('historyNilai/(:num)', 'Admin\SiswaController::historyNilai/$1');
+        $routes->get('nilaiPengetahuan/(:num)', 'Admin\SiswaController::nilaiPengetahuan/$1');
+        $routes->get('nilaiKetrampilan/(:num)', 'Admin\SiswaController::nilaiKetrampilan/$1');
+        $routes->get('nilaiPas/(:num)', 'Admin\SiswaController::nilaiPas/$1');
     });
 
 

@@ -8,6 +8,7 @@ use App\Models\Admin\MapelModel;
 use App\Models\Admin\SiswaModel;
 use App\Models\Admin\NilaiKetrampilanDetailModel;
 use App\Models\Admin\RFNilaiKetrampilanDetailModel;
+use App\Models\Admin\SettingsModel;
 use App\Controllers\BaseController;
 
 class NilaiKetrampilanController extends BaseController
@@ -19,6 +20,7 @@ class NilaiKetrampilanController extends BaseController
     protected $siswaModel;
     protected $nilaiDetailModel;
     protected $rfNilaiDetailModel;
+    protected $settings;
     public function __construct(){
         $this->nilaiModel = new NilaiKetrampilanModel();
         $this->kelasModel = new KelasModel();
@@ -27,6 +29,7 @@ class NilaiKetrampilanController extends BaseController
         $this->siswaModel = new SiswaModel();
         $this->nilaiDetailModel = new NilaiKetrampilanDetailModel();
         $this->rfNilaiDetailModel = new RFNilaiKetrampilanDetailModel();
+        $this->settings = new SettingsModel();
     }
     public function index()
 {
@@ -39,6 +42,9 @@ class NilaiKetrampilanController extends BaseController
     $kelasId = $siswa['kelas'];
     $kelas = $this->kelasModel->where('id_kelas', $kelasId)->first();
     $kurikulum = $kelas['kurikulum'];
+    $setting = $this->settings->first();
+    $semester = $setting['semester'];
+    $ta = $setting['tahun_ajaran'];
     $data['kurikulum'] = $kurikulum;
     $data['rf_nilai_detail'] = $this->rfNilaiDetailModel->where('kurikulum_id', $kurikulum)->orderBy('rf_nilai_detail_id')->findAll();
     $nilai = $this->nilaiModel->where('id_siswa', $siswaId)->find();
@@ -64,6 +70,8 @@ class NilaiKetrampilanController extends BaseController
             ->join('guru', 'guru.id_guru = nilaiKetrampilan.id_guru')
             ->join('nilaiKetrampilanDetail', 'nilaiKetrampilanDetail.id_nilai = nilaiKetrampilan.id_nilai')
             ->whereIn('nilaiKetrampilan.id_nilai', $idNilai)
+            ->where('nilaiKetrampilan.semester', $semester)
+            ->where('nilaiKetrampilan.tahun_ajaran', $ta)
             ->groupBy('nilaiKetrampilan.id_kelas')
             ->groupBy('nilaiKetrampilan.id_mapel')
             ->findAll();

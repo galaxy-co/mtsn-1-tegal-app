@@ -8,6 +8,7 @@ use App\Models\Admin\MapelModel;
 use App\Models\Admin\SiswaModel;
 use App\Models\Admin\NilaiDetailModel;
 use App\Models\Admin\RFNilaiDetailModel;
+use App\Models\Admin\SettingsModel;
 use App\Controllers\BaseController;
 
 class NilaiHarianController extends BaseController
@@ -19,6 +20,7 @@ class NilaiHarianController extends BaseController
     protected $siswaModel;
     protected $nilaiDetailModel;
     protected $rfNilaiDetailModel;
+    protected $settings;
     public function __construct(){
         $this->nilaiModel = new NilaiModel();
         $this->kelasModel = new KelasModel();
@@ -27,6 +29,7 @@ class NilaiHarianController extends BaseController
         $this->siswaModel = new SiswaModel();
         $this->nilaiDetailModel = new NilaiDetailModel();
         $this->rfNilaiDetailModel = new RFNilaiDetailModel();
+        $this->settings = new SettingsModel();
     }
     public function index()
 {
@@ -40,9 +43,14 @@ class NilaiHarianController extends BaseController
     $kelas = $this->kelasModel->where('id_kelas', $kelasId)->first();
     $kurikulum = $kelas['kurikulum'];
     $data['kurikulum'] = $kurikulum;
+    
+    $setting = $this->settings->first();
+    $semester = $setting['semester'];
+    $ta = $setting['tahun_ajaran'];
     $data['rf_nilai_detail'] = $this->rfNilaiDetailModel->where('kurikulum_id', $kurikulum)->orderBy('rf_nilai_detail_id')->findAll();
-    $nilai = $this->nilaiModel->where('id_siswa', $siswaId)->find();
+    $nilai = $this->nilaiModel->where('id_siswa', $siswaId)->where('semester', $semester)->where('tahun_ajaran', $ta)->find();
     $idNilai = [];
+
 
     foreach ($nilai as $n) {
         array_push($idNilai, $n['id_nilai']);

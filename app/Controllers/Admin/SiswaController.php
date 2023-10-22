@@ -184,4 +184,20 @@ class SiswaController extends BaseController
 
         return redirect()->to('/admin/siswa');
     }
+    public function historyNilai ($idSiswa){
+        $data['id_siswa'] = $idSiswa;
+        echo view('admin/template_admin/header');
+        echo view('admin/template_admin/sidebar');
+        echo view('admin/historyNilai', $data);
+        echo view('admin/template_admin/footer');
+    }
+    public function nilaiPengetahuan($id){
+        
+    }
+    public function nilaiKetrampilan($id){
+        
+    }
+    public function nilaiPas($id){
+        
+    }
 }

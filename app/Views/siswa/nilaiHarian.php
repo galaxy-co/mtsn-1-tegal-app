@@ -4,7 +4,6 @@
             <div class="row">
 
                 <div class="col-md-12">
-                <?php foreach($groupedData as $sesesterTahun => $nilaiPas) : list($semster, $tahunAjaran) = explode('-', $sesesterTahun);?>
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex justify-content-center">
@@ -71,7 +70,6 @@
                         </div>
                     </div>
                 </div>
-                <?php endforeach ?>
             </div>
         </div>
     </div>

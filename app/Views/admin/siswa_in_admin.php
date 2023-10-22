@@ -163,7 +163,9 @@
 											<td><?= $k['tingkat'] ?> <?= $k['nama_kelas'] ?></td>
                                             <td>
                                                 <a href="<?= base_url('admin/siswa/edit/') . $k['id_siswa']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="icon-note"></i> Edit</a>  
-                                                <a href="<?= base_url('admin/siswa/delete/') . $k['id_siswa']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a></td>
+                                                <a href="<?= base_url('admin/siswa/delete/') . $k['id_siswa']?>" class="btn btn-danger btn-sm"  style="text-decoration:none" onclick="return konfirmasiHapus()"><i class="icon-trash"></i> Hapus</a>
+                                                <a href="<?= base_url('admin/siswa/historyNilai/') . $k['id_siswa']?>" class="btn btn-primary btn-sm" style="text-decoration:none"><i class="fa fa-history"></i> Histori Nilai </a>
+                                            </td>
                                         </tr>
                                         
                                         <?php endforeach?>
