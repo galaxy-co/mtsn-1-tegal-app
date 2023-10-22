@@ -6,6 +6,7 @@ use App\Models\Admin\SiswaModel;
 use App\Models\Admin\KelasModel;
 use App\Models\Admin\GuruModel;
 use App\Controllers\BaseController;
+use App\Models\Admin\SettingsModel;
 use App\Database\Migrations\Kelas;
 
 class NilaiSemesterController extends BaseController
@@ -14,12 +15,14 @@ class NilaiSemesterController extends BaseController
     protected $siswaModel;
     protected $kelasModel;
     protected $guruModel;
+    protected $settingModel;
     public function __construct()
     {
         $this->pasModel = new PASModel();
         $this->siswaModel = new SiswaModel();
         $this->kelasModel = new KelasModel();
         $this->guruModel = new GuruModel();
+        $this->settingModel = new SettingsModel();
     }
     public function index()
     {
@@ -38,6 +41,9 @@ class NilaiSemesterController extends BaseController
         $guru = $this->guruModel->where('id_guru', $idGuru)->first();
         $data['wali_kelas'] = $guru['nama_guru'];
         $cekNilaiPas = $this->pasModel->where('id_siswa', $siswaId)->findAll();
+        $settings = $this->settingModel->first();
+        $semester = $settings['semester'];
+        $ta = $settings['tahun_ajaran'];
 
         if(count($cekNilaiPas) > 0){
             $data['nilai_pas'] = $this->pasModel
@@ -47,6 +53,8 @@ class NilaiSemesterController extends BaseController
             ->join('mapel', 'mapel.id_mapel = rfmapel.id_mapel')
             ->join('guru', 'guru.id_guru=nilai_pas.id_guru')
             ->where('nilai_pas.id_siswa', $siswaId)
+            ->where('nilai_pas.semester', $semester)
+            ->where('nilai_pas.tahun_ajaran', $ta)
             ->findAll();
         }else{
             $data['nilai_pas'] = [];

@@ -200,6 +200,19 @@ $routes->group('guru', ['filter'=> 'authGuard:3'],static function ($routes) {
         $routes->post('export','Admin\NilaiController::export');
     });
 
+    $routes->group('nilaiKetrampilan',static function ($routes){
+        $routes->get('/', 'Admin\NilaiKetrampilanController::index');
+        $routes->get('detail', 'Admin\NilaiKetrampilanController::detail');
+        $routes->post('storenilai', 'Admin\NilaiKetrampilanController::store_nilai');
+        $routes->post('storekdname', 'Admin\NilaiKetrampilanController::store_kd_name');
+        $routes->post('delete', 'Admin\NilaiKetrampilanController::delete');
+        $routes->get('edit/(:num)', 'Admin\NilaiKetrampilanController::edit/$1');
+        $routes->post('upload', 'Admin\NilaiKetrampilanController::uploadGuru');
+        $routes->get('pasnilai/(:num)', 'Admin\PASController::pasnilai/$1');
+        $routes->get('rfmapel/(:num)', 'Admin\NilaiKetrampilanController::rfmapel/$1');
+        $routes->post('export','Admin\NilaiKetrampilanController::export');
+    });
+
     $routes->group('pas',static function ($routes){
         $routes->get('/', 'Admin\PASController::index');
         $routes->get('detail', 'Admin\PASController::detail');

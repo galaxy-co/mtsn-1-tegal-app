@@ -13,6 +13,7 @@ use App\Models\Admin\NilaiKetrampilanModel;
 use App\Models\Admin\NilaiKetrampilanDetailModel;
 use App\Models\Admin\RFNilaiKetrampilanDetailModel;
 use App\Controllers\BaseController;
+use App\Models\Admin\PASModel;
 
 class SiswaController extends BaseController
 {
@@ -29,6 +30,9 @@ class SiswaController extends BaseController
     protected $nilaiKetrampilan;
     protected $nilaiKetrampilanDetail;
     protected $rfNilaiKetrampilanDetail;
+
+    // pas
+    protected $pasModel;
     public function __construct()
     {
         $this->siswaModel = new SiswaModel();
@@ -44,6 +48,9 @@ class SiswaController extends BaseController
         $this->nilaiKetrampilan = new NilaiKetrampilanModel();
         $this->nilaiKetrampilanDetail = new NilaiKetrampilanDetailModel();
         $this->rfNilaiKetrampilanDetail = new RFNilaiKetrampilanDetailModel();
+
+        // pas
+        $this->pasModel = new PASModel();
 
         
     }
@@ -378,6 +385,48 @@ class SiswaController extends BaseController
         echo view('admin/template_admin/footer');
     }
     public function nilaiPas($id){
+        $data['type'] = 'PAS';
+        $siswa = $this->siswaModel->where('id_siswa', $id)->first();
+        $siswaId = $siswa['id_siswa'];
+        $kelasId = $siswa['kelas'];
+
+        $kelas = $this->kelasModel->where('id_kelas', $kelasId)->first();
+        $data['kurikulum'] = $kelas['kurikulum'];
+        $idGuru = $kelas['id_guru'];
+
+        $guru = $this->guruModel->where('id_guru', $idGuru)->first();
+        $data['wali_kelas'] = $guru['nama_guru'];
+        $cekNilaiPas = $this->pasModel->where('id_siswa', $siswaId)->findAll();
+
+        if(count($cekNilaiPas) > 0){
+            $data['nilai_pas'] = $this->pasModel
+            ->join('siswa', 'siswa.id_siswa=nilai_pas.id_siswa')
+            ->join('kelas', 'kelas.id_kelas=nilai_pas.id_kelas')
+            ->join('rfmapel', 'rfmapel.id_rfmapel = nilai_pas.id_mapel')
+            ->join('mapel', 'mapel.id_mapel = rfmapel.id_mapel')
+            ->join('guru', 'guru.id_guru=nilai_pas.id_guru')
+            ->where('nilai_pas.id_siswa', $siswaId)
+            ->groupBy('nilai_pas.semester')
+            ->groupBy('nilai_pas.tahun_ajaran')
+            ->findAll();
+        }else{
+            $data['nilai_pas'] = [];
+        }
         
+
+            $groupedData = [];
+
+            foreach ($data['nilai_pas'] as $s) {
+                $semesterTahun = $s['semester'] . '-' . $s['tahun_ajaran'];
+                if (!isset($groupedData[$semesterTahun])) {
+                    $groupedData[$semesterTahun] = [];
+                }
+                $groupedData[$semesterTahun][] = $s;
+            }
+        $data['groupedData'] = $groupedData;
+        echo view('admin/template_admin/header');
+        echo view('admin/template_admin/sidebar');
+        echo view('admin/historyPas', $data);
+        echo view('admin/template_admin/footer');
     }
 }

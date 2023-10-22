@@ -26,9 +26,10 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
+                    <?php foreach($groupedData as $sesesterTahun => $nilaiPas) : list($semster, $tahunAjaran) = explode('-', $sesesterTahun);?>
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title d-flex justify-content-center">Daftar Nilai PAS</div>
+                            <div class="card-title d-flex justify-content-center">Daftar Nilai PAS <?php if($semster == 1){echo 'Ganjil';}else{echo 'Genap';}?> Tahun Ajaran  <?=$tahunAjaran?></div>
                         </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -43,7 +44,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $no = 0; foreach($nilai_pas as $s) : ?>
+                                            <?php $no = 0; foreach($nilaiPas as $s) : ?>
                                                 <tr>
                                                     <td scope="row"><?= ++$no ?></td>
                                                     <td><?= $s['nama_mapel']?></td>
@@ -60,14 +61,10 @@
                                             <?php endforeach ?>
                                         </tbody>
                                     </table>
-                                    <div class="d-flex justify-content-end">
-                                        <h6>Wali Kelas:</h6>
-                                    </div>
-                                    
-                                    <div class="card-title d-flex justify-content-end"><?=$wali_kelas?></div>
                                 </div>
                             </div>
                     </div>
+                    <?php endforeach ?>
                 </div>
             </div>
         </div>

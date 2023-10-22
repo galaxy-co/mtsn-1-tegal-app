@@ -110,6 +110,9 @@ class PASController extends BaseController
     // }
     public function pasnilai($idkelas)
     {
+        $settings = $this->settingsModel->first();
+        $semester = $settings['semester'];
+        $ta = $settings['tahun_ajaran'];
         $session = session();
         $data['role_id'] = $session->get('role_id');
        
@@ -123,6 +126,8 @@ class PASController extends BaseController
             ->join('rfmapel', 'rfmapel.id_rfmapel = nilai_pas.id_mapel')
             ->join('mapel', 'mapel.id_mapel = rfmapel.id_mapel')
             ->where('nilai_pas.id_kelas', $idkelas)
+            ->where('nilai_pas.semester', $semester)
+            ->where('nilai_pas.tahun_ajaran', $ta)
             ->groupBy('nilai_pas.tahun_ajaran')
             ->groupBy('nilai_pas.semester')
             ->groupBy('nilai_pas.id_kelas')
@@ -142,6 +147,8 @@ class PASController extends BaseController
             ->join('mapel', 'mapel.id_mapel = rfmapel.id_mapel')
             ->where('nilai_pas.id_guru', $idGuru)
             ->where('nilai_pas.id_kelas', $idkelas)
+            ->where('nilai_pas.semester', $semester)
+            ->where('nilai_pas.tahun_ajaran', $ta)
             ->groupBy('nilai_pas.tahun_ajaran')
             ->groupBy('nilai_pas.semester')
             ->groupBy('nilai_pas.id_kelas')
