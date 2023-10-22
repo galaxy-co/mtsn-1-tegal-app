@@ -59,13 +59,13 @@ class NilaiKetrampilanController extends BaseController
         $data['nilai_detail'] = $this->nilaiDetailModel->whereIn('id_nilai', $idNilai)->findAll();
 
         $data['nilai'] = $this->nilaiModel
-            ->join('kelas', 'kelas.id_kelas = nilaiketrampilan.id_kelas')
-            ->join('mapel', 'mapel.id_mapel = nilaiketrampilan.id_mapel')
-            ->join('guru', 'guru.id_guru = nilaiketrampilan.id_guru')
-            ->join('nilaiketrampilandetail', 'nilaiketrampilandetail.id_nilai = nilaiketrampilan.id_nilai')
-            ->whereIn('nilaiketrampilan.id_nilai', $idNilai)
-            ->groupBy('nilaiketrampilan.id_kelas')
-            ->groupBy('nilaiketrampilan.id_mapel')
+            ->join('kelas', 'kelas.id_kelas = nilaiKetrampilan.id_kelas')
+            ->join('mapel', 'mapel.id_mapel = nilaiKetrampilan.id_mapel')
+            ->join('guru', 'guru.id_guru = nilaiKetrampilan.id_guru')
+            ->join('nilaiKetrampilanDetail', 'nilaiKetrampilanDetail.id_nilai = nilaiKetrampilan.id_nilai')
+            ->whereIn('nilaiKetrampilan.id_nilai', $idNilai)
+            ->groupBy('nilaiKetrampilan.id_kelas')
+            ->groupBy('nilaiKetrampilan.id_mapel')
             ->findAll();
 
         foreach($data['nilai_detail'] as $nilai_detail){
