@@ -451,4 +451,33 @@ class NilaiController extends BaseController
         $writer->save($fileName);
         return $this->response->download($fileName,null);
     }
+    public function pushSemestr(){
+        $allDatanilai = $this->NilaiModel->findAll();
+        
+        $allIdNilai = array_column($allDatanilai, 'id_nilai');
+       
+        // dd($allIdNilai);
+        // $dataToUpdate = [
+        //     'semester' => 1,
+        //     'tahun_ajaran' => '2023/2024',
+        // ];
+    
+        $filteredData = array_filter($allDatanilai, function($item) use ($allIdNilai) {
+            return in_array($item['id_nilai'], $allIdNilai);
+        });
+    
+        $idsToUpdate = array_column($filteredData, 'id_nilai');
+        $idsToUpdate = array_map('intval', $idsToUpdate);
+
+   
+        foreach ($idsToUpdate as $id) {
+            $dataToUpdate = [
+                'semester' => 1,
+                'tahun_ajaran' => '2023/2024',
+            ];
+
+            $this->NilaiModel->update($id, $dataToUpdate);
+        }
+        dd('Update berhasil!');
+    }
 }

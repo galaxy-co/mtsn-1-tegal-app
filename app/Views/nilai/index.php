@@ -111,6 +111,9 @@
                             </div>
                             
                         </form>
+                        <form action="<?= base_url('admin/nilai/pushSemestr')?>" method="POST">
+                            <button type="submit">PUSH SEMESTER</button>
+                        </form>
                 </div>
             </div>
         </div>
