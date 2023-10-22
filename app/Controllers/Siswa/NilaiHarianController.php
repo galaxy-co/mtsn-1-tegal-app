@@ -72,6 +72,8 @@ class NilaiHarianController extends BaseController
             ->join('guru', 'guru.id_guru = nilai.id_guru')
             ->join('nilai_detail', 'nilai_detail.id_nilai = nilai.id_nilai')
             ->whereIn('nilai.id_nilai', $idNilai)
+            ->where('nilai.semester', $semester)
+            ->where('nilai.tahun_ajaran', $ta)
             ->groupBy('nilai.id_kelas')
             ->groupBy('nilai.id_mapel')
             ->findAll();

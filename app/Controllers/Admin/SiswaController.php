@@ -4,6 +4,14 @@ namespace App\Controllers\Admin;
 use App\Models\Admin\SiswaModel;
 use App\Models\Admin\KelasModel;
 use App\Models\Admin\UserModel;
+use App\Models\Admin\NilaiModel;
+use App\Models\Admin\NilaiDetailModel;
+use App\Models\Admin\GuruModel;
+use App\Models\Admin\MapelModel;
+use App\Models\Admin\RFNilaiDetailModel;
+use App\Models\Admin\NilaiKetrampilanModel;
+use App\Models\Admin\NilaiKetrampilanDetailModel;
+use App\Models\Admin\RFNilaiKetrampilanDetailModel;
 use App\Controllers\BaseController;
 
 class SiswaController extends BaseController
@@ -11,11 +19,32 @@ class SiswaController extends BaseController
     protected $siswaModel;
     protected $kelasModel;
     protected $userModel;
+    protected $mapelModel;
+    protected $guruModel;
+    // nilaiPengetahuan
+    protected $nilaiModel;
+    protected $nilaiDetailModel;
+    protected $rfNilaiDetailModel;
+    // nilaiKetrampilan
+    protected $nilaiKetrampilan;
+    protected $nilaiKetrampilanDetail;
+    protected $rfNilaiKetrampilanDetail;
     public function __construct()
     {
         $this->siswaModel = new SiswaModel();
         $this->kelasModel = new KelasModel();
         $this->userModel = new UserModel();
+        $this->mapelModel = new MapelModel();
+        $this->guruModel = new GuruModel();
+        // nilaiPengetahuan
+        $this->nilaiModel = new NilaiModel();
+        $this->nilaiDetailModel = new NilaiDetailModel();
+        $this->rfNilaiDetailModel = new RFNilaiDetailModel();
+        // nilaiKetrampilan
+        $this->nilaiKetrampilan = new NilaiKetrampilanModel();
+        $this->nilaiKetrampilanDetail = new NilaiKetrampilanDetailModel();
+        $this->rfNilaiKetrampilanDetail = new RFNilaiKetrampilanDetailModel();
+
         
     }
     public function index()
@@ -192,10 +221,161 @@ class SiswaController extends BaseController
         echo view('admin/template_admin/footer');
     }
     public function nilaiPengetahuan($id){
-        
+        $data['type'] = 'Pengetahuan';
+        $siswa = $this->siswaModel->where('id_siswa', $id)->first();
+        $siswaId = $siswa['id_siswa'];
+        $kelasId = $siswa['kelas'];
+        $kelas = $this->kelasModel->where('id_kelas', $kelasId)->first();
+        $kurikulum = $kelas['kurikulum'];
+        $data['kurikulum'] = $kurikulum;
+
+        $data['rf_nilai_detail'] = $this->rfNilaiDetailModel->where('kurikulum_id', $kurikulum)->orderBy('rf_nilai_detail_id')->findAll();
+        $nilai = $this->nilaiModel->where('id_siswa', $siswaId)->find();
+        $idNilai = [];
+
+        foreach ($nilai as $n) {
+            array_push($idNilai, $n['id_nilai']);
+        }
+
+        $data['kelas'] = $this->kelasModel->findAll();
+        $data['guru'] = $this->guruModel->findAll();
+        $data['mapel'] = $this->mapelModel->findAll();
+
+        $data['header'] = [];
+        $data['nilai_detail'] = [];
+
+        if (count($idNilai) > 0) {
+            $data['nilai_detail'] = $this->nilaiDetailModel->whereIn('id_nilai', $idNilai)->findAll();
+    
+            $data['nilai'] = $this->nilaiModel
+                ->join('kelas', 'kelas.id_kelas = nilai.id_kelas')
+                ->join('mapel', 'mapel.id_mapel = nilai.id_mapel')
+                ->join('guru', 'guru.id_guru = nilai.id_guru')
+                ->join('nilai_detail', 'nilai_detail.id_nilai = nilai.id_nilai')
+                ->whereIn('nilai.id_nilai', $idNilai)
+                ->groupBy('nilai.id_mapel')
+                ->groupBy('nilai.semester')
+                ->groupBy('nilai.tahun_ajaran')
+                ->findAll();
+    
+            foreach($data['nilai_detail'] as $nilai_detail){
+                $cek = 0;
+                $index = 0;
+                for ($i=0; $i < count($data['header']) ; $i++) { 
+                    $z=$data['header'][$i];
+                    if($nilai_detail['kd_name'] == $z['kd_name']){
+                        $cek ++;
+                        $index = $i;
+                        break;
+                    }
+                } 
+                
+                if(!$cek){
+                    array_push($data['header'],[
+                        "kd_name" => $nilai_detail['kd_name'],
+                        "nilai_detail_ids" => [$nilai_detail['nilai_detail_id']]
+                    ]);
+                }else{
+                    array_push($data['header'][$index]['nilai_detail_ids'],$nilai_detail['nilai_detail_id']);
+                }
+            }
+        } else {
+            $data['nilai'] = []; 
+        }
+    
+        $groupedData = [];
+        foreach ($data['nilai'] as $s) {
+            $semesterTahun = $s['semester'] . '-' . $s['tahun_ajaran'];
+            if (!isset($groupedData[$semesterTahun])) {
+                $groupedData[$semesterTahun] = [];
+            }
+            $groupedData[$semesterTahun][] = $s;
+        }
+        $data['groupedData'] = $groupedData;
+    
+        echo view('admin/template_admin/header');
+        echo view('admin/template_admin/sidebar');
+        echo view('admin/detailHistory', $data);
+        echo view('admin/template_admin/footer');
     }
     public function nilaiKetrampilan($id){
-        
+        $data['type'] = 'Ketrampilan';
+        $siswa = $this->siswaModel->where('id_siswa', $id)->first();
+        $siswaId = $siswa['id_siswa'];
+        $kelasId = $siswa['kelas'];
+        $kelas = $this->kelasModel->where('id_kelas', $kelasId)->first();
+        $kurikulum = $kelas['kurikulum'];
+        $data['kurikulum'] = $kurikulum;
+
+        $data['rf_nilai_detail'] = $this->rfNilaiKetrampilanDetail->where('kurikulum_id', $kurikulum)->orderBy('rf_nilai_detail_id')->findAll();
+        $nilai = $this->nilaiKetrampilan->where('id_siswa', $siswaId)->find();
+        $idNilai = [];
+
+        foreach ($nilai as $n) {
+            array_push($idNilai, $n['id_nilai']);
+        }
+
+        $data['kelas'] = $this->kelasModel->findAll();
+        $data['guru'] = $this->guruModel->findAll();
+        $data['mapel'] = $this->mapelModel->findAll();
+
+        $data['header'] = [];
+        $data['nilai_detail'] = [];
+
+        if (count($idNilai) > 0) {
+            $data['nilai_detail'] = $this->nilaiKetrampilanDetail->whereIn('id_nilai', $idNilai)->findAll();
+            $cekNilaiKet = $this->nilaiKetrampilan->whereIn('nilaiKetrampilan.id_nilai', $idNilai)->findAll();
+            // dd($cekNilaiKet);
+            $data['nilai'] = $this->nilaiKetrampilan
+                ->join('kelas', 'kelas.id_kelas = nilaiKetrampilan.id_kelas')
+                ->join('mapel', 'mapel.id_mapel = nilaiKetrampilan.id_mapel')
+                ->join('guru', 'guru.id_guru = nilaiKetrampilan.id_guru')
+                ->join('nilaiKetrampilanDetail', 'nilaiKetrampilanDetail.id_nilai = nilaiKetrampilan.id_nilai')
+                ->whereIn('nilaiKetrampilan.id_nilai', $idNilai)
+                ->groupBy('nilaiKetrampilan.id_mapel')
+                ->groupBy('nilaiKetrampilan.semester')
+                ->groupBy('nilaiKetrampilan.tahun_ajaran')
+                ->findAll();
+            foreach($data['nilai_detail'] as $nilai_detail){
+                $cek = 0;
+                $index = 0;
+                for ($i=0; $i < count($data['header']) ; $i++) { 
+                    $z=$data['header'][$i];
+                    if($nilai_detail['kd_name'] == $z['kd_name']){
+                        $cek ++;
+                        $index = $i;
+                        break;
+                    }
+                } 
+                
+                if(!$cek){
+                    array_push($data['header'],[
+                        "kd_name" => $nilai_detail['kd_name'],
+                        "nilai_detail_ids" => [$nilai_detail['nilai_detail_id']]
+                    ]);
+                }else{
+                    array_push($data['header'][$index]['nilai_detail_ids'],$nilai_detail['nilai_detail_id']);
+                }
+            }
+        } else {
+            $data['nilai'] = []; 
+        }
+        // dd($data['nilai']);
+        $groupedData = [];
+        foreach ($data['nilai'] as $s) {
+            $semesterTahun = $s['semester'] . '-' . $s['tahun_ajaran'];
+            if (!isset($groupedData[$semesterTahun])) {
+                $groupedData[$semesterTahun] = [];
+            }
+            $groupedData[$semesterTahun][] = $s;
+        }
+        // dd($groupedData);
+        $data['groupedData'] = $groupedData;
+    
+        echo view('admin/template_admin/header');
+        echo view('admin/template_admin/sidebar');
+        echo view('admin/detailHistory', $data);
+        echo view('admin/template_admin/footer');
     }
     public function nilaiPas($id){
         
