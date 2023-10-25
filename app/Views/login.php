@@ -74,7 +74,13 @@
 
    
   </header>
+              <footer>
+      <div class="d-flex justify-content-center">
+      Powered by galaxy.co | Partner&nbsp;<a href="https://gamalingua.com"> www.gamalingua.com</a>
 
+
+			</div>	
+              </footer>
     <script type="text/javascript" src="<?= base_url('login/')?>js/mdb.min.js"></script>
 
     <script type="text/javascript" src="<?= base_url('login/')?>js/script.js"></script>
