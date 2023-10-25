@@ -20,7 +20,13 @@
 					<h6>Kamu Bisa Cek Nilai Mu Kapanpun Melalui Aplikasi Ini</h6>
 				</div>
 			</div>
+			<div class="d-flex justify-content-center">
+				Powered by galaxy.co | Partner <a href="https://gamalingua.com"> www.gamalingua.com</a>
+			</div>	
 		</div>
 		
 		<!-- End Custom template -->
+		
 	</div>
+	
+	
