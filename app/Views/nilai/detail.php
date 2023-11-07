@@ -35,13 +35,19 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
-                                <div class="card-title col-10">Nilai Pengetahuan</div>
+                                <div class="card-title col-9">Nilai Pengetahuan</div>
                                
                                 <form action="<?= $url.'export'?>" method="post">
                                     <input type="hidden" name="id_kelas" value="<?= $nilai['id_kelas']?>">
                                     <input type="hidden" name="id_guru" value="<?= $nilai['id_guru']?>">
                                     <input type="hidden" name="id_mapel" value="<?= $nilai['id_mapel']?>">
                                     <button type='submit' class="btn btn-export btn-info mr-2">Export</button>
+                                </form>
+                                <form action="<?= $url.'regenerate'?>" method="post">
+                                    <input type="hidden" name="id_kelas" value="<?= $nilai['id_kelas']?>">
+                                    <input type="hidden" name="id_guru" value="<?= $nilai['id_guru']?>">
+                                    <input type="hidden" name="id_mapel" value="<?= $nilai['id_mapel']?>">
+                                    <button type='submit' class="btn btn-export btn-success mr-2">Generate Ulang</button>
                                 </form>
                                 <div class="btn btn-delete btn-danger">Hapus</div>
 

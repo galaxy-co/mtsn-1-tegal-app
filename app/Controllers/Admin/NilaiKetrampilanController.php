@@ -20,6 +20,14 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class NilaiKetrampilanController extends BaseController
 {
     protected $NilaiModel;
+    protected $KelasModel;
+    protected $GuruModel;
+    protected $MapelModel;
+    protected $SiswaModel;
+    protected $RFNilaiDetailModel;
+    protected $NilaiDetailModel;
+    protected $RfMapelModel;
+    protected $SettingModel;
     use ResponseTrait;
     public function __construct()
     {
@@ -124,7 +132,54 @@ class NilaiKetrampilanController extends BaseController
             }
         }
     }
+    public function regenerate(){
+        $settings = $this->SettingModel->first();
+        $semester = $settings['semester'];
+        $ta = $settings['tahun_ajaran'];
+        $inputPost = $this->request->getVar();
+        $data['functionName'] = 'regenarate';
+        $data['allSiswa'] =$this->SiswaModel->where('kelas',$inputPost['id_kelas'])->findAll();
+        $kurikulum = $this->KelasModel->select('kurikulum')->where('id_kelas',$inputPost['id_kelas'])->find();
+        $data['rf_nilai_detail'] = $this->RFNilaiDetailModel->where('kurikulum_id',$kurikulum[0]['kurikulum'])->orderBy('rf_nilai_detail_id')->findAll();
+        $cekNilai = $this->NilaiModel->where('id_kelas', $inputPost['id_kelas'])
+                                    ->where('id_guru', $inputPost['id_guru'])
+                                    ->where('id_mapel', $inputPost['id_mapel'])
+                                    ->where('semester', $semester)
+                                    ->where('tahun_ajaran', $ta)
+                                    ->findAll();
+        $existingStudentIds = array_column($cekNilai, 'id_siswa');
 
+        $missingStudents = array_filter($data['allSiswa'], function($siswa) use ($existingStudentIds) {
+            return !in_array($siswa['id_siswa'], $existingStudentIds);
+        });
+        $data['siswa'] = $missingStudents;
+        if($missingStudents){
+            $this->generateNilai($inputPost,$data);
+            $queryParams = [
+                'id_kelas' => $inputPost['id_kelas'],
+                'id_mapel' => $inputPost['id_mapel'],
+                'id_guru'  => $inputPost['id_guru'],
+            ];
+    
+            $redirectUrl = '/admin/nilaiKetrampilan/detail?' . http_build_query($queryParams);
+    
+            session()->setFlashdata('success', 'Berhasil Generate Data');
+    
+            return redirect()->to($redirectUrl);
+        }else{
+            $queryParams = [
+                'id_kelas' => $inputPost['id_kelas'],
+                'id_mapel' => $inputPost['id_mapel'],
+                'id_guru'  => $inputPost['id_guru'],
+            ];
+
+            $redirectUrl = '/admin/nilaiKetrampilan/detail?' . http_build_query($queryParams);
+    
+            session()->setFlashdata('warning', 'Tidak Ada Data Yang Perlu Di Generate Ulang');
+    
+            return redirect()->to($redirectUrl);
+        }
+    }
     public function detail(){
         
         $inputPost = $this->request->getVar();

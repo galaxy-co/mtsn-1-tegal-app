@@ -90,6 +90,7 @@ $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
         $routes->get('edit/(:num)', 'Admin\NilaiController::edit/$1');
         $routes->post('upload', 'Admin\NilaiController::uploadGuru');
         $routes->post('export','Admin\NilaiController::export');
+        $routes->post('regenerate','Admin\NilaiController::regenerate');
         $routes->post('pushSemestr', 'Admin\NilaiController::pushSemestr');
     });
 
@@ -103,6 +104,7 @@ $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
         $routes->post('delete', 'Admin\NilaiKetrampilanController::delete');
         $routes->get('edit/(:num)', 'Admin\NilaiKetrampilanController::edit/$1');
         $routes->post('upload', 'Admin\NilaiKetrampilanController::uploadGuru');
+        $routes->post('regenerate','Admin\NilaiController::regenerate');
         $routes->post('export','Admin\NilaiKetrampilanController::export');
     });
 
@@ -139,6 +141,7 @@ $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
         $routes->get('edit/(:num)', 'Admin\PASController::edit/$1');
         $routes->get('pasnilai/(:num)', 'Admin\PASController::pasnilai/$1');
         $routes->post('update', 'Admin\PASController::update');
+        $routes->post('regenerate', 'Admin\PASController::regenerate');
     });
 
     $routes->group('p5',static function ($routes){

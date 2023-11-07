@@ -255,6 +255,60 @@ class PASController extends BaseController
         
         
     }
+    public function generateNilai($input, $data){
+        $settings = $this->settingsModel->first();
+        $kelas = $input['id_kelas'];
+        $guru = $input['id_guru'];
+        $mapel = $input['id_mapel'];
+        $semester = $settings['semester'];
+        $ta = $settings['tahun_ajaran'];
+        $array_idSiswa = $data['siswa'];
+    
+        foreach ($array_idSiswa as $siswa) {
+            $nilaiData = [
+                'id_guru' => $guru,
+                'id_kelas' => $kelas,
+                'id_mapel' => $mapel,
+                'id_siswa' => $siswa['id_siswa'],
+                'nilai' => null,
+                'type_test' => 1,
+                'semester' => $semester,
+                'tahun_ajaran' => $ta
+            ];
+            $this->pasModel->insert($nilaiData);
+        }
+
+
+    }
+    
+    public function regenerate(){
+        $inputPost = $this->request->getVar();
+        $settings = $this->settingsModel->first();
+        $semester = $settings['semester'];
+        $ta = $settings['tahun_ajaran'];
+        $data['allSiswa'] =$this->siswaModel->where('kelas',$inputPost['id_kelas'])->findAll();
+        $cekPas = $this->pasModel->where('id_mapel', $inputPost['id_mapel'])
+                        ->where('id_kelas', $inputPost['id_kelas'])
+                        ->where('id_guru', $inputPost['id_guru'])
+                        ->where('semester', $semester)
+                        ->where('tahun_ajaran', $ta)
+                        ->findAll();
+        
+        $existingStudentIds = array_column($cekPas, 'id_siswa');
+
+        $missingStudents = array_filter($data['allSiswa'], function($siswa) use ($existingStudentIds) {
+            return !in_array($siswa['id_siswa'], $existingStudentIds);
+        });
+        $data['siswa'] = $missingStudents;
+        if($missingStudents){
+            $this->generateNilai($inputPost,$data);
+            session()->setFlashdata('success', 'Berhasil Generate Data');
+            return redirect()->to('admin/pas/pasnilai/' . $inputPost['id_kelas']);
+        }else{
+            session()->setFlashdata('warning', 'Tidak Ada Data Yang Perlu Di Generate Ulang');
+            return redirect()->to('admin/pas/pasnilai/' . $inputPost['id_kelas']);
+        }
+    }
     public function edit($id){
         $nilai = $this->pasModel->where('id_nilai_pas', $id)->first();
 
@@ -275,7 +329,9 @@ class PASController extends BaseController
                             ->where('nilai_pas.id_mapel', $mapel)
                             ->orderBy('siswa.nama_siswa')
                             ->findAll();
-
+        $data['kelas'] = $kelas;
+        $data['mapel'] = $mapel;
+        $data['guru'] =  $nilai['id_mapel'];
         echo view('admin/template_admin/header');
         echo view('admin/template_admin/sidebar');
         echo view('admin/edit_pas', $data);

@@ -34,9 +34,16 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">Nilai Semester</div>
-                        </div>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-title">Nilai Semester</div>
+                        <form action="<?= $url.'/pas/regenerate'?>" method="post" class="ml-auto">
+                            <input type="hidden" name="id_kelas" value="<?= $kelas?>">
+                            <input type="hidden" name="id_guru" value="<?= $guru?>">
+                            <input type="hidden" name="id_mapel" value="<?= $mapel?>">
+                            <button type='submit' class="btn btn-export btn-success">Generate Ulang</button>
+                        </form>
+                    </div>
+
                         <form action="<?= $url.'/pas/update'?>" method="POST">
                             <div class="card-body">
                                 <div class="table-responsive">
