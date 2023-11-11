@@ -180,7 +180,7 @@
                                                 <?php if($sis['id_nilai'] == $nilai_d['id_nilai']) : ?>
                                                     <td class='p-0' class='data-nilai'>
                                                         <input type="text" 
-                                                            style="min-width:50px;"
+                                                            style="min-width:70px;"
                                                             class='form-control td-input td-input-<?= $sis['id_siswa'] ?>' 
                                                             data-idsiswa="<?= $sis['id_siswa']?>"
                                                             data-nilaidetailid = "<?= $nilai_d['nilai_detail_id'] ?>" 
