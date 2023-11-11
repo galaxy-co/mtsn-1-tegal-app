@@ -75,7 +75,7 @@ class NilaiKetrampilanController extends BaseController
             ->groupBy('nilaiKetrampilan.id_mapel')
             ->findAll();
         
-        $data['kelas'] = $queryKelas->findAll();
+        $data['kelas'] = $queryKelas->where('kurikulum = 1')->findAll();
         $data['guru'] = $queryGuru->findAll();
         $data['mapel'] = $queryMapel->findAll();
         // dd($data);
