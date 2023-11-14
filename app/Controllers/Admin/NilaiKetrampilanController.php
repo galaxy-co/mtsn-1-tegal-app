@@ -133,6 +133,7 @@ class NilaiKetrampilanController extends BaseController
         }
     }
     public function regenerate(){
+        $role=session('role_id');
         $settings = $this->SettingModel->first();
         $semester = $settings['semester'];
         $ta = $settings['tahun_ajaran'];
@@ -160,8 +161,12 @@ class NilaiKetrampilanController extends BaseController
                 'id_mapel' => $inputPost['id_mapel'],
                 'id_guru'  => $inputPost['id_guru'],
             ];
-    
-            $redirectUrl = '/admin/nilaiKetrampilan/detail?' . http_build_query($queryParams);
+            if($role == 3){
+                $redirectUrl = '/guru/nilaiKetrampilan/detail?' . http_build_query($queryParams);
+            }else{
+                $redirectUrl = '/admin/nilaiKetrampilan/detail?' . http_build_query($queryParams);
+            }
+           
     
             session()->setFlashdata('success', 'Berhasil Generate Data');
     
@@ -172,8 +177,12 @@ class NilaiKetrampilanController extends BaseController
                 'id_mapel' => $inputPost['id_mapel'],
                 'id_guru'  => $inputPost['id_guru'],
             ];
-
-            $redirectUrl = '/admin/nilaiKetrampilan/detail?' . http_build_query($queryParams);
+            if($role == 3){
+                $redirectUrl = '/guru/nilaiKetrampilan/detail?' . http_build_query($queryParams);
+            }else{
+                $redirectUrl = '/admin/nilaiKetrampilan/detail?' . http_build_query($queryParams);
+            }
+            
     
             session()->setFlashdata('warning', 'Tidak Ada Data Yang Perlu Di Generate Ulang');
     

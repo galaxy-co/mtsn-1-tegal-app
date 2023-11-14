@@ -201,6 +201,7 @@ $routes->group('guru', ['filter'=> 'authGuard:3'],static function ($routes) {
         $routes->get('pasnilai/(:num)', 'Admin\PASController::pasnilai/$1');
         $routes->get('rfmapel/(:num)', 'Admin\NilaiController::rfmapel/$1');
         $routes->post('export','Admin\NilaiController::export');
+        $routes->post('regenerate','Admin\NilaiController::regenerate');
     });
 
     $routes->group('nilaiKetrampilan',static function ($routes){
@@ -214,6 +215,7 @@ $routes->group('guru', ['filter'=> 'authGuard:3'],static function ($routes) {
         $routes->get('pasnilai/(:num)', 'Admin\PASController::pasnilai/$1');
         $routes->get('rfmapel/(:num)', 'Admin\NilaiKetrampilanController::rfmapel/$1');
         $routes->post('export','Admin\NilaiKetrampilanController::export');
+        $routes->post('regenerate','Admin\NilaiController::regenerate');
     });
 
     $routes->group('pas',static function ($routes){
