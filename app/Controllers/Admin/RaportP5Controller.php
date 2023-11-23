@@ -77,7 +77,7 @@ class RaportP5Controller extends BaseController
         $data['rfnilai'] = $this->rfnilaip5model->findAll();
         $data['nilaip5'] = $this->nilaiP5Model
                         ->join('project_dimensi', 'project_dimensi.id_project_dimensi=nilaip5.id_project_dimensi')
-                        // ->join('projects', 'projects.id_project=project_dimensi.id_project')
+                        ->join('projects', 'projects.id_project=project_dimensi.id_project')
                         // ->join('rf_nilai_p5_options', 'rf_nilai_p5_options.id_nilaip5_option = nilaip5.nilai')
                         // ->join('capaian_p5', 'capaian_p5.id_capaian=project_dimensi.kode_capaian_fase')
                         // ->join('dimensi_p5', 'dimensi_p5.id_dimensi=project_dimensi.id_dimensi')
