@@ -90,7 +90,7 @@ class RaportP5Controller extends BaseController
         foreach ($data['nilaip5'] as $row) {
             $nilai[] = $row['id_nilaip5_option'];
         }
-        
+        dd($nilai);
         $nilai_count = array_count_values($nilai);
         
         arsort($nilai_count);
