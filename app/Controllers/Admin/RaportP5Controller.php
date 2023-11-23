@@ -75,7 +75,6 @@ class RaportP5Controller extends BaseController
         
         $data['nilai'] = $this->nilaiP5Model->where('id_siswa', $idSiswa)->findAll();
         $data['rfnilai'] = $this->rfnilaip5model->findAll();
-        dd($idSiswa);
         $data['nilaip5'] = $this->nilaiP5Model
                         ->join('project_dimensi', 'project_dimensi.id_project_dimensi=nilaip5.id_project_dimensi')
                         // ->join('projects', 'projects.id_project=project_dimensi.id_project')
