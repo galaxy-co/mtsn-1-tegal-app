@@ -84,6 +84,7 @@ class RaportP5Controller extends BaseController
                         ->join('dimensi_p5', 'dimensi_p5.id_dimensi=project_dimensi.id_dimensi')
                         ->where('nilaip5.id_siswa', $idSiswa)
                         ->findAll();
+        dd($data['nilaip5']);
         
         $nilai = [];
 
