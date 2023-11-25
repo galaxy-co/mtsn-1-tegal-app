@@ -148,7 +148,6 @@ class NilaiKetrampilanController extends BaseController
                                     ->where('semester', $semester)
                                     ->where('tahun_ajaran', $ta)
                                     ->findAll();
-                                    dd($cekNilai);
         $existingStudentIds = array_column($cekNilai, 'id_siswa');
         $currentSIswa = $this->SiswaModel->where('kelas', $inputPost['id_kelas'])->findAll();
         $nilaiSiswaIds = array_column($cekNilai, 'id_siswa');

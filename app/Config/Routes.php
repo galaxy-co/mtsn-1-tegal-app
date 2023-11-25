@@ -104,7 +104,7 @@ $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
         $routes->post('delete', 'Admin\NilaiKetrampilanController::delete');
         $routes->get('edit/(:num)', 'Admin\NilaiKetrampilanController::edit/$1');
         $routes->post('upload', 'Admin\NilaiKetrampilanController::uploadGuru');
-        $routes->post('regenerate','Admin\NilaiController::regenerate');
+        $routes->post('regenerate','Admin\NilaiKetrampilanController::regenerate');
         $routes->post('export','Admin\NilaiKetrampilanController::export');
     });
 
