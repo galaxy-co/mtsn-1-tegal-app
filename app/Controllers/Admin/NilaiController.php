@@ -221,6 +221,48 @@ class NilaiController extends BaseController
     
             return redirect()->to($redirectUrl);
         }
+        if($idSiswaTidakAda){
+            $queryParams = [
+                'id_kelas' => $inputPost['id_kelas'],
+                'id_mapel' => $inputPost['id_mapel'],
+                'id_guru'  => $inputPost['id_guru'],
+            ];
+            
+            foreach ($idSiswaTidakAda as $idSiswaTidakAdaPerid) {
+                $nilaiTodelete = $this->NilaiModel->where('id_siswa', $idSiswaTidakAdaPerid)->find();
+                // $idNilai = $nilaiTodelete["id_nilai"];
+                
+                foreach($nilaiTodelete as $nilai){
+                    $this->NilaiModel->delete($nilai['id_nilai']);
+                }
+            }
+            if($role == 3){
+                $redirectUrl = '/guru/nilai/detail?' . http_build_query($queryParams);
+            }else{
+                $redirectUrl = '/admin/nilai/detail?' . http_build_query($queryParams);
+            }
+            
+    
+            session()->setFlashdata('success', 'Berhasil Generate Data');
+            return redirect()->to($redirectUrl);
+        }else{
+            $queryParams = [
+                'id_kelas' => $inputPost['id_kelas'],
+                'id_mapel' => $inputPost['id_mapel'],
+                'id_guru'  => $inputPost['id_guru'],
+            ];
+
+            if($role == 3){
+                $redirectUrl = '/guru/nilai/detail?' . http_build_query($queryParams);
+            }else{
+                $redirectUrl = '/admin/nilai/detail?' . http_build_query($queryParams);
+            }
+            
+    
+            session()->setFlashdata('warning', 'Tidak Ada Data Yang Perlu Di Generate Ulang');
+    
+            return redirect()->to($redirectUrl);
+        }
     }
     public function detail(){
         

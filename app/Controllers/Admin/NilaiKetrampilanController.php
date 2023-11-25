@@ -148,7 +148,12 @@ class NilaiKetrampilanController extends BaseController
                                     ->where('semester', $semester)
                                     ->where('tahun_ajaran', $ta)
                                     ->findAll();
+                                    dd($cekNilai);
         $existingStudentIds = array_column($cekNilai, 'id_siswa');
+        $currentSIswa = $this->SiswaModel->where('kelas', $inputPost['id_kelas'])->findAll();
+        $nilaiSiswaIds = array_column($cekNilai, 'id_siswa');
+        $currentSiswaIds = array_column($currentSIswa, 'id_siswa');
+        $idSiswaTidakAda = array_diff($nilaiSiswaIds, $currentSiswaIds);
 
         $missingStudents = array_filter($data['allSiswa'], function($siswa) use ($existingStudentIds) {
             return !in_array($siswa['id_siswa'], $existingStudentIds);
@@ -171,12 +176,79 @@ class NilaiKetrampilanController extends BaseController
             session()->setFlashdata('success', 'Berhasil Generate Data');
     
             return redirect()->to($redirectUrl);
+        }elseif($idSiswaTidakAda){
+            $queryParams = [
+                'id_kelas' => $inputPost['id_kelas'],
+                'id_mapel' => $inputPost['id_mapel'],
+                'id_guru'  => $inputPost['id_guru'],
+            ];
+            
+            foreach ($idSiswaTidakAda as $idSiswaTidakAdaPerid) {
+                $nilaiTodelete = $this->NilaiModel->where('id_siswa', $idSiswaTidakAdaPerid)->find();
+                // $idNilai = $nilaiTodelete["id_nilai"];
+                
+                foreach($nilaiTodelete as $nilai){
+                    $this->NilaiModel->delete($nilai['id_nilai']);
+                }
+            }
+            if($role == 3){
+                $redirectUrl = '/guru/nilaiKetrampilan/detail?' . http_build_query($queryParams);
+            }else{
+                $redirectUrl = '/admin/nilaiKetrampilan/detail?' . http_build_query($queryParams);
+            }
+            
+    
+            session()->setFlashdata('success', 'Berhasil Generate Data');
+            return redirect()->to($redirectUrl);
+            
         }else{
             $queryParams = [
                 'id_kelas' => $inputPost['id_kelas'],
                 'id_mapel' => $inputPost['id_mapel'],
                 'id_guru'  => $inputPost['id_guru'],
             ];
+            if($role == 3){
+                $redirectUrl = '/guru/nilaiKetrampilan/detail?' . http_build_query($queryParams);
+            }else{
+                $redirectUrl = '/admin/nilaiKetrampilan/detail?' . http_build_query($queryParams);
+            }
+            
+    
+            session()->setFlashdata('warning', 'Tidak Ada Data Yang Perlu Di Generate Ulang');
+    
+            return redirect()->to($redirectUrl);
+        }
+        if($idSiswaTidakAda){
+            $queryParams = [
+                'id_kelas' => $inputPost['id_kelas'],
+                'id_mapel' => $inputPost['id_mapel'],
+                'id_guru'  => $inputPost['id_guru'],
+            ];
+            
+            foreach ($idSiswaTidakAda as $idSiswaTidakAdaPerid) {
+                $nilaiTodelete = $this->NilaiModel->where('id_siswa', $idSiswaTidakAdaPerid)->find();
+                // $idNilai = $nilaiTodelete["id_nilai"];
+                
+                foreach($nilaiTodelete as $nilai){
+                    $this->NilaiModel->delete($nilai['id_nilai']);
+                }
+            }
+            if($role == 3){
+                $redirectUrl = '/guru/nilaiKetrampilan/detail?' . http_build_query($queryParams);
+            }else{
+                $redirectUrl = '/admin/nilaiKetrampilan/detail?' . http_build_query($queryParams);
+            }
+            
+    
+            session()->setFlashdata('success', 'Berhasil Generate Data');
+            return redirect()->to($redirectUrl);
+        }else{
+            $queryParams = [
+                'id_kelas' => $inputPost['id_kelas'],
+                'id_mapel' => $inputPost['id_mapel'],
+                'id_guru'  => $inputPost['id_guru'],
+            ];
+
             if($role == 3){
                 $redirectUrl = '/guru/nilaiKetrampilan/detail?' . http_build_query($queryParams);
             }else{

@@ -173,7 +173,7 @@
                 <td></td>
                 <td style="font-size:x-small;">Fase</td>
                 <td style="font-size:x-small;">:</td>
-                <td style="font-size:x-small;"></td>
+                <td style="font-size:x-small;">D</td>
             </tr>
             <tr>
                 <td style="font-size:x-small;">NISM</td>
