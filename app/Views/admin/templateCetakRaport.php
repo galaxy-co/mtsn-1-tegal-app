@@ -113,7 +113,7 @@
         $data = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
 
-        $path2 = 'assets/assets/img/logomtsraport.png';
+        $path2 = 'assets/assets/img/logorapot.png';
         $type2 = pathinfo($path2, PATHINFO_EXTENSION);
         $data2 = file_get_contents($path2);
         $base642 = 'data:image/' . $type2 . ';base64,' . base64_encode($data2);
