@@ -128,7 +128,7 @@ class RaportP5Controller extends BaseController
         $options->setIsRemoteEnabled(true);
         $dompdf = new Dompdf($options);
         $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->setPaper('A3', 'portrait');
         $dompdf->render();
         
         $this->response->setContentType('application/pdf');
