@@ -143,14 +143,20 @@ class NilaiController extends BaseController
         $data['allSiswa'] =$this->SiswaModel->where('kelas',$inputPost['id_kelas'])->findAll();
         $kurikulum = $this->KelasModel->select('kurikulum')->where('id_kelas',$inputPost['id_kelas'])->find();
         $data['rf_nilai_detail'] = $this->RFNilaiDetailModel->where('kurikulum_id',$kurikulum[0]['kurikulum'])->orderBy('rf_nilai_detail_id')->findAll();
-        $cekNilai = $this->NilaiModel->where('id_kelas', $inputPost['id_kelas'])
+        $cekNilai = $this->NilaiModel
+                                    // ->join('siswa', 'siswa.id_siswa = nilai.id_siswa')
+                                    ->where('id_kelas', $inputPost['id_kelas'])
                                     ->where('id_guru', $inputPost['id_guru'])
                                     ->where('id_mapel', $inputPost['id_mapel'])
                                     ->where('semester', $semester)
                                     ->where('tahun_ajaran', $ta)
                                     ->findAll();
         $existingStudentIds = array_column($cekNilai, 'id_siswa');
-
+        $currentSIswa = $this->SiswaModel->where('kelas', $inputPost['id_kelas'])->findAll();
+        $nilaiSiswaIds = array_column($cekNilai, 'id_siswa');
+        $currentSiswaIds = array_column($currentSIswa, 'id_siswa');
+        $idSiswaTidakAda = array_diff($nilaiSiswaIds, $currentSiswaIds);
+        
         $missingStudents = array_filter($data['allSiswa'], function($siswa) use ($existingStudentIds) {
             return !in_array($siswa['id_siswa'], $existingStudentIds);
         });
@@ -172,6 +178,31 @@ class NilaiController extends BaseController
             session()->setFlashdata('success', 'Berhasil Generate Data');
     
             return redirect()->to($redirectUrl);
+        }elseif($idSiswaTidakAda){
+            $queryParams = [
+                'id_kelas' => $inputPost['id_kelas'],
+                'id_mapel' => $inputPost['id_mapel'],
+                'id_guru'  => $inputPost['id_guru'],
+            ];
+            
+            foreach ($idSiswaTidakAda as $idSiswaTidakAdaPerid) {
+                $nilaiTodelete = $this->NilaiModel->where('id_siswa', $idSiswaTidakAdaPerid)->find();
+                // $idNilai = $nilaiTodelete["id_nilai"];
+                
+                foreach($nilaiTodelete as $nilai){
+                    $this->NilaiModel->delete($nilai['id_nilai']);
+                }
+            }
+            if($role == 3){
+                $redirectUrl = '/guru/nilai/detail?' . http_build_query($queryParams);
+            }else{
+                $redirectUrl = '/admin/nilai/detail?' . http_build_query($queryParams);
+            }
+            
+    
+            session()->setFlashdata('success', 'Berhasil Generate Data');
+            return redirect()->to($redirectUrl);
+            
         }else{
             $queryParams = [
                 'id_kelas' => $inputPost['id_kelas'],
