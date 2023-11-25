@@ -120,7 +120,7 @@
     ?>
     <tbody>
         <tr>
-            <!-- <td><img src="<?= $base64 ?>" alt="" width="90px" height="80px"></td> -->
+            <td><img src="<?= $base64 ?>" alt="" width="90px" height="80px"></td>
             <td class="center-text">
                 <p><b>KEMENTRIAN AGAMA</b></p>
                 <p><b>KANTOR KEMENTRIAN AGAMA KABUPATEN TEGAL</b></p>
