@@ -110,7 +110,27 @@ class SiswaController extends BaseController
         $nism = $siswa['nism'];
         $user = $this->userModel->where('username', $nism)->first();
         $userId = $user['user_id'];
-       
+        $nilaiSiswa = $this->nilaiModel->where('id_siswa', $id)->findAll();
+        foreach ($nilaiSiswa as $row) {
+            $idNilai = $row['id_nilai'];
+            $nilaiDetail = $this->nilaiDetailModel->where('id_nilai', $idNilai)->findAll();
+            foreach($nilaiDetail as $innilaiDetail){
+                $idnilaiDetail = $innilaiDetail['nilai_detail_id'];
+                $this->nilaiDetailModel->delete($idnilaiDetail);
+            }
+            $this->nilaiModel->delete($idNilai);
+        }
+
+        $nilaiKetSiswa = $this->nilaiKetrampilan->where('id_siswa', $id)->findAll();
+        foreach ($nilaiKetSiswa as $data) {
+            $idNilai = $data['id_nilai'];
+            $nilaiDetKet = $this->nilaiKetrampilanDetail->where('id_nilai', $idNilai)->findAll();
+            foreach($nilaiDetKet as $innilaiDetKet){
+                $idnilaiDetKet = $innilaiDetKet['nilai_detail_id'];
+                $this->nilaiKetrampilanDetail->delete($idnilaiDetKet);
+            }
+            $this->nilaiModel->delete($idNilai);
+        }
         $this->siswaModel->delete($id);
         $this->userModel->delete($userId);
 
