@@ -128,7 +128,7 @@ class RaportP5Controller extends BaseController
         $options->setIsRemoteEnabled(true);
         $dompdf = new Dompdf($options);
         $dompdf->loadHtml($html);
-        $dompdf->setPaper('A3', 'portrait');
+        $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
         
         $this->response->setContentType('application/pdf');
@@ -138,7 +138,7 @@ class RaportP5Controller extends BaseController
         header('Content-Disposition: inline; filename="raport.pdf"'); 
         header('Content-Transfer-Encoding: binary');
         header('Content-Length: ' . strlen($output));
-   
+        set_time_limit(300);
         echo $output;
     }
 
