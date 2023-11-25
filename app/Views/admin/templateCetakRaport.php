@@ -128,7 +128,7 @@
                 <p style="font-size: x-small;">Jl. Ponpes Babakan-Lebaksiu Tegal</p>
                 <!-- Horizontal line -->
             </td>
-            <td><img src="<?= $base642 ?>" alt="" width="80px" height="80px"></td>
+            <!-- <td><img src="<?= $base642 ?>" alt="" width="80px" height="80px"></td> -->
         </tr>
         <tr>
             <td class="horizontal-line"></td>
