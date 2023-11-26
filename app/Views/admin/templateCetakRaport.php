@@ -122,8 +122,8 @@
         <tr>
             <td><img src="<?= $base64 ?>" alt="" width="90px" height="80px"></td>
             <td class="center-text">
-                <p><b>KEMENTRIAN AGAMA</b></p>
-                <p><b>KANTOR KEMENTRIAN AGAMA KABUPATEN TEGAL</b></p>
+                <p><b>KEMENTERIAN AGAMA</b></p>
+                <p><b>KANTOR KEMENTERIAN AGAMA KABUPATEN TEGAL</b></p>
                 <p><b>MADRASAH TSANAWIYAH NEGERI 1 TEGAL</b><br></p>
                 <p style="font-size: x-small;">Jl. Ponpes Babakan-Lebaksiu Tegal</p>
                 <!-- Horizontal line -->
@@ -301,7 +301,7 @@
                 <td><?= $guru['nama_guru']?></td>
             </tr>
             <tr>
-                <td>NIP :</td>
+                <td>NIP : 197406252000121004</td>
                 <td></td>
                 <td>NIP : <?= $guru['nuptk']?></td>
             </tr>
