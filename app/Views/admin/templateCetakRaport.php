@@ -212,20 +212,36 @@
                 <td style="background-color:#ADABAB;" class="bordered-td">NILAI</td>
                 <td style="background-color:#ADABAB;" class="bordered-td">DESKRIPSI CAPAIAN</td>
             </tr>
-            <tr style="height: 30px;">
-                <td style="background-color:#ADABAB;" class="bordered-td"></td>
-                <td style="background-color:#ADABAB;" class="bordered-td"></td>
-                <td style="background-color:#ADABAB;" class="bordered-td"></td>
-                <td style="background-color:#ADABAB;" class="bordered-td"></td>
-            </tr>
             
-            <?php $no=0; foreach($nilaip5 as $n) : ?>
-                <tr>
-                    <td style="background-color:#FAF5F5;" class="bordered-td"><?= ++$no?></td>
-                    <td style="background-color:#FAF5F5;" class="bordered-td"><?= $n['dimensi']?></td>
-                    <td style="background-color:#FAF5F5;" class="bordered-td" id="nilai_sering"><?= $n['nilai']?></td>
-                    <td style="background-color:#FAF5F5;" class="bordered-td">Ananda <?= $n['arti']?> dalam <?=$n['desc']?></td>
+            
+            <?php
+            $groupedData = [];
+
+            foreach ($nilaip5 as $n) {
+                $name = $n['name'];
+            
+                if (!isset($groupedData[$name])) {
+                    // Jika belum ada kunci $name, buat array kosong untuk kunci tersebut
+                    $groupedData[$name] = [];
+                }
+            
+                // Tambahkan data ke dalam kelompok yang sesuai dengan kunci $name
+                $groupedData[$name][] = $n;
+            }
+             $no=0; foreach($groupedData as $name => $group) : 
+             ?>
+                <tr style="height: 30px;">
+                    <td style="background-color:#ADABAB;" class="bordered-td"></td>
+                    <td style="background-color:#ADABAB;" class="bordered-td" colspan="3"><?= $name?></td>
                 </tr>
+                <?php foreach($group as $n) : ?>
+                    <tr>
+                        <td style="background-color:#FAF5F5;" class="bordered-td"><?= ++$no?></td>
+                        <td style="background-color:#FAF5F5;" class="bordered-td"><?= $n['dimensi']?></td>
+                        <td style="background-color:#FAF5F5;" class="bordered-td" id="nilai_sering"><?= $n['nilai']?></td>
+                        <td style="background-color:#FAF5F5;" class="bordered-td">Ananda <?= $n['arti']?> dalam <?=$n['desc']?></td>
+                    </tr>
+                <?php $no++; endforeach ?>   
 
             <?php endforeach ?>   
 
@@ -283,6 +299,11 @@
                 <td><?= $setting['nama_kepsek']?></td>
                 <td></td>
                 <td><?= $guru['nama_guru']?></td>
+            </tr>
+            <tr>
+                <td>NIP :</td>
+                <td></td>
+                <td>NIP : <?= $guru['nuptk']?></td>
             </tr>
         </tbody>
     </table>

@@ -25,6 +25,7 @@ class RaportP5Controller extends BaseController
     protected $rfnilaip5model;
     protected $guruModel;
     protected $settingModel;
+    protected $proyekModel;
     public function __construct()
     {
         $this->nilaiP5Model = new PenilaianP5Model();
@@ -34,6 +35,7 @@ class RaportP5Controller extends BaseController
         $this->rfnilaip5model = new RFNilaiP5Model();
         $this->guruModel = new GuruModel();
         $this->settingModel = new SettingsModel();
+        $this->proyekModel = new ProyekModel();
     }
     public function index()
     {
@@ -83,6 +85,10 @@ class RaportP5Controller extends BaseController
                         ->join('dimensi_p5', 'dimensi_p5.id_dimensi=project_dimensi.id_dimensi')
                         ->where('nilaip5.id_siswa', $idSiswa)
                         ->findAll();
+        // $data['nilaiGrouped'] = [];
+        // foreach($data['nilaip5'] as $nilai){
+        //     $id_project = $nilai['id_project'];
+        // }
         // dd($data['nilaip5']);
         
         $nilai = [];
