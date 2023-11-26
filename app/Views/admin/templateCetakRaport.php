@@ -228,15 +228,15 @@
                 // Tambahkan data ke dalam kelompok yang sesuai dengan kunci $name
                 $groupedData[$name][] = $n;
             }
-             $no=0; foreach($groupedData as $name => $group) : 
+              foreach($groupedData as $name => $group) : 
              ?>
                 <tr style="height: 30px;">
                     <td style="background-color:#ADABAB;" class="bordered-td"></td>
                     <td style="background-color:#ADABAB;" class="bordered-td" colspan="3"><?= $name?></td>
                 </tr>
-                <?php foreach($group as $n) : ?>
+                <?php $no=1; foreach($group as $n) : ?>
                     <tr>
-                        <td style="background-color:#FAF5F5;" class="bordered-td"><?= ++$no?></td>
+                        <td style="background-color:#FAF5F5;" class="bordered-td"><?= $no?></td>
                         <td style="background-color:#FAF5F5;" class="bordered-td"><?= $n['dimensi']?></td>
                         <td style="background-color:#FAF5F5;" class="bordered-td" id="nilai_sering"><?= $n['nilai']?></td>
                         <td style="background-color:#FAF5F5;" class="bordered-td">Ananda <?= $n['arti']?> dalam <?=$n['desc']?></td>
