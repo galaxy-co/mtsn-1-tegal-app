@@ -207,10 +207,10 @@
         </thead>
         <tbody>
             <tr>
-                <td style="background-color:#ADABAB;" class="bordered-td">No</td>
-                <td style="background-color:#ADABAB;" class="bordered-td">DIMENSI P5 PPRA</td>
-                <td style="background-color:#ADABAB;" class="bordered-td">NILAI</td>
-                <td style="background-color:#ADABAB;" class="bordered-td">DESKRIPSI CAPAIAN</td>
+                <td style="background-color:#ADABAB; text-align:center;" class="bordered-td">No</td>
+                <td style="background-color:#ADABAB; text-align:center;" class="bordered-td">DIMENSI P5 PPRA</td>
+                <td style="background-color:#ADABAB; text-align:center;" class="bordered-td">NILAI</td>
+                <td style="background-color:#ADABAB; text-align:center;" class="bordered-td">DESKRIPSI CAPAIAN</td>
             </tr>
             
             
@@ -236,7 +236,7 @@
                 </tr>
                 <?php $no=1; foreach($group as $n) : ?>
                     <tr>
-                        <td style="background-color:#FAF5F5;" class="bordered-td"><?= $no?></td>
+                        <td style="background-color:#FAF5F5; text-align:center;" class="bordered-td"><?= $no?></td>
                         <td style="background-color:#FAF5F5;" class="bordered-td"><?= $n['dimensi']?></td>
                         <td style="background-color:#FAF5F5;" class="bordered-td" id="nilai_sering"><?= $n['nilai']?></td>
                         <td style="background-color:#FAF5F5;" class="bordered-td">Ananda <?= $n['arti']?> dalam <?=$n['desc']?></td>
@@ -283,7 +283,7 @@
             <tr>
                 <td>Mengetahui :</td>
                 <td></td>
-                <td>Lebaksiu, <?= $setting['tanggal_cetak_raport']?></td>
+                <td>Lebaksiu, <?= date('d-F-Y', strtotime($setting['tanggal_cetak_raport'])) ?></td>
             </tr>
             <tr>
                 <td>Kepala Madrasah</td>
