@@ -267,6 +267,7 @@
             <tr style="font-size: xx-small; margin-top: 10px;">
                 <td class="bordered-td" style="background-color:#FAF5F5;"><?= $rf['nilai']?></td>
                 <td class="bordered-td" style="background-color:#FAF5F5;"><?= $rf['arti']?></td>
+                <td></td>
             </tr>
             <?php endforeach ?>
     </tbody>

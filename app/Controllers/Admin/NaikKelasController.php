@@ -5,17 +5,30 @@ use App\Models\Admin\AbsenModel;
 use App\Models\Admin\KelasModel;
 use App\Models\Admin\SiswaModel;
 use App\Controllers\BaseController;
+use App\Database\Migrations\NilaiKetrampilanDetail;
+use App\Models\Admin\NilaiModel;
+use App\Models\Admin\NilaiDetailModel;
+use App\Models\Admin\NilaiKetrampilanDetailModel;
+use App\Models\Admin\NilaiKetrampilanModel;
 
 class NaikKelasController extends BaseController
 {
     protected $absenModel;
     protected $kelasModel;
     protected $siswaModel;
+    protected $nilaiModel;
+    protected $nilaiDetailModel;
+    protected $nilaiKetModel;
+    protected $nilaiKetDetailModel;
     public function __construct()
     {
         $this->absenModel = new AbsenModel();
         $this->kelasModel = new KelasModel();
         $this->siswaModel = new SiswaModel();
+        $this->nilaiModel = new NilaiModel();
+        $this->nilaiDetailModel = new NilaiDetailModel();
+        $this->nilaiKetModel = new NilaiKetrampilanModel();
+        $this->nilaiKetDetailModel = new NilaiKetrampilanDetailModel();
     }
     public function index()
     {
@@ -35,7 +48,7 @@ class NaikKelasController extends BaseController
             $tingkat = $kelas['tingkat'] + 1;
             $tingkatKelas = $this->kelasModel->where('tingkat', $tingkat)->findAll();
             $data['tocheck'] = $kelas['tingkat'];
-            dd($data['tocheck']);
+            // dd($data['tocheck']);
             $data['lulus'] = 0;
             
             $data['tingkatan'] = $tingkatKelas;
@@ -48,8 +61,8 @@ class NaikKelasController extends BaseController
             }
             
         }else{
-           $data['tingkatan'] = [];
-           $data['tocheck'] = [];
+            $data['tingkatan'] = [];
+            $data['tocheck'] = [];
         }        
        
         echo view('admin/template_admin/header');
@@ -60,6 +73,14 @@ class NaikKelasController extends BaseController
     public function add(){
         $dataSiswa = $this->request->getPost('siswa');
         $idKelas = $this->request->getPost('kelas');
+        if($idKelas == 0){
+            foreach ($dataSiswa as $siswaId) {
+                $allNilai = $this->nilaiModel->where('id_siswa', $siswaId)->findAll();
+
+                $this->siswaModel->delete($siswaId);
+
+            }
+        }
         foreach ($dataSiswa as $siswaId) {
             $dataToUpdate = ['kelas' => $idKelas];
             $this->siswaModel->update(['id' => $siswaId], $dataToUpdate);
