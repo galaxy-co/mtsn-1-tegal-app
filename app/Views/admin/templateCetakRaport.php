@@ -280,11 +280,30 @@
                 <td style="width: 30%;"></td>
             </tr>
         </thead>
+        <?php
+        $bulan = array(
+            'January'   => 'Januari',
+            'February'  => 'Februari',
+            'March'     => 'Maret',
+            'April'     => 'April',
+            'May'       => 'Mei',
+            'June'      => 'Juni',
+            'July'      => 'Juli',
+            'August'    => 'Agustus',
+            'September' => 'September',
+            'October'   => 'Oktober',
+            'November'  => 'November',
+            'December'  => 'Desember'
+        );
+        $tanggal_cetak_raport = $setting['tanggal_cetak_raport']; 
+        $tanggal_array = explode('-', $tanggal_cetak_raport);
+    $tanggal_format = $tanggal_array[2] . ' ' . $bulan[date('F', strtotime($tanggal_cetak_raport))] . ' ' . $tanggal_array[0];
+        ?>
         <tbody>
             <tr>
                 <td>Mengetahui :</td>
                 <td></td>
-                <td>Lebaksiu, <?= date('d-F-Y', strtotime($setting['tanggal_cetak_raport'])) ?></td>
+                <td>Lebaksiu, <?= $tanggal_format?></td>
             </tr>
             <tr>
                 <td>Kepala Madrasah</td>
