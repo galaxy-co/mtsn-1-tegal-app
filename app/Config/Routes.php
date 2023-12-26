@@ -142,6 +142,7 @@ $routes->group('admin', ['filter'=> 'authGuard:1'],static function ($routes) {
         $routes->get('pasnilai/(:num)', 'Admin\PASController::pasnilai/$1');
         $routes->post('update', 'Admin\PASController::update');
         $routes->post('regenerate', 'Admin\PASController::regenerate');
+        $routes->get('downloadrekap/(:num)', 'Admin\PASController::downloadrekap/$1');
     });
 
     $routes->group('p5',static function ($routes){

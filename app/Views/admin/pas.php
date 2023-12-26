@@ -80,7 +80,6 @@
                             <div class="card-action">
                                 <button class="btn btn-success" type="submit">TAMBAH</button>		
                             </div>
-                            
                         </form>
                 </div>
             </div>
@@ -97,7 +96,9 @@
                             <div class="d-flex align-items-center">
                                 <h4 class="card-title">Data Nilai</h4>                
                             </div>
-
+                            <div class="card-action">
+                                <a href="<?= base_url('admin/pas/downloadrekap/') . $id_kelas?>" class="btn btn-info">DOWNLOAD REKAP NILAI</a>		
+                            </div>
                         </div>
                        
                         <div class="card-body">

@@ -14,6 +14,9 @@ use App\Database\Migrations\Mapel;
 use App\Models\Admin\UserModel;
 use App\Models\Admin\RfMapelModel;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class PASController extends BaseController
 {
     protected $rfMapelModel;
@@ -173,7 +176,6 @@ class PASController extends BaseController
         $data['role_id'] = $session->get('role_id');
         $dataInput = $this->request->getVar();
         $data['input'] = $dataInput;
-
         
         // $cekSiswa = $this->pasModel->where
             $kelas = $this->kelasModel->where('id_kelas', $dataInput['id_kelas'])->first();
@@ -356,4 +358,223 @@ class PASController extends BaseController
         return redirect()->to('/admin/pas');
         
     }
+    public function downloadrekap($idkelas){
+        $fileName = 'nilai-pas.xlsx';  
+        $settings = $this->settingsModel->first();
+        $semester = $settings['semester'];
+        $ta = $settings['tahun_ajaran'];
+        
+        $nilaiPas = $this->pasModel
+                            ->join('kelas', 'kelas.id_kelas = nilai_pas.id_kelas')
+                            ->join('siswa', 'siswa.id_siswa = nilai_pas.id_siswa')
+                            ->join('rfmapel', 'rfmapel.id_rfmapel = nilai_pas.id_mapel')
+                            ->join('mapel', 'mapel.id_mapel = rfmapel.id_mapel')
+                            ->join('guru', 'guru.id_guru = nilai_pas.id_guru')
+                            ->where('nilai_pas.id_kelas', $idkelas)
+                            ->where('nilai_pas.semester', $semester)
+                            ->where('nilai_pas.tahun_ajaran', $ta)
+                            ->findAll();
+                            $groupedNilaiPas = [];
+        $prevIdmapel = null;
+        $sumMapel = 0;
+        foreach ($nilaiPas as $nilai) {
+            $idMapel = $nilai['id_mapel'];
+            $idSiswa = $nilai['id_siswa'];
+            if($prevIdmapel !== $idMapel){
+                $sumMapel++;
+            }
+            if ($idSiswa !== null) {
+                if (!isset($groupedNilaiPas[$idMapel])) {
+                    $groupedNilaiPas[$idMapel] = [];
+                }
+            
+                $groupedNilaiPas[$idMapel][] = $nilai;
+            }
+            $prevIdmapel = $idMapel;
+        }
+        // dd($groupedNilaiPas);
+        $styleArrayLabel = [
+            'font' => [
+                'bold' => false,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            ],
+        ];
+        $styleArrayValueGrey = [
+            'font' => [
+                'bold' => false,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+            ],
+            'borders' => [
+                'top' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'bottom' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'left' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'right' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_GRADIENT_LINEAR,
+                'rotation' => 90,
+                'startColor' => [
+                    'argb' => 'BFBFBF',
+                ],
+                'endColor' => [
+                    'argb' => 'BFBFBF',
+                ],
+            ],
+        ];
+
+        $styleArrayValue = [
+            'font' => [
+                'bold' => false,
+                
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+            ],
+            'borders' => [
+                'top' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'bottom' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'left' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'right' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+
+        $styleHeader = [
+            'font' => [
+                'bold' => false,
+                
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            ],
+            'borders' => [
+                'top' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'bottom' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'left' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'right' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+        $styleHeaderCenter = [
+            'font' => [
+                'bold' => false,
+                
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'top' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'bottom' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'left' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'right' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+
+        $spreadsheet = new Spreadsheet();
+        $worksheet1;
+        // $count = count($groupedNilaiPas);
+        // dd($count);
+        $rows = 9;
+        
+        for ($i=1; $i < count($groupedNilaiPas) ; $i++) { 
+            $data = $groupedNilaiPas[$i];
+            $mapel = $data[$i]['nama_mapel'];
+            $no = 1;
+            $worksheet1 = $spreadsheet->createSheet();
+            $worksheet1->setTitle('nilai pas');
+            $worksheet1->setCellValue('A1', 'TEMPLATE NILAI PAS/SAS')->getStyle('A1')->applyFromArray($styleArrayLabel);
+            $worksheet1->setCellValue('A2', 'MTs NEGERI 1 TEGAL')->getStyle('A2')->applyFromArray($styleArrayLabel);
+            $worksheet1->setCellValue('A3', 'TAHUN PELAJARAN' . ' ' . $data[$i]['tahun_ajaran'])->getStyle('A3')->applyFromArray($styleArrayLabel);
+            $worksheet1->setCellValue('A4', 'SEMESTER' . ' ' . $data[$i]['semester'])->getStyle('A4')->applyFromArray($styleArrayLabel);
+            $worksheet1->setCellValue('A5', 'KELAS' . ' ' . $data[$i]['tingkat'] . ' ' . $data[$i]['nama_kelas'])->getStyle('A5')->applyFromArray($styleArrayLabel);
+            $worksheet1->setCellValue('A7', 'NO')->getStyle('A7')->applyFromArray($styleHeader);
+            $worksheet1->setCellValue('B7', '')->getStyle('B7')->applyFromArray($styleHeader);
+            $worksheet1->setCellValue('C7', 'KELAS')->getStyle('C7')->applyFromArray($styleHeaderCenter);
+            $worksheet1->setCellValue('D7', 'NAMA')->getStyle('D7')->applyFromArray($styleHeaderCenter);
+            $worksheet1->mergeCells("A1:v1");
+            $worksheet1->mergeCells("A2:v2");
+            $worksheet1->mergeCells("A3:v3");
+            $worksheet1->mergeCells("A4:v4");
+            $worksheet1->mergeCells("A4:v4");
+            $worksheet1->mergeCells("A5:v5");
+            $worksheet1->mergeCells("A7:B7");
+            $worksheet1->mergeCells("C7:C9");
+            $worksheet1->mergeCells("D7:D9");
+            $rows = 10;
+            for ($j=1; $j < count($data) ; $j++) {
+                $worksheet1->setCellValue('A'.$rows, $no)->getStyle('A'.$rows)->applyFromArray($styleArrayLabel);
+                $worksheet1->setCellValue('B'.$rows, $data[$j]['nisn'])->getStyle('B'.$rows)->applyFromArray($styleArrayLabel);
+                $worksheet1->setCellValue('C'.$rows, $data[$j]['tingkat']. ' ' .$data[$j]['nama_kelas'])->getStyle('C'.$rows)->applyFromArray($styleArrayLabel);
+                $worksheet1->setCellValue('D'.$rows, $data[$j]['nama_siswa'])->getStyle('D'.$rows)->applyFromArray($styleArrayLabel);
+                for($s=1; $s < $sumMapel; $s++){
+                    $worksheet1->setCellValue('E'.$rows, $data[$j]['nama_siswa'])->getStyle('D'.$rows)->applyFromArray($styleArrayLabel);
+                }
+                $no++;
+                $rows++;
+            }
+            $worksheet1->getColumnDimension('A')->setAutoSize(true);
+            $worksheet1->getColumnDimension('B')->setAutoSize(true);
+            $worksheet1->getColumnDimension('C')->setAutoSize(true);
+            $worksheet1->getColumnDimension('D')->setAutoSize(true);
+            $worksheet1->getColumnDimension('E')->setAutoSize(true);
+            $worksheet1->getColumnDimension('F')->setAutoSize(true);
+            $worksheet1->getColumnDimension('G')->setAutoSize(true);
+            $worksheet1->getColumnDimension('H')->setAutoSize(true);
+            $worksheet1->getColumnDimension('I')->setAutoSize(true);
+            $worksheet1->getColumnDimension('J')->setAutoSize(true);
+            $worksheet1->getColumnDimension('K')->setAutoSize(true);
+            $worksheet1->getColumnDimension('L')->setAutoSize(true);
+            $worksheet1->getColumnDimension('M')->setAutoSize(true);
+            $worksheet1->getColumnDimension('N')->setAutoSize(true);
+            $worksheet1->getColumnDimension('O')->setAutoSize(true);
+            $worksheet1->getColumnDimension('P')->setAutoSize(true);
+            $worksheet1->getColumnDimension('Q')->setAutoSize(true);
+            $worksheet1->getColumnDimension('R')->setAutoSize(true);
+            $worksheet1->getColumnDimension('S')->setAutoSize(true);
+            $worksheet1->getColumnDimension('T')->setAutoSize(true);
+            $worksheet1->getColumnDimension('U')->setAutoSize(true);
+            $worksheet1->getColumnDimension('V')->setAutoSize(true);
+        }
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($fileName);
+        return $this->response->download($fileName,null); 
+    }
+    
+    
 }
